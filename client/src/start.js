@@ -1,7 +1,16 @@
 import ReactDOM from "react-dom";
+import Welcome from "./welcome";
+import App from "./app";
 
-ReactDOM.render(<HelloWorld />, document.querySelector("main"));
-
-function HelloWorld() {
-    return <div>Hello, World!</div>;
-}
+fetch("/api/user/id")
+    .then((response) => response.json())
+    .then((data) => {
+        if (!data.userId) {
+            ReactDOM.render(<Welcome />, document.querySelector("main"));
+        } else {
+            ReactDOM.render(
+                <App userId={data.userId} />,
+                document.querySelector("main")
+            );
+        }
+    });
