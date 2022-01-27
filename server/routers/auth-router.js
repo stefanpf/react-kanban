@@ -10,7 +10,7 @@ authRouter.get("/api/user/id", (req, res) => {
     });
 });
 
-authRouter.post("/api/user/register", (req, res) => {
+authRouter.post("/api/register", (req, res) => {
     const { name, email, password } = req.body;
     if (checkValidEmail(email) && name != "" && password != "") {
         hash(password)

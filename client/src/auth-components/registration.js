@@ -4,7 +4,7 @@ import useFormSubmit from "../hooks/useFormSubmit";
 
 export default function Registration() {
     const [userInput, handleChange] = useForm();
-    const [submit, error] = useFormSubmit("/api/user/register", userInput);
+    const [submit, error] = useFormSubmit("/api/register", userInput);
 
     return (
         <>
