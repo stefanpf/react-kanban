@@ -1,13 +1,17 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./ui-components/header";
-import TaskForm from "./task-components/taskForm";
+import Overview from "./overview-components/overview";
+import NewTaskForm from "./task-components/newTaskForm";
 
 export default function App() {
     return (
         <BrowserRouter>
             <Header />
             <Route path="/task">
-                <TaskForm />
+                <NewTaskForm />
+            </Route>
+            <Route exact path="/">
+                <Overview />
             </Route>
         </BrowserRouter>
     );

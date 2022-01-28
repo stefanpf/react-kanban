@@ -35,8 +35,17 @@ function addNewTask(userId, title, description, dueDate) {
     return db.query(q, params);
 }
 
+function getTasksByOwnerId(userId) {
+    const q = `SELECT id, owner_id, title, description, due_date
+            FROM tasks
+            WHERE owner_id = $1;`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
     addNewTask,
+    getTasksByOwnerId,
 };
