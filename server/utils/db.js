@@ -43,9 +43,18 @@ function getTasksByOwnerId(userId) {
     return db.query(q, params);
 }
 
+function updateTask(taskId, ownerId, title, description, dueDate, status) {
+    const q = `UPDATE tasks
+            SET owner_id = $2, title = $3, description = $4, due_date = $5, status = $6
+            WHERE id = $1;`;
+    const params = [taskId, ownerId, title, description, dueDate, status];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
     addNewTask,
     getTasksByOwnerId,
+    updateTask,
 };

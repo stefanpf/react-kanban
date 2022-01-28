@@ -41,4 +41,17 @@ taskRouter.post("/api/task/new", (req, res) => {
     }
 });
 
+taskRouter.post("/api/task/:id", (req, res) => {
+    const taskId = req.params.id;
+    const { taskOwnerId, title, description, status, dueDate } = req.body;
+    db.updateTask(taskId, taskOwnerId, title, description, dueDate, status)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("Err in updateTask:", err);
+            res.json({ success: false });
+        });
+});
+
 module.exports = taskRouter;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Header from "./components/ui/header";
-import Overview from "./components/overview/overview";
+import KanBanBoard from "./components/kanban/kanBanBoard";
 import NewTaskForm from "./components/task/newTaskForm";
 import { receiveUserData } from "./redux/user_data/slice";
 import { receiveTasks } from "./redux/tasks/slice";
@@ -34,7 +34,7 @@ export default function App(props) {
                 <NewTaskForm />
             </Route>
             <Route exact path="/">
-                <Overview />
+                <KanBanBoard />
             </Route>
         </BrowserRouter>
     );

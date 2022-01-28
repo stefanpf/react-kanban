@@ -39,10 +39,7 @@ body {
     border-radius: 3px;
     padding: 8px;
     margin-bottom: 8px;
-}
-
-.task-view-small:last-child {
-    padding-bottom: 0px;
+    background-color: #fff;
 }
 
 .task-view-sm-title {
