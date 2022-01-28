@@ -11,6 +11,7 @@ const cookieSessionMiddleware = cookieSession({
 });
 const path = require("path");
 const authRouter = require("./routers/auth-router");
+const taskRouter = require("./routers/task-router");
 const PORT = 3001;
 
 // MIDDLEWARE
@@ -29,6 +30,7 @@ app.use(express.json());
 
 // ROUTES
 app.use(authRouter);
+app.use(taskRouter);
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
