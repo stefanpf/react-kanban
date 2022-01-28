@@ -27,7 +27,16 @@ function getUserByEmail(email) {
     return db.query(q, params);
 }
 
+function addNewTask(userId, title, description, dueDate) {
+    const q = `INSERT INTO tasks (owner_id, title, description, due_date)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id;`;
+    const params = [userId, title, description, dueDate];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
+    addNewTask,
 };
