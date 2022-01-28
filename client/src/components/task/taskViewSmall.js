@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
+import { Draggable } from "react-beautiful-dnd";
 
 export default function TaskViewSmall(props) {
-    const { taskId } = props;
+    const { taskId, index } = props;
     const task = useSelector(
         (state) =>
             (state.tasks &&
@@ -10,8 +11,18 @@ export default function TaskViewSmall(props) {
     )[0];
 
     return (
-        <div className="task-view-small">
-            {task.taskId} {task.title}
-        </div>
+        <Draggable draggableId={taskId.toString()} index={index}>
+            {(provided) => (
+                <div
+                    className="task-view-small"
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                >
+                    <div className="task-view-sm-title">{task.title}</div>
+                    <div>{task.dueDate}</div>
+                </div>
+            )}
+        </Draggable>
     );
 }

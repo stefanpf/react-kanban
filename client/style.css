@@ -17,6 +17,7 @@ body {
 
 .kanban-board {
     width: 30%;
+    padding: 12px 6px 12px 6px;
 }
 
 .board-to-do {
@@ -34,5 +35,16 @@ body {
 /* TASK VIEW SMALL STYLES */
 /* ---------------------- */
 .task-view-small {
-    border: 1px solid blue;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.task-view-small:last-child {
+    padding-bottom: 0px;
+}
+
+.task-view-sm-title {
+    border: 1px solid red;
 }

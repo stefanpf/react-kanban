@@ -1,11 +1,20 @@
-import Board from "../kanban/board";
+import { DragDropContext } from "react-beautiful-dnd";
+import BoardColumn from "../kanban/boardColumn";
 
 export default function Overview() {
+    const handleDragEnd = (result) => {
+        // this function needs to update the state to reflect the
+        // result of the drag and drop action
+        console.log("onDragEnd result:", result);
+    };
+
     return (
         <div className="board-overview">
-            <Board type="todo" />
-            <Board type="inprogress" />
-            <Board type="done" />
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <BoardColumn key="todo" type="todo" />
+                <BoardColumn key="inprogress" type="inprogress" />
+                <BoardColumn key="done" type="done" />
+            </DragDropContext>
         </div>
     );
 }
