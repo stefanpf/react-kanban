@@ -10,9 +10,10 @@ taskRouter.get("/api/tasks", (req, res) => {
                 return {
                     taskId: row.id,
                     taskOwnerId: row.owner_id,
+                    dueDate: row.due_date,
                     title: row.title,
                     description: row.description,
-                    dueDate: row.due_date,
+                    status: row.status,
                 };
             });
             res.json({ tasks, success: true });

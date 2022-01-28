@@ -7,6 +7,9 @@ body {
     background-color: ghostwhite;
 }
 
+/* KANBAN BOARD */
+/* --------------------*/
+
 .board-overview {
     display: flex;
     justify-content: space-between;
@@ -26,4 +29,10 @@ body {
 
 .board-done {
     background-color: rgb(72, 245, 3);
+}
+
+/* TASK VIEW SMALL STYLES */
+/* ---------------------- */
+.task-view-small {
+    border: 1px solid blue;
 }

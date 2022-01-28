@@ -36,7 +36,7 @@ function addNewTask(userId, title, description, dueDate) {
 }
 
 function getTasksByOwnerId(userId) {
-    const q = `SELECT id, owner_id, title, description, due_date
+    const q = `SELECT id, owner_id, title, description, due_date, status
             FROM tasks
             WHERE owner_id = $1;`;
     const params = [userId];
