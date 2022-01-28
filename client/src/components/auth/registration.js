@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
-import useForm from "../hooks/useForm";
-import useFormSubmit from "../hooks/useFormSubmit";
+import useForm from "../../hooks/useForm";
+import useFormSubmit from "../../hooks/useFormSubmit";
 
-export default function Login() {
+export default function Registration() {
     const [userInput, handleChange] = useForm();
-    const [submit, error] = useFormSubmit("/api/login", userInput);
+    const [submit, error] = useFormSubmit("/api/register", userInput);
 
     return (
         <>
-            <h1>Login</h1>
+            <h1>Registration</h1>
             {error && <h2>Oops, something went wrong...</h2>}
             <div className="form-container">
                 <form>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="what should we call you?"
+                        required
+                        onChange={handleChange}
+                    ></input>
                     <input
                         type="email"
                         name="email"
@@ -27,14 +34,14 @@ export default function Login() {
                         onChange={handleChange}
                     ></input>
                     <button type="submit" onClick={submit}>
-                        Login
+                        Register
                     </button>
                 </form>
             </div>
             <div className="auth-switch-text">
-                Don&apos;t have an account yet?{" "}
-                <Link to="/">
-                    Click here to <strong>register!</strong>
+                Already registered?{" "}
+                <Link to="/login">
+                    Click here to <strong>log in!</strong>
                 </Link>
             </div>
         </>

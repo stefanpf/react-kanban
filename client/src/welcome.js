@@ -1,6 +1,6 @@
 import { BrowserRouter, Route } from "react-router-dom";
-import Registration from "./auth-components/registration";
-import Login from "./auth-components/login";
+import Registration from "./components/auth/registration";
+import Login from "./components/auth/login";
 
 export default function Welcome() {
     return (

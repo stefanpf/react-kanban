@@ -1,7 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
-import Header from "./ui-components/header";
-import Overview from "./overview-components/overview";
-import NewTaskForm from "./task-components/newTaskForm";
+import Header from "./components/ui/header";
+import Overview from "./components/overview/overview";
+import NewTaskForm from "./components/task/newTaskForm";
 
 export default function App() {
     return (

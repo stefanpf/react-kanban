@@ -1,3 +1,29 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-color: ghostwhite;
+}
+
+.board-overview {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kanban-board {
+    width: 30%;
+}
+
+.board-to-do {
+    background-color: rgb(247, 179, 123);
+}
+
+.board-in-progress {
+    background-color: rgb(210, 236, 198);
+}
+
+.board-done {
+    background-color: rgb(72, 245, 3);
 }

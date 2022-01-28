@@ -1,5 +1,5 @@
-import useForm from "../hooks/useForm";
-import useFormSubmit from "../hooks/useFormSubmit";
+import useForm from "../../hooks/useForm";
+import useFormSubmit from "../../hooks/useFormSubmit";
 
 export default function NewTaskForm() {
     const [userInput, handleChange] = useForm();
