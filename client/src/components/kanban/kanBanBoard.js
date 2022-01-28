@@ -29,6 +29,11 @@ export default function KanBanBoard() {
             status: statusMap[destination.droppableId],
         };
 
+        // non-optimistic dispatch led to janky UX where the
+        // task jumped around while waiting for the fetch
+        // to finish
+        dispatch(updateTask(newTask));
+
         fetch(`/api/task/${newTask.taskId}`, {
             method: "POST",
             headers: {
@@ -38,9 +43,8 @@ export default function KanBanBoard() {
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.success) {
-                    dispatch(updateTask(newTask));
-                } else {
+                if (!data.success) {
+                    dispatch(updateTask(task));
                     setError(true);
                 }
             });
