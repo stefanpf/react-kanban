@@ -1,6 +1,14 @@
 import { useSelector } from "react-redux";
 import { Droppable } from "react-beautiful-dnd";
 import TaskViewSmall from "../task/taskViewSmall";
+import styled from "styled-components";
+
+const Column = styled.div`
+    transition: background-color 0.2s ease;
+    background-color: ${(props) => {
+        if (props.isDraggingOver) return "antiquewhite";
+    }};
+`;
 
 export default function BoardColumn(props) {
     const { type } = props;
@@ -30,11 +38,12 @@ export default function BoardColumn(props) {
 
     return (
         <Droppable droppableId={type}>
-            {(provided) => (
-                <div
+            {(provided, snapshot) => (
+                <Column
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                     className={`kanban-board ${columnTypeMap[type].style}`}
+                    isDraggingOver={snapshot.isDraggingOver}
                 >
                     {tasks && tasks.length
                         ? tasks.map((task, index) => {
@@ -48,7 +57,7 @@ export default function BoardColumn(props) {
                           })
                         : ""}
                     {provided.placeholder}
-                </div>
+                </Column>
             )}
         </Droppable>
     );

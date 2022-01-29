@@ -39,7 +39,8 @@ body {
     border-radius: 3px;
     padding: 8px;
     margin-bottom: 8px;
-    background-color: #fff;
+    /* opacity: 1; */
+    /* background-color: #fff; */
 }
 
 .task-view-sm-title {
