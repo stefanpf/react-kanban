@@ -3,10 +3,82 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     background-color: ghostwhite;
 }
 
+button {
+    all: unset;
+}
+
+/* GLOBAL ELEMENTS */
+.add-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-button-big {
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.add-button-small {
+    width: 50px;
+    height: 50px;
+    font-size: 36px;
+    font-weight: 600;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.add-button-small:hover {
+    border: 3px solid black;
+}
+
+.add-new-task-button {
+    align-self: center;
+}
+
+.modal {
+    z-index: 10;
+    padding: 24px 0px;
+    width: 60%;
+    background-color: #fff;
+    /* font-size: 1.3em; */
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.overlay {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* HEADER */
+/* ------ */
+header {
+    height: 90px;
+    background-color: orange;
+    border-bottom: 1px solid blue;
+}
 /* KANBAN BOARD */
 /* --------------------*/
 
@@ -22,6 +94,9 @@ body {
 
 .board-to-do {
     background-color: rgb(247, 179, 123);
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
 }
 
 .board-in-progress {
@@ -32,8 +107,8 @@ body {
     background-color: rgb(72, 245, 3);
 }
 
-/* TASK VIEW SMALL STYLES */
-/* ---------------------- */
+/* TASK VIEW SMALL */
+/* --------------- */
 .task-view-small {
     border: 1px solid lightgrey;
     border-radius: 3px;

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Droppable } from "react-beautiful-dnd";
 import TaskViewSmall from "../task/taskViewSmall";
+import AddTaskButton from "../task/addTaskButton";
 import styled from "styled-components";
 
 const Column = styled.div`
@@ -26,6 +27,7 @@ export default function BoardColumn(props) {
             status: 3,
         },
     };
+
     const tasks = useSelector((state) => {
         if (state.tasks) {
             return state.tasks.filter((task) => {
@@ -57,6 +59,7 @@ export default function BoardColumn(props) {
                           })
                         : ""}
                     {provided.placeholder}
+                    {type === "todo" && <AddTaskButton />}
                 </Column>
             )}
         </Droppable>
