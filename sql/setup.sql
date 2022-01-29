@@ -45,7 +45,7 @@ CREATE TABLE tasks_lists_map (
     list_id INT REFERENCES lists(id) NOT NULL
 );
 
-CREATE TABLE teams (
+CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
     description TEXT,
@@ -54,15 +54,15 @@ CREATE TABLE teams (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE team_members (
+CREATE TABLE project_members (
     id SERIAL PRIMARY KEY,
-    team_id INT REFERENCES teams(id) NOT NULL,
+    team_id INT REFERENCES projects(id) NOT NULL,
     member_id INT REFERENCES users(id) NOT NULL
 );
 
-CREATE TABLE team_invites (
+CREATE TABLE project_invites (
     id SERIAL PRIMARY KEY,
-    team_id INT REFERENCES teams(id) NOT NULL,
+    project_id INT REFERENCES projects(id) NOT NULL,
     sender_id INT REFERENCES users(id) NOT NULL,
     invite_code VARCHAR,
     used BOOLEAN DEFAULT false,
