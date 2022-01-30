@@ -8,16 +8,19 @@ export default function Modal() {
         (state) => (state.modal && state.modal.modalType) || {}
     );
 
-    const handleOverlayClick = () => {
+    const handleClick = () => {
         dispatch(setActiveModal({ modalType: "" }));
         dispatch(toggleModalVisibility());
     };
 
     return (
         <>
-            <div className="overlay" onClick={handleOverlayClick}></div>
+            <div className="overlay" onClick={handleClick}></div>
             <div className="modal">
                 {modalType === "newTaskForm" && <NewTaskForm />}
+                <button onClick={handleClick} className="close-modal-button">
+                    X
+                </button>
             </div>
         </>
     );

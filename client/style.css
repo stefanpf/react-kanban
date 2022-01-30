@@ -10,19 +10,24 @@ body {
 
 body {
     background-color: ghostwhite;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
     all: unset;
-}
-
-/* GLOBAL ELEMENTS */
-.add-button {
     cursor: pointer;
+    background-color: #1b105c;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+button:hover {
+    box-shadow: 0px 4px 4px rgba(36, 18, 147, 0.4);
+}
+
+/* GLOBAL ELEMENTS */
 .add-button-big {
     border: 1px solid black;
     border-radius: 50%;
@@ -31,14 +36,9 @@ button {
 .add-button-small {
     width: 50px;
     height: 50px;
-    font-size: 36px;
+    font-size: 48px;
     font-weight: 600;
-    border: 2px solid black;
     border-radius: 50%;
-}
-
-.add-button-small:hover {
-    border: 3px solid black;
 }
 
 .add-new-task-button {
@@ -60,6 +60,17 @@ button {
     flex-direction: column;
     justify-items: center;
     align-items: center;
+}
+
+.close-modal-button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 2.5em;
+    height: 2.5em;
+    font-weight: 900;
+    font-size: 24px;
+    border-radius: 50%;
 }
 
 .overlay {
