@@ -18,7 +18,9 @@ export default function TaskViewSmall(props) {
     )[0];
 
     const handleClick = () => {
-        // dispatch(setActiveModal({ modalType: }))
+        dispatch(
+            setActiveModal({ modalType: { type: "taskViewBig", taskId } })
+        );
         dispatch(toggleModalVisibility());
     };
 

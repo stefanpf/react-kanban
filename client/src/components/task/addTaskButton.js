@@ -4,7 +4,7 @@ import { toggleModalVisibility, setActiveModal } from "../../redux/modal/slice";
 export default function AddTaskButton() {
     const dispatch = useDispatch();
     const handleClick = () => {
-        dispatch(setActiveModal({ modalType: "newTaskForm" }));
+        dispatch(setActiveModal({ modalType: { type: "newTaskForm" } }));
         dispatch(toggleModalVisibility());
     };
 

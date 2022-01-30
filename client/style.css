@@ -50,7 +50,6 @@ button:hover {
     padding: 24px 0px;
     width: 60%;
     background-color: #fff;
-    /* font-size: 1.3em; */
     border-radius: 10px;
     position: absolute;
     left: 50%;
@@ -131,4 +130,17 @@ header {
 
 .task-view-sm-title {
     border: 1px solid red;
+}
+
+/* TASK VIEW BIG */
+/* ------------- */
+.task-view-big-container {
+    width: 100%;
+    border: 1px solid blue;
+    padding: 12px 10px 24px 10px;
+}
+
+.task-view-big-title {
+    font-weight: 800;
+    font-size: 36px;
 }
