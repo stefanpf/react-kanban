@@ -1,9 +1,9 @@
 import useForm from "../../hooks/useForm";
-import useFormSubmit from "../../hooks/useFormSubmit";
+import useTaskFormSubmit from "../../hooks/useTaskFormSubmit";
 
 export default function NewTaskForm() {
     const [userInput, handleChange] = useForm();
-    const [submit, error] = useFormSubmit("/api/task/new", userInput);
+    const [submit, error] = useTaskFormSubmit(userInput);
 
     return (
         <div>

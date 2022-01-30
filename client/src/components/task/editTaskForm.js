@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import useForm from "../../hooks/useForm";
+import useModalFormSubmit from "../../hooks/useTaskFormSubmit";
 
 export default function EditTaskForm(props) {
     const { taskId } = props;
@@ -10,7 +10,7 @@ export default function EditTaskForm(props) {
                 state.tasks.filter((task) => task.taskId === taskId))[0] || {}
     );
     const [userInput, handleChange] = useForm();
-    const [error, setError] = useState(false);
+    const [submit, error] = useModalFormSubmit(userInput, taskId);
 
     return (
         <div>
@@ -20,21 +20,24 @@ export default function EditTaskForm(props) {
                 <input
                     type="text"
                     name="title"
-                    placeholder="title"
+                    defaultValue={task.title}
                     required
                     onChange={handleChange}
                 ></input>
                 <textarea
                     name="description"
-                    placeholder="description"
+                    defaultValue={task.description}
                     onChange={handleChange}
                 />
                 <input
                     type="date"
                     name="due_date"
+                    defaultValue={task.dueDate}
                     onChange={handleChange}
                 ></input>
-                <button type="submit">Save</button>
+                <button type="submit" onClick={submit}>
+                    Save
+                </button>
             </form>
         </div>
     );
