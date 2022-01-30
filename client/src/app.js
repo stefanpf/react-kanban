@@ -3,8 +3,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/ui/header";
 import Modal from "./components/ui/modal";
-import KanBanBoard from "./components/kanban/kanBanBoard";
-import NewTaskForm from "./components/task/newTaskForm";
+import ProjectNavigation from "./components/project/projectNavigation";
+import Overview from "./components/project/overview";
+import Project from "./components/project/project";
 import { receiveUserData } from "./redux/user_data/slice";
 import { receiveTasks } from "./redux/tasks/slice";
 import { receiveModalVisibility } from "./redux/modal/slice";
@@ -35,14 +36,24 @@ export default function App(props) {
     return (
         <BrowserRouter>
             <Header />
-            {error && <h2>Oops, something went wrong...</h2>}
             {modalIsVisible && <Modal />}
-            <Route path="/task">
-                <NewTaskForm />
-            </Route>
-            <Route exact path="/">
-                <KanBanBoard />
-            </Route>
+            <div className="main-container">
+                {error && <h2>Oops, something went wrong...</h2>}
+                <div className="main-container-left-col">
+                    <ProjectNavigation userId={userId} />
+                </div>
+                <div className="main-container-right-col">
+                    <Route path="/new-project">
+                        <Project newProject="new" />
+                    </Route>
+                    <Route path="/project/:id">
+                        <Project />
+                    </Route>
+                    <Route exact path="/">
+                        <Overview />
+                    </Route>
+                </div>
+            </div>
         </BrowserRouter>
     );
 }
