@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveModal } from "../../redux/modal/slice";
+import { setActiveModal, toggleModalVisibility } from "../../redux/modal/slice";
+import { deleteTask } from "../../redux/tasks/slice";
 
 export default function TaskViewBig(props) {
     const { taskId } = props;
+    const [error, setError] = useState(false);
     const dispatch = useDispatch();
     const task = useSelector(
         (state) =>
@@ -17,12 +20,27 @@ export default function TaskViewBig(props) {
         4: "Archived",
     };
 
-    const handleClick = () => {
+    const handleEdit = () => {
         dispatch(
             setActiveModal({ modalType: { type: "editTaskForm", taskId } })
         );
     };
 
+    const handleDelete = () => {
+        fetch(`/api/task/${taskId}`, {
+            method: "DELETE",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log("task deleted from DB, need to update state");
+                    dispatch(deleteTask(taskId));
+                    dispatch(toggleModalVisibility());
+                } else {
+                    setError(true);
+                }
+            });
+    };
     return (
         <>
             {task && (
@@ -47,7 +65,9 @@ export default function TaskViewBig(props) {
                     <div className="task-view-big-sub-content">
                         {statusMap[task.status]}
                     </div>
-                    <button onClick={handleClick}>Edit</button>
+                    {error && <div>Oops, something went wrong...</div>}
+                    <button onClick={handleEdit}>Edit</button>
+                    <button onClick={handleDelete}>Delete</button>
                 </div>
             )}
         </>

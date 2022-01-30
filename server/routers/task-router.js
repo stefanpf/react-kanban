@@ -30,7 +30,16 @@ taskRouter.post("/api/task/new", (req, res) => {
     if (title) {
         db.addNewTask(userId, title, description || null, dueDate || null)
             .then(({ rows }) => {
-                res.json({ taskId: rows[0].id, success: true });
+                res.json({
+                    task: {
+                        taskId: rows[0].id,
+                        taskOwnerId: userId,
+                        title,
+                        description: description || null,
+                        dueDate: dueDate || null,
+                    },
+                    success: true,
+                });
             })
             .catch((err) => {
                 console.log("Err in addNewTask:", err);
@@ -41,17 +50,31 @@ taskRouter.post("/api/task/new", (req, res) => {
     }
 });
 
-taskRouter.post("/api/task/:id", (req, res) => {
-    const taskId = req.params.id;
-    const { taskOwnerId, title, description, status, dueDate } = req.body;
-    db.updateTask(taskId, taskOwnerId, title, description, dueDate, status)
-        .then(() => {
-            res.json({ success: true });
-        })
-        .catch((err) => {
-            console.log("Err in updateTask:", err);
-            res.json({ success: false });
-        });
-});
+taskRouter
+    .route("/api/task/:id")
+    .post((req, res) => {
+        const taskId = req.params.id;
+        const { taskOwnerId, title, description, status, dueDate } = req.body;
+        db.updateTask(taskId, taskOwnerId, title, description, dueDate, status)
+            .then(() => {
+                res.json({ success: true });
+            })
+            .catch((err) => {
+                console.log("Err in updateTask:", err);
+                res.json({ success: false });
+            });
+    })
+    .delete((req, res) => {
+        const taskId = req.params.id;
+        const { userId } = req.session;
+        db.deleteTask(taskId, userId)
+            .then(() => {
+                res.json({ success: true });
+            })
+            .catch((err) => {
+                console.log("Err in deleteTask:", err);
+                res.json({ success: false });
+            });
+    });
 
 module.exports = taskRouter;

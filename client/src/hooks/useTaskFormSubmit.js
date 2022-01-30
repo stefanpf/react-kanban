@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateTask, addTask } from "../redux/tasks/slice";
 import { toggleModalVisibility } from "../redux/modal/slice";
 
 export default function useTaskFormSubmit(userInput, taskId = null) {
@@ -32,7 +33,11 @@ export default function useTaskFormSubmit(userInput, taskId = null) {
             .then((data) => {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
-                    // dispatch new Task to reducer
+                    if (data.task) {
+                        dispatch(addTask(data.task));
+                    } else {
+                        dispatch(updateTask(userInput));
+                    }
                 } else {
                     setError(true);
                 }

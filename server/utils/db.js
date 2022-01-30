@@ -51,10 +51,19 @@ function updateTask(taskId, ownerId, title, description, dueDate, status) {
     return db.query(q, params);
 }
 
+function deleteTask(taskId, userId) {
+    const q = `DELETE FROM tasks
+            WHERE id = $1
+            AND owner_id = $2;`;
+    const params = [taskId, userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
     addNewTask,
     getTasksByOwnerId,
     updateTask,
+    deleteTask,
 };
