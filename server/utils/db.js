@@ -101,10 +101,53 @@ function getProjectsByUserId(userId) {
     return db.query(q, params);
 }
 
+function addInviteCode(projectId, userId, inviteCode) {
+    const q = `INSERT INTO project_invites (project_id, sender_id, invite_code)
+            VALUES ($1, $2, $3)
+            RETURNING created_at;`;
+    const params = [projectId, userId, inviteCode];
+    return db.query(q, params);
+}
+
+function getProjectFromActiveCode(inviteCode) {
+    const q = `SELECT project_id
+            FROM project_invites
+            WHERE invite_code = $1
+            AND used = false
+            AND CURRENT_TIMESTAMP - created_at < INTERVAL '7 days';`;
+    const params = [inviteCode];
+    return db.query(q, params);
+}
+
+function getActiveProjectInviteCodes(projectId) {
+    const q = `SELECT invite_code, created_at
+            FROM project_invites
+            WHERE project_id = $1
+            AND used = false
+            AND CURRENT_TIMESTAMP - created_at < INTERVAL '7 days';`;
+    const params = [projectId];
+    return db.query(q, params);
+}
+
 function deleteTasksByProjectId(id) {
     const q = `DELETE FROM tasks
             WHERE project_id = $1;`;
     const params = [id];
+    return db.query(q, params);
+}
+
+function expireInviteCode(code) {
+    const q = `UPDATE project_invites
+            SET used = true
+            WHERE invite_code = $1;`;
+    const params = [code];
+    return db.query(q, params);
+}
+
+function addMemberToProject(userId, projectId) {
+    const q = `INSERT INTO project_members (member_id, project_id)
+            VALUES ($1, $2);`;
+    const params = [userId, projectId];
     return db.query(q, params);
 }
 
@@ -124,7 +167,12 @@ module.exports = {
     updateTask,
     deleteTask,
     addNewProject,
+    getProjectFromActiveCode,
     getProjectsByUserId,
+    addInviteCode,
+    getActiveProjectInviteCodes,
+    expireInviteCode,
+    addMemberToProject,
     deleteTasksByProjectId,
     deleteProject,
 };

@@ -4,6 +4,7 @@ import NewTaskForm from "../task/newTaskForm";
 import EditTaskForm from "../task/editTaskForm";
 import TaskViewBig from "../task/taskViewBig";
 import NewProjectForm from "../project/newProjectForm";
+import JoinProjectForm from "../project/joinProjectForm";
 import ProjectSettingsView from "../project/projectSettingsView";
 import ProjectMembersView from "../project/projectMembersView";
 
@@ -32,6 +33,7 @@ export default function Modal() {
                     <TaskViewBig taskId={modalType.taskId} />
                 )}
                 {modalType.type === "newProjectForm" && <NewProjectForm />}
+                {modalType.type === "joinProjectForm" && <JoinProjectForm />}
                 {modalType.type === "projectSettingsView" && (
                     <ProjectSettingsView projectId={modalType.projectId} />
                 )}
