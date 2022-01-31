@@ -47,6 +47,19 @@ projectRouter.post("/api/project/new", (req, res) => {
     }
 });
 
+projectRouter.get("/api/project/:id/members", (req, res) => {
+    const projectId = req.params.id;
+    db.getUserNamesByProjectId(projectId)
+        .then(({ rows }) => {
+            console.log(rows);
+            res.json({ memberNames: rows, success: true });
+        })
+        .catch((err) => {
+            console.log("Err in getUserNamesByProjectId:", err);
+            res.json({ success: false });
+        });
+});
+
 projectRouter.delete("/api/project/:id", (req, res) => {
     const { userId } = req.session;
     const { ownerId } = req.body;
@@ -63,4 +76,5 @@ projectRouter.delete("/api/project/:id", (req, res) => {
         res.json({ success: false });
     }
 });
+
 module.exports = projectRouter;

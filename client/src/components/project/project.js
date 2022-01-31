@@ -15,21 +15,28 @@ export default function Project() {
             {}
     );
 
-    const handleSettingsClick = () => {
+    const handleClick = (e) => {
         dispatch(
             setActiveModal({
-                modalType: { type: "projectSettingsView", projectId: id },
+                modalType: {
+                    type: `project${e.target.textContent}View`,
+                    projectId: id,
+                },
             })
         );
         dispatch(toggleModalVisibility());
     };
+
     return (
         <div className="project-container">
             {project && (
                 <div className="project-view-header">
                     <h1>Project Title: {project.name}</h1>
-                    <div className="project-view-header-buttons">
-                        <button onClick={handleSettingsClick}>Settings</button>
+                    <div className="project-view-header-button">
+                        <button onClick={handleClick}>Settings</button>
+                    </div>
+                    <div className="project-view-header-button">
+                        <button onClick={handleClick}>Members</button>
                     </div>
                 </div>
             )}

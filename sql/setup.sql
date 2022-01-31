@@ -34,7 +34,7 @@ CREATE TABLE tasks (
 
 CREATE TABLE project_members (
     id SERIAL PRIMARY KEY,
-    team_id INT REFERENCES projects(id) NOT NULL,
+    project_id INT REFERENCES projects(id) NOT NULL,
     member_id INT REFERENCES users(id) NOT NULL
 );
 
