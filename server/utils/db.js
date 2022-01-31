@@ -59,6 +59,14 @@ function deleteTask(taskId, userId) {
     return db.query(q, params);
 }
 
+function addNewProject(userId, name, description, logo) {
+    const q = `INSERT INTO projects (owner_id, name, description, logo)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id;`;
+    const params = [userId, name, description || null, logo || null];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -66,4 +74,5 @@ module.exports = {
     getTasksByOwnerId,
     updateTask,
     deleteTask,
+    addNewProject,
 };

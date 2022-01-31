@@ -6,6 +6,7 @@ import Modal from "./components/ui/modal";
 import ProjectNavigation from "./components/project/projectNavigation";
 import Overview from "./components/project/overview";
 import Project from "./components/project/project";
+import NewProject from "./components/project/newProject";
 import { receiveUserData } from "./redux/user_data/slice";
 import { receiveTasks } from "./redux/tasks/slice";
 import { receiveModalVisibility } from "./redux/modal/slice";
@@ -44,7 +45,7 @@ export default function App(props) {
                 </div>
                 <div className="main-container-right-col">
                     <Route path="/new-project">
-                        <Project newProject="new" />
+                        <NewProject />
                     </Route>
                     <Route path="/project/:id">
                         <Project />

@@ -33,7 +33,6 @@ export default function TaskViewBig(props) {
             .then((res) => res.json())
             .then((data) => {
                 if (data.success) {
-                    console.log("task deleted from DB, need to update state");
                     dispatch(deleteTask(taskId));
                     dispatch(toggleModalVisibility());
                 } else {
