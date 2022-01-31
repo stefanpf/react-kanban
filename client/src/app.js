@@ -9,6 +9,7 @@ import Project from "./components/project/project";
 import NewProject from "./components/project/newProject";
 import { receiveUserData } from "./redux/user_data/slice";
 import { receiveTasks } from "./redux/tasks/slice";
+import { receiveProjects } from "./redux/projects/slice";
 import { receiveModalVisibility } from "./redux/modal/slice";
 
 export default function App(props) {
@@ -32,6 +33,16 @@ export default function App(props) {
                 }
             })
             .catch(() => setError(true));
+        fetch("/api/projects")
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    dispatch(receiveProjects(data.projects));
+                } else {
+                    setError(true);
+                }
+            })
+            .catch(() => setError(true));
     }, []);
 
     return (
@@ -39,11 +50,11 @@ export default function App(props) {
             <Header />
             {modalIsVisible && <Modal />}
             <div className="main-container">
-                {error && <h2>Oops, something went wrong...</h2>}
                 <div className="main-container-left-col">
                     <ProjectNavigation userId={userId} />
                 </div>
                 <div className="main-container-right-col">
+                    {error && <h2>Oops, something went wrong...</h2>}
                     <Route path="/new-project">
                         <NewProject />
                     </Route>

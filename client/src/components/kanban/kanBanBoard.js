@@ -4,9 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import BoardColumn from "./boardColumn";
 import { updateTask } from "../../redux/tasks/slice";
 
-export default function KanBanBoard() {
+export default function KanBanBoard(props) {
+    const { projectId } = props;
     const [error, setError] = useState(false);
-    const tasks = useSelector((state) => state.tasks || {});
+    const tasks = useSelector((state) => {
+        if (state.tasks) {
+            return state.tasks.filter((task) => {
+                if (projectId) {
+                    return task.projectId == projectId;
+                } else {
+                    return task;
+                }
+            });
+        } else {
+            return {};
+        }
+    });
     const dispatch = useDispatch();
     const statusMap = { todo: 1, inprogress: 2, done: 3 };
 
@@ -54,9 +67,13 @@ export default function KanBanBoard() {
         <div className="board-overview">
             {error && <h2>Oops, something went wrong...</h2>}
             <DragDropContext onDragEnd={handleDragEnd}>
-                <BoardColumn key="todo" type="todo" />
-                <BoardColumn key="inprogress" type="inprogress" />
-                <BoardColumn key="done" type="done" />
+                <BoardColumn projectId={projectId} key="todo" type="todo" />
+                <BoardColumn
+                    projectId={projectId}
+                    key="inprogress"
+                    type="inprogress"
+                />
+                <BoardColumn projectId={projectId} key="done" type="done" />
             </DragDropContext>
         </div>
     );

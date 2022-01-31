@@ -27,27 +27,43 @@ function getUserByEmail(email) {
     return db.query(q, params);
 }
 
-function addNewTask(userId, title, description, dueDate) {
-    const q = `INSERT INTO tasks (owner_id, title, description, due_date)
-            VALUES ($1, $2, $3, $4)
+function addNewTask(userId, project_id, title, description, dueDate) {
+    const q = `INSERT INTO tasks (owner_id, project_id, title, description, due_date)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING id;`;
-    const params = [userId, title, description, dueDate];
+    const params = [userId, project_id, title, description, dueDate];
     return db.query(q, params);
 }
 
 function getTasksByOwnerId(userId) {
-    const q = `SELECT id, owner_id, title, description, due_date, status
+    const q = `SELECT id, owner_id, project_id, title, description, due_date, status
             FROM tasks
             WHERE owner_id = $1;`;
     const params = [userId];
     return db.query(q, params);
 }
 
-function updateTask(taskId, ownerId, title, description, dueDate, status) {
+function updateTask(
+    taskId,
+    ownerId,
+    projectId,
+    title,
+    description,
+    dueDate,
+    status
+) {
     const q = `UPDATE tasks
-            SET owner_id = $2, title = $3, description = $4, due_date = $5, status = $6
+            SET owner_id = $2, project_id = $3, title = $4, description = $5, due_date = $6, status = $7
             WHERE id = $1;`;
-    const params = [taskId, ownerId, title, description, dueDate, status];
+    const params = [
+        taskId,
+        ownerId,
+        projectId,
+        title,
+        description,
+        dueDate,
+        status,
+    ];
     return db.query(q, params);
 }
 
@@ -67,6 +83,14 @@ function addNewProject(userId, name, description, logo) {
     return db.query(q, params);
 }
 
+function getProjectsByUserId(userId) {
+    const q = `SELECT id, name, description, logo
+            FROM projects
+            WHERE owner_id = $1;`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -75,4 +99,5 @@ module.exports = {
     updateTask,
     deleteTask,
     addNewProject,
+    getProjectsByUserId,
 };

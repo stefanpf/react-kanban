@@ -7,7 +7,7 @@ export default function ProjectNavigation(props) {
         (state) =>
             (state.projects &&
                 state.projects.filter((project) =>
-                    project.members.contains(userId)
+                    project.members.includes(userId)
                 )) ||
             []
     );
@@ -17,13 +17,12 @@ export default function ProjectNavigation(props) {
             <Link to="/">
                 <button className="project-link-icon">Overview</button>
             </Link>
-            <Link to="/project/17">
-                <button className="project-link-icon">Test 17</button>
-            </Link>
             {projects &&
                 projects.map((project, index) => (
-                    <Link key={index} to={`/project/${project.id}`}>
-                        <div className="project-link-icon">{project.name}</div>
+                    <Link key={index} to={`/project/${project.projectId}`}>
+                        <button className="project-link-icon">
+                            {project.name}
+                        </button>
                     </Link>
                 ))}
             <Link to="/new-project">

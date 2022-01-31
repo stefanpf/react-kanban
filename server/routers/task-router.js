@@ -10,6 +10,7 @@ taskRouter.get("/api/tasks", (req, res) => {
                 return {
                     taskId: row.id,
                     taskOwnerId: row.owner_id,
+                    projectId: row.project_id,
                     dueDate: row.due_date,
                     title: row.title,
                     description: row.description,
@@ -26,14 +27,21 @@ taskRouter.get("/api/tasks", (req, res) => {
 
 taskRouter.post("/api/task/new", (req, res) => {
     const { userId } = req.session;
-    const { title, description, due_date: dueDate } = req.body;
+    const { title, description, projectId, due_date: dueDate } = req.body;
     if (title) {
-        db.addNewTask(userId, title, description || null, dueDate || null)
+        db.addNewTask(
+            userId,
+            projectId,
+            title,
+            description || null,
+            dueDate || null
+        )
             .then(({ rows }) => {
                 res.json({
                     task: {
                         taskId: rows[0].id,
                         taskOwnerId: userId,
+                        projectId,
                         title,
                         description: description || null,
                         dueDate: dueDate || null,
@@ -54,8 +62,17 @@ taskRouter
     .route("/api/task/:id")
     .post((req, res) => {
         const taskId = req.params.id;
-        const { taskOwnerId, title, description, status, dueDate } = req.body;
-        db.updateTask(taskId, taskOwnerId, title, description, dueDate, status)
+        const { taskOwnerId, projectId, title, description, status, dueDate } =
+            req.body;
+        db.updateTask(
+            taskId,
+            taskOwnerId,
+            projectId,
+            title,
+            description,
+            dueDate,
+            status
+        )
             .then(() => {
                 res.json({ success: true });
             })

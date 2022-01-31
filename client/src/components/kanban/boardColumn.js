@@ -12,7 +12,7 @@ const Column = styled.div`
 `;
 
 export default function BoardColumn(props) {
-    const { type } = props;
+    const { type, projectId } = props;
     const columnTypeMap = {
         todo: {
             style: "board-to-do",
@@ -31,7 +31,14 @@ export default function BoardColumn(props) {
     const tasks = useSelector((state) => {
         if (state.tasks) {
             return state.tasks.filter((task) => {
-                return task.status == columnTypeMap[type].status;
+                if (projectId) {
+                    return (
+                        task.status == columnTypeMap[type].status &&
+                        task.projectId == projectId
+                    );
+                } else {
+                    return task.status == columnTypeMap[type].status;
+                }
             });
         } else {
             return {};
@@ -59,7 +66,9 @@ export default function BoardColumn(props) {
                           })
                         : ""}
                     {provided.placeholder}
-                    {type === "todo" && <AddTaskButton />}
+                    {type === "todo" && projectId && (
+                        <AddTaskButton projectId={projectId} />
+                    )}
                 </Column>
             )}
         </Droppable>

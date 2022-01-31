@@ -20,7 +20,9 @@ export default function Modal() {
         <>
             <div className="overlay" onClick={handleClick}></div>
             <div className="modal">
-                {modalType.type === "newTaskForm" && <NewTaskForm />}
+                {modalType.type === "newTaskForm" && (
+                    <NewTaskForm projectId={modalType.projectId} />
+                )}
                 {modalType.type === "editTaskForm" && (
                     <EditTaskForm taskId={modalType.taskId} />
                 )}

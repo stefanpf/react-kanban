@@ -22,8 +22,8 @@ export default function NewProjectForm() {
             .then((data) => {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
-                    dispatch(addProject(data.id));
-                    location.replace(`/project/${data.id}`);
+                    dispatch(addProject(data.project));
+                    location.replace(`/project/${data.project.projectId}`);
                 } else {
                     setError(true);
                 }
