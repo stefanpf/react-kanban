@@ -23,7 +23,7 @@ export default function NewProjectForm() {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
                     dispatch(addProject(data.project));
-                    location.replace(`/project/${data.project.projectId}`);
+                    // location.replace(`/project/${data.project.projectId}`);
                 } else {
                     setError(true);
                 }

@@ -43,6 +43,7 @@ taskRouter.post("/api/task/new", (req, res) => {
                         taskOwnerId: userId,
                         projectId,
                         title,
+                        status: 1,
                         description: description || null,
                         dueDate: dueDate || null,
                     },

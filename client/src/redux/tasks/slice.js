@@ -1,19 +1,19 @@
 export function tasksReducer(tasks = null, action) {
     if (action.type === "tasks/received") {
-        tasks = action.payload.tasks;
+        tasks = action.payload;
     } else if (action.type === "tasks/updateTask") {
         const newTasks = tasks.map((task) => {
-            if (task.taskId === action.payload.task.taskId) {
+            if (task.taskId === action.payload.taskId) {
                 return {
                     ...task,
-                    ...action.payload.task,
+                    ...action.payload,
                 };
             }
             return task;
         });
         return newTasks;
     } else if (action.type === "tasks/addTask") {
-        return [...tasks, action.payload.task];
+        return [...tasks, action.payload];
     } else if (action.type === "tasks/deleteTask") {
         const newTasks = tasks.filter((task) => task.taskId !== action.payload);
         return newTasks;
@@ -24,27 +24,21 @@ export function tasksReducer(tasks = null, action) {
 export function receiveTasks(tasks) {
     return {
         type: "tasks/received",
-        payload: {
-            tasks,
-        },
+        payload: tasks,
     };
 }
 
 export function updateTask(task) {
     return {
         type: "tasks/updateTask",
-        payload: {
-            task,
-        },
+        payload: task,
     };
 }
 
 export function addTask(task) {
     return {
         type: "tasks/addTask",
-        payload: {
-            task,
-        },
+        payload: task,
     };
 }
 
