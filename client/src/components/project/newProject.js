@@ -11,7 +11,6 @@ export default function NewProject() {
 
     return (
         <div className="project-container">
-            <h1>This is the page for New Project</h1>
             <button className="new-project-button" onClick={handleClick}>
                 <div className="new-project-button-content">
                     <h1>Start New Project</h1>

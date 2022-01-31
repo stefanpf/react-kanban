@@ -9,6 +9,7 @@ projectRouter.get("/api/projects", (req, res) => {
             const projects = rows.map((row) => {
                 return {
                     projectId: row.id,
+                    ownerId: userId,
                     members: [userId],
                     name: row.name,
                     description: row.description,
@@ -31,6 +32,7 @@ projectRouter.post("/api/project/new", (req, res) => {
             .then(({ rows }) => {
                 const newProject = {
                     projectId: rows[0].id,
+                    ownerId: userId,
                     members: [userId],
                     name,
                     description,
@@ -45,4 +47,20 @@ projectRouter.post("/api/project/new", (req, res) => {
     }
 });
 
+projectRouter.delete("/api/project/:id", (req, res) => {
+    const { userId } = req.session;
+    const { ownerId } = req.body;
+    const projectId = req.params.id;
+    if (userId === ownerId) {
+        db.deleteTasksByProjectId(projectId)
+            .then(() => db.deleteProject(projectId))
+            .then(() => res.json({ success: true }))
+            .catch((err) => {
+                console.log("Err in deleteProject:", err);
+                res.json({ success: false });
+            });
+    } else {
+        res.json({ success: false });
+    }
+});
 module.exports = projectRouter;

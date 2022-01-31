@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import useForm from "../../hooks/useForm";
-import useModalFormSubmit from "../../hooks/useTaskFormSubmit";
+import useTaskFormSubmit from "../../hooks/useTaskFormSubmit";
 
 export default function EditTaskForm(props) {
     const { taskId } = props;
@@ -10,7 +10,7 @@ export default function EditTaskForm(props) {
                 state.tasks.filter((task) => task.taskId === taskId))[0] || {}
     );
     const [userInput, handleChange] = useForm();
-    const [submit, error] = useModalFormSubmit(userInput, taskId);
+    const [submit, error] = useTaskFormSubmit(userInput, taskId);
 
     return (
         <div>

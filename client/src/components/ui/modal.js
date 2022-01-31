@@ -4,6 +4,7 @@ import NewTaskForm from "../task/newTaskForm";
 import EditTaskForm from "../task/editTaskForm";
 import TaskViewBig from "../task/taskViewBig";
 import NewProjectForm from "../project/newProjectForm";
+import ProjectSettingsView from "../project/projectSettingsView";
 
 export default function Modal() {
     const dispatch = useDispatch();
@@ -30,6 +31,9 @@ export default function Modal() {
                     <TaskViewBig taskId={modalType.taskId} />
                 )}
                 {modalType.type === "newProjectForm" && <NewProjectForm />}
+                {modalType.type === "projectSettingsView" && (
+                    <ProjectSettingsView projectId={modalType.projectId} />
+                )}
                 <button onClick={handleClick} className="close-modal-button">
                     X
                 </button>

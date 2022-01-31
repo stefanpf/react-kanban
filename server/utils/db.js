@@ -91,6 +91,20 @@ function getProjectsByUserId(userId) {
     return db.query(q, params);
 }
 
+function deleteTasksByProjectId(id) {
+    const q = `DELETE FROM tasks
+            WHERE project_id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
+function deleteProject(id) {
+    const q = `DELETE FROM projects
+            WHERE id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
@@ -100,4 +114,6 @@ module.exports = {
     deleteTask,
     addNewProject,
     getProjectsByUserId,
+    deleteTasksByProjectId,
+    deleteProject,
 };
