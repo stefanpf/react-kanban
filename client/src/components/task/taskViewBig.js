@@ -5,14 +5,15 @@ import { deleteTask } from "../../redux/tasks/slice";
 
 export default function TaskViewBig(props) {
     const { taskId } = props;
+    const { userId } = useSelector((state) => state.userData || 0);
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
     const task = useSelector(
         (state) =>
             (state.tasks &&
-                state.tasks.filter((task) => task.taskId === taskId))[0] || {}
+                state.tasks.filter((task) => task.taskId === taskId))[0] || []
     );
-
+    const ownTask = userId === task.taskOwnerId;
     const statusMap = {
         1: "To Do",
         2: "In Progress",
@@ -65,8 +66,12 @@ export default function TaskViewBig(props) {
                         {statusMap[task.status]}
                     </div>
                     {error && <div>Oops, something went wrong...</div>}
-                    <button onClick={handleEdit}>Edit</button>
-                    <button onClick={handleDelete}>Delete</button>
+                    {ownTask && (
+                        <>
+                            <button onClick={handleEdit}>Edit</button>
+                            <button onClick={handleDelete}>Delete</button>
+                        </>
+                    )}
                 </div>
             )}
         </>

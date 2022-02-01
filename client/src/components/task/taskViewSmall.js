@@ -13,7 +13,7 @@ const OwnTask = styled.div`
 
 export default function TaskViewSmall(props) {
     const { taskId, index } = props;
-    const ownTask = props.ownTask === "true" ? true : false;
+    const ownTask = props.ownTask === "true";
     const dispatch = useDispatch();
     const task = useSelector(
         (state) =>
