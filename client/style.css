@@ -165,6 +165,10 @@ header {
     /* background-color: #fff; */
 }
 
+.task-view-small-foreign {
+    cursor: pointer;
+}
+
 .task-view-sm-title {
     border: 1px solid red;
 }

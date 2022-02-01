@@ -17,7 +17,7 @@ export default function KanBanBoard(props) {
                 }
             });
         } else {
-            return {};
+            return [];
         }
     });
     const dispatch = useDispatch();

@@ -13,6 +13,7 @@ const Column = styled.div`
 
 export default function BoardColumn(props) {
     const { type, projectId } = props;
+    const { userId } = useSelector((state) => state.userData || 0);
     const columnTypeMap = {
         todo: {
             style: "board-to-do",
@@ -27,7 +28,6 @@ export default function BoardColumn(props) {
             status: 3,
         },
     };
-
     const tasks = useSelector((state) => {
         if (state.tasks) {
             return state.tasks.filter((task) => {
@@ -41,9 +41,11 @@ export default function BoardColumn(props) {
                 }
             });
         } else {
-            return {};
+            return [];
         }
     });
+    const ownTasks = tasks.filter((task) => task.taskOwnerId === userId);
+    const foreignTasks = tasks.filter((task) => task.taskOwnerId !== userId);
 
     return (
         <Droppable droppableId={type}>
@@ -54,8 +56,21 @@ export default function BoardColumn(props) {
                     className={`kanban-board ${columnTypeMap[type].style}`}
                     isDraggingOver={snapshot.isDraggingOver}
                 >
-                    {tasks && tasks.length
-                        ? tasks.map((task, index) => {
+                    {ownTasks && ownTasks.length
+                        ? ownTasks.map((task, index) => {
+                              return (
+                                  <TaskViewSmall
+                                      key={index}
+                                      taskId={task.taskId}
+                                      index={index}
+                                      ownTask="true"
+                                  />
+                              );
+                          })
+                        : ""}
+                    {provided.placeholder}
+                    {foreignTasks && foreignTasks.length
+                        ? foreignTasks.map((task, index) => {
                               return (
                                   <TaskViewSmall
                                       key={index}
@@ -65,7 +80,6 @@ export default function BoardColumn(props) {
                               );
                           })
                         : ""}
-                    {provided.placeholder}
                     {type === "todo" && projectId && (
                         <AddTaskButton projectId={projectId} />
                     )}

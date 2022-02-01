@@ -3,12 +3,17 @@ import { Draggable } from "react-beautiful-dnd";
 import { setActiveModal, toggleModalVisibility } from "../../redux/modal/slice";
 import styled from "styled-components";
 
-const Task = styled.div`
+const OwnTask = styled.div`
     background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
+`;
+
+const ForeignTask = styled.div`
+    background-color: "lightgrey";
 `;
 
 export default function TaskViewSmall(props) {
     const { taskId, index } = props;
+    const ownTask = props.ownTask === "true" ? true : false;
     const dispatch = useDispatch();
     const task = useSelector(
         (state) =>
@@ -24,10 +29,10 @@ export default function TaskViewSmall(props) {
         dispatch(toggleModalVisibility());
     };
 
-    return (
+    return ownTask ? (
         <Draggable draggableId={taskId.toString()} index={index}>
             {(provided, snapshot) => (
-                <Task
+                <OwnTask
                     className="task-view-small"
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -37,8 +42,16 @@ export default function TaskViewSmall(props) {
                 >
                     <div className="task-view-sm-title">{task.title}</div>
                     <div>{task.dueDate}</div>
-                </Task>
+                </OwnTask>
             )}
         </Draggable>
+    ) : (
+        <ForeignTask
+            className="task-view-small task-view-small-foreign"
+            onClick={handleClick}
+        >
+            <div className="task-view-sm-title">{task.title}</div>
+            <div>{task.dueDate}</div>
+        </ForeignTask>
     );
 }
