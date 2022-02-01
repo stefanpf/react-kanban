@@ -1,5 +1,6 @@
 import useForm from "../../hooks/useForm";
 import { useState } from "react";
+import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { toggleModalVisibility } from "../../redux/modal/slice";
 import { addProject } from "../../redux/projects/slice";
@@ -8,6 +9,7 @@ export default function NewProjectForm() {
     const [userInput, handleChange] = useForm();
     const [error, setError] = useState(false);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const submit = function (e) {
         e.preventDefault();
@@ -23,7 +25,7 @@ export default function NewProjectForm() {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
                     dispatch(addProject(data.project));
-                    // location.replace(`/project/${data.project.projectId}`);
+                    history.replace(`/project/${data.project.projectId}`);
                 } else {
                     setError(true);
                 }

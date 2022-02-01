@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { useHistory } from "react-router";
 import { toggleModalVisibility } from "../../redux/modal/slice";
 
 export default function ProjectSettingsView(props) {
@@ -8,6 +9,7 @@ export default function ProjectSettingsView(props) {
         (state) => (state.userData && state.userData.userId) || {}
     );
     const dispatch = useDispatch();
+    const history = useHistory();
     const [error, setError] = useState(false);
     const project = useSelector(
         (state) =>
@@ -33,6 +35,7 @@ export default function ProjectSettingsView(props) {
             .then((data) => {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
+                    history.replace("/");
                 }
             })
             .catch(() => setError(true));
