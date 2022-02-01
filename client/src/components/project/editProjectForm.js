@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalVisibility } from "../../redux/modal/slice";
-import { updateProject } from "../../redux/projects/slice";
 
 export default function EditProjectForm(props) {
     const { projectId } = props;
@@ -44,7 +43,6 @@ export default function EditProjectForm(props) {
             .then((data) => {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
-                    dispatch(updateProject(projectId, editedProject));
                     history.replace(`/project/${projectId}`);
                 } else {
                     setError(true);

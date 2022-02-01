@@ -2,7 +2,7 @@ const express = require("express");
 const cryptoRandomString = require("crypto-random-string");
 const projectRouter = express.Router();
 const db = require("../utils/db");
-// const io = require("../server");
+const { io } = require("../server");
 
 projectRouter.get("/api/projects", (req, res) => {
     const { userId } = req.session;
@@ -130,10 +130,18 @@ projectRouter
 projectRouter
     .route("/api/project/:id")
     .post((req, res) => {
-        const projectId = req.params.id;
+        const projectId = parseInt(req.params.id);
         const { ownerId, name, description, logo } = req.body;
         db.updateProject(projectId, ownerId, name, description, logo)
             .then(() => {
+                const updatedProject = {
+                    id: projectId,
+                    project: { ownerId, name, description, logo },
+                };
+                io.to(`project:${projectId}`).emit(
+                    "updateProject",
+                    updatedProject
+                );
                 res.json({ success: true });
             })
             .catch((err) => {

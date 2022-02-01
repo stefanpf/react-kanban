@@ -1,5 +1,7 @@
 import { io } from "socket.io-client";
 import { addTask, updateTask } from "./redux/tasks/slice";
+import { updateProject } from "./redux/projects/slice";
+
 export let socket;
 
 export const init = (store) => {
@@ -10,6 +12,12 @@ export const init = (store) => {
 
         socket.on("updateTask", (updatedTask) =>
             store.dispatch(updateTask(updatedTask))
+        );
+
+        socket.on("updateProject", (updatedProject) =>
+            store.dispatch(
+                updateProject(updatedProject.id, updatedProject.project)
+            )
         );
     }
 };

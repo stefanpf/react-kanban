@@ -9,11 +9,12 @@ const cookieSessionMiddleware = cookieSession({
     sameSite: true,
 });
 const path = require("path");
-const authRouter = require("./routers/auth-router");
-const projectRouter = require("./routers/project-router");
 const db = require("./utils/db");
 const app = express();
 const server = require("http").Server(app);
+
+// create and export IO before Routers are imported
+// to prevent circular import problems as they require IO
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) => {
         callback(
@@ -28,6 +29,8 @@ const io = require("socket.io")(server, {
 });
 module.exports = { io };
 
+const authRouter = require("./routers/auth-router");
+const projectRouter = require("./routers/project-router");
 const taskRouter = require("./routers/task-router");
 const PORT = 3001;
 
