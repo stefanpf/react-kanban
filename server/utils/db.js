@@ -32,7 +32,10 @@ function getUserNamesByProjectId(id) {
             FROM users
             WHERE id IN (SELECT member_id
                             FROM project_members
-                            WHERE project_id = $1);`;
+                            WHERE project_id = $1)
+                OR id = (SELECT owner_id
+                            FROM projects
+                            WHERE id = $1);`;
     const params = [id];
     return db.query(q, params);
 }
@@ -94,9 +97,12 @@ function addNewProject(userId, name, description, logo) {
 }
 
 function getProjectsByUserId(userId) {
-    const q = `SELECT id, name, description, logo
+    const q = `SELECT id, name, description, logo, owner_id
             FROM projects
-            WHERE owner_id = $1;`;
+            WHERE owner_id = $1
+            OR id IN (SELECT project_id
+                    FROM project_members
+                    WHERE member_id = $1);`;
     const params = [userId];
     return db.query(q, params);
 }

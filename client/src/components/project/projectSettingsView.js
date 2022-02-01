@@ -21,8 +21,8 @@ export default function ProjectSettingsView(props) {
     const handleEdit = () => {
         console.log("user wants to edit project");
     };
+
     const handleDelete = () => {
-        console.log("user wants to delete project");
         fetch(`/api/project/${projectId}`, {
             method: "DELETE",
             headers: {
@@ -55,7 +55,7 @@ export default function ProjectSettingsView(props) {
                     </div>
                     {error && <div>Oops, something went wrong...</div>}
                     <button onClick={handleEdit}>Edit</button>
-                    {project.ownerId === userId && (
+                    {project.ownerId == userId && (
                         <button onClick={handleDelete}>Delete</button>
                     )}
                 </div>

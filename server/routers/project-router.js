@@ -10,8 +10,8 @@ projectRouter.get("/api/projects", (req, res) => {
             const projects = rows.map((row) => {
                 return {
                     projectId: row.id,
-                    ownerId: userId,
-                    members: [userId],
+                    ownerId: row.owner_id,
+                    members: [row.owner_id],
                     name: row.name,
                     description: row.description,
                     logo: row.logo,
