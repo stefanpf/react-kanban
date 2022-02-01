@@ -4,9 +4,10 @@ const db = require("../utils/db");
 
 taskRouter.get("/api/tasks", (req, res) => {
     const { userId } = req.session;
+    let tasks;
     db.getTasksByOwnerId(userId)
         .then(({ rows }) => {
-            const tasks = rows.map((row) => {
+            tasks = rows.map((row) => {
                 return {
                     taskId: row.id,
                     taskOwnerId: row.owner_id,
@@ -17,6 +18,26 @@ taskRouter.get("/api/tasks", (req, res) => {
                     status: row.status,
                 };
             });
+            return db.getProjectIdsByUserId(userId);
+        })
+        .then(({ rows }) => {
+            return rows.map((row) => row.id);
+        })
+        .then((projectIds) => {
+            return db.getNonOwnedTasksByProjectId(userId, projectIds);
+        })
+        .then(({ rows }) => {
+            rows.forEach((row) =>
+                tasks.push({
+                    taskId: row.id,
+                    taskOwnerId: row.owner_id,
+                    projectId: row.project_id,
+                    dueDate: row.due_date,
+                    title: row.title,
+                    description: row.description,
+                    status: row.status,
+                })
+            );
             res.json({ tasks, success: true });
         })
         .catch((err) => {

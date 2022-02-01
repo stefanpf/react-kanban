@@ -56,6 +56,15 @@ function getTasksByOwnerId(userId) {
     return db.query(q, params);
 }
 
+function getNonOwnedTasksByProjectId(userId, arrOfProjectIds) {
+    const q = `SELECT id, owner_id, project_id, title, description, due_date, status
+            FROM tasks
+            WHERE owner_id != $1
+            AND project_id = ANY($2);`;
+    const params = [userId, arrOfProjectIds];
+    return db.query(q, params);
+}
+
 function updateTask(
     taskId,
     ownerId,
@@ -93,6 +102,17 @@ function addNewProject(userId, name, description, logo) {
             VALUES ($1, $2, $3, $4)
             RETURNING id;`;
     const params = [userId, name, description || null, logo || null];
+    return db.query(q, params);
+}
+
+function getProjectIdsByUserId(userId) {
+    const q = `SELECT id
+            FROM projects
+            WHERE owner_id = $1
+            OR id IN (SELECT project_id
+                        FROM project_members
+                        WHERE member_id = $1);`;
+    const params = [userId];
     return db.query(q, params);
 }
 
@@ -178,10 +198,12 @@ module.exports = {
     getUserNamesByProjectId,
     addNewTask,
     getTasksByOwnerId,
+    getNonOwnedTasksByProjectId,
     updateTask,
     deleteTask,
     addNewProject,
     getProjectFromActiveCode,
+    getProjectIdsByUserId,
     getProjectsByUserId,
     getProjectMembersByProjectIds,
     addInviteCode,
