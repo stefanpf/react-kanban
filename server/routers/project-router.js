@@ -125,23 +125,37 @@ projectRouter
             });
     });
 
-projectRouter.delete("/api/project/:id", (req, res) => {
-    const { userId } = req.session;
-    const { ownerId } = req.body;
-    const projectId = req.params.id;
-    if (userId === ownerId) {
-        db.deleteTasksByProjectId(projectId)
-            .then(() => db.deleteInviteCodeByProjectId(projectId))
-            .then(() => db.deleteAllMembersFromProject(projectId))
-            .then(() => db.deleteProject(projectId))
-            .then(() => res.json({ success: true }))
+projectRouter
+    .route("/api/project/:id")
+    .post((req, res) => {
+        const projectId = req.params.id;
+        const { ownerId, name, description, logo } = req.body;
+        db.updateProject(projectId, ownerId, name, description, logo)
+            .then(() => {
+                res.json({ success: true });
+            })
             .catch((err) => {
-                console.log("Err in deleteProject:", err);
+                console.log("Err in updateProject:", err);
                 res.json({ success: false });
             });
-    } else {
-        res.json({ success: false });
-    }
-});
+    })
+    .delete((req, res) => {
+        const { userId } = req.session;
+        const { ownerId } = req.body;
+        const projectId = req.params.id;
+        if (userId === ownerId) {
+            db.deleteTasksByProjectId(projectId)
+                .then(() => db.deleteInviteCodeByProjectId(projectId))
+                .then(() => db.deleteAllMembersFromProject(projectId))
+                .then(() => db.deleteProject(projectId))
+                .then(() => res.json({ success: true }))
+                .catch((err) => {
+                    console.log("Err in deleteProject:", err);
+                    res.json({ success: false });
+                });
+        } else {
+            res.json({ success: false });
+        }
+    });
 
 module.exports = projectRouter;

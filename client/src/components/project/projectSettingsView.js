@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { toggleModalVisibility } from "../../redux/modal/slice";
+import { toggleModalVisibility, setActiveModal } from "../../redux/modal/slice";
 
 export default function ProjectSettingsView(props) {
     const { projectId } = props;
@@ -20,7 +20,11 @@ export default function ProjectSettingsView(props) {
             {}
     );
     const handleEdit = () => {
-        console.log("user wants to edit project");
+        dispatch(
+            setActiveModal({
+                modalType: { type: "editProjectForm", projectId },
+            })
+        );
     };
 
     const handleDelete = () => {

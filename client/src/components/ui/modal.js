@@ -4,6 +4,7 @@ import NewTaskForm from "../task/newTaskForm";
 import EditTaskForm from "../task/editTaskForm";
 import TaskViewBig from "../task/taskViewBig";
 import NewProjectForm from "../project/newProjectForm";
+import EditProjectForm from "../project/editProjectForm";
 import JoinProjectForm from "../project/joinProjectForm";
 import ProjectSettingsView from "../project/projectSettingsView";
 import ProjectMembersView from "../project/projectMembersView";
@@ -39,6 +40,9 @@ export default function Modal() {
                 )}
                 {modalType.type === "projectMembersView" && (
                     <ProjectMembersView projectId={modalType.projectId} />
+                )}
+                {modalType.type === "editProjectForm" && (
+                    <EditProjectForm projectId={modalType.projectId} />
                 )}
                 <button onClick={handleClick} className="close-modal-button">
                     X
