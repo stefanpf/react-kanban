@@ -7,10 +7,6 @@ const OwnTask = styled.div`
     background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
 `;
 
-// const ForeignTask = styled.div`
-//     background-color: "lightgrey";
-// `;
-
 export default function TaskViewSmall(props) {
     const { taskId, index } = props;
     const ownTask = props.ownTask === "true";

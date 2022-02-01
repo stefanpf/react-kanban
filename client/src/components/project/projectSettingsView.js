@@ -17,7 +17,6 @@ export default function ProjectSettingsView(props) {
                 )[0]) ||
             {}
     );
-    console.log(project);
     const handleEdit = () => {
         console.log("user wants to edit project");
     };
