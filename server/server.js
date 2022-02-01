@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const cookieSessionMiddleware = cookieSession({
@@ -12,6 +11,23 @@ const cookieSessionMiddleware = cookieSession({
 const path = require("path");
 const authRouter = require("./routers/auth-router");
 const projectRouter = require("./routers/project-router");
+const db = require("./utils/db");
+const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) => {
+        callback(
+            null,
+            req.headers.referer.startsWith("https://sp-kanban.herokuapp.com") ||
+                req.headers.referer.startsWith(
+                    "http://sp-kanban.herokuapp.com"
+                ) ||
+                req.headers.referer.startsWith("http://localhost:3000")
+        );
+    },
+});
+module.exports = { io };
+
 const taskRouter = require("./routers/task-router");
 const PORT = 3001;
 
@@ -25,6 +41,9 @@ if (process.env.NODE_ENV == "production") {
     });
 }
 app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(express.json());
@@ -37,6 +56,28 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || PORT, function () {
+// START SERVER
+server.listen(process.env.PORT || PORT, function () {
     console.log("I'm listening.");
+});
+
+// WEBSOCKET SETUP
+const onlineUsers = {};
+
+io.on("connection", (socket) => {
+    const userId = socket.request.session.userId;
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+    onlineUsers[socket.id] = userId;
+
+    db.getProjectIdsByUserId(userId).then(({ rows }) => {
+        rows.forEach((row) => {
+            socket.join(`project:${row.id}`);
+        });
+    });
+
+    socket.on("disconnect", () => {
+        delete onlineUsers[socket.id];
+    });
 });

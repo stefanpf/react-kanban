@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useForm from "../../hooks/useForm";
 import { toggleModalVisibility } from "../../redux/modal/slice";
-import { addTask } from "../../redux/tasks/slice";
 import { useDispatch } from "react-redux";
 
 export default function NewTaskForm(props) {
@@ -24,7 +23,6 @@ export default function NewTaskForm(props) {
             .then((data) => {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
-                    dispatch(addTask(data.task));
                 } else {
                     setError(true);
                 }

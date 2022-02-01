@@ -1,6 +1,7 @@
 const express = require("express");
 const taskRouter = express.Router();
 const db = require("../utils/db");
+const { io } = require("../server");
 
 taskRouter.get("/api/tasks", (req, res) => {
     const { userId } = req.session;
@@ -58,16 +59,19 @@ taskRouter.post("/api/task/new", (req, res) => {
             dueDate || null
         )
             .then(({ rows }) => {
+                const newTask = {
+                    taskId: rows[0].id,
+                    taskOwnerId: userId,
+                    projectId,
+                    title,
+                    status: 1,
+                    description: description || null,
+                    dueDate: dueDate || null,
+                };
+
+                io.to(`project:${projectId}`).emit("newTask", newTask);
+
                 res.json({
-                    task: {
-                        taskId: rows[0].id,
-                        taskOwnerId: userId,
-                        projectId,
-                        title,
-                        status: 1,
-                        description: description || null,
-                        dueDate: dueDate || null,
-                    },
                     success: true,
                 });
             })
@@ -83,7 +87,7 @@ taskRouter.post("/api/task/new", (req, res) => {
 taskRouter
     .route("/api/task/:id")
     .post((req, res) => {
-        const taskId = req.params.id;
+        const taskId = parseInt(req.params.id);
         const { taskOwnerId, projectId, title, description, status, dueDate } =
             req.body;
         db.updateTask(
@@ -96,6 +100,16 @@ taskRouter
             status
         )
             .then(() => {
+                const updatedTask = {
+                    taskId,
+                    taskOwnerId,
+                    projectId,
+                    title,
+                    description,
+                    status,
+                    dueDate,
+                };
+                io.to(`project:${projectId}`).emit("updateTask", updatedTask);
                 res.json({ success: true });
             })
             .catch((err) => {

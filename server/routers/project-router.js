@@ -2,6 +2,7 @@ const express = require("express");
 const cryptoRandomString = require("crypto-random-string");
 const projectRouter = express.Router();
 const db = require("../utils/db");
+// const io = require("../server");
 
 projectRouter.get("/api/projects", (req, res) => {
     const { userId } = req.session;
@@ -30,6 +31,7 @@ projectRouter.get("/api/projects", (req, res) => {
                 )[0];
                 project.members.push(row.member_id);
             });
+
             res.json({ projects, success: true });
         })
         .catch((err) => {
