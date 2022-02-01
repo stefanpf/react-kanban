@@ -178,10 +178,32 @@ function expireInviteCode(code) {
     return db.query(q, params);
 }
 
+function deleteInviteCodeByProjectId(id) {
+    const q = `DELETE FROM project_invites
+            WHERE project_id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function addMemberToProject(userId, projectId) {
     const q = `INSERT INTO project_members (member_id, project_id)
             VALUES ($1, $2);`;
     const params = [userId, projectId];
+    return db.query(q, params);
+}
+
+function removeMemberFromProject(userId, projectId) {
+    const q = `DELETE FROM project_members
+            WHERE member_id = $1
+            AND project_id = $2;`;
+    const params = [userId, projectId];
+    return db.query(q, params);
+}
+
+function deleteAllMembersFromProject(projectId) {
+    const q = `DELETE FROM project_members
+            WHERE project_id = $1;`;
+    const params = [projectId];
     return db.query(q, params);
 }
 
@@ -209,7 +231,10 @@ module.exports = {
     addInviteCode,
     getActiveProjectInviteCodes,
     expireInviteCode,
+    deleteInviteCodeByProjectId,
     addMemberToProject,
+    removeMemberFromProject,
+    deleteAllMembersFromProject,
     deleteTasksByProjectId,
     deleteProject,
 };

@@ -139,6 +139,8 @@ projectRouter.delete("/api/project/:id", (req, res) => {
     const projectId = req.params.id;
     if (userId === ownerId) {
         db.deleteTasksByProjectId(projectId)
+            .then(() => db.deleteInviteCodeByProjectId(projectId))
+            .then(() => db.deleteAllMembersFromProject(projectId))
             .then(() => db.deleteProject(projectId))
             .then(() => res.json({ success: true }))
             .catch((err) => {
