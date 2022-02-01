@@ -107,6 +107,14 @@ function getProjectsByUserId(userId) {
     return db.query(q, params);
 }
 
+function getProjectMembersByProjectIds(arrOfIds) {
+    const q = `SELECT project_id, member_id
+            FROM project_members
+            WHERE project_id = ANY ($1);`;
+    const params = [arrOfIds];
+    return db.query(q, params);
+}
+
 function addInviteCode(projectId, userId, inviteCode) {
     const q = `INSERT INTO project_invites (project_id, sender_id, invite_code)
             VALUES ($1, $2, $3)
@@ -175,6 +183,7 @@ module.exports = {
     addNewProject,
     getProjectFromActiveCode,
     getProjectsByUserId,
+    getProjectMembersByProjectIds,
     addInviteCode,
     getActiveProjectInviteCodes,
     expireInviteCode,

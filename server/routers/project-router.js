@@ -5,9 +5,10 @@ const db = require("../utils/db");
 
 projectRouter.get("/api/projects", (req, res) => {
     const { userId } = req.session;
+    let projects;
     db.getProjectsByUserId(userId)
         .then(({ rows }) => {
-            const projects = rows.map((row) => {
+            projects = rows.map((row) => {
                 return {
                     projectId: row.id,
                     ownerId: row.owner_id,
@@ -16,6 +17,18 @@ projectRouter.get("/api/projects", (req, res) => {
                     description: row.description,
                     logo: row.logo,
                 };
+            });
+            return projects.map((project) => project.projectId);
+        })
+        .then((projectIds) => {
+            return db.getProjectMembersByProjectIds(projectIds);
+        })
+        .then(({ rows }) => {
+            rows.forEach((row) => {
+                const project = projects.filter(
+                    (project) => project.projectId === row.project_id
+                )[0];
+                project.members.push(row.member_id);
             });
             res.json({ projects, success: true });
         })
