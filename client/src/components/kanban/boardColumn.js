@@ -37,7 +37,10 @@ export default function BoardColumn(props) {
                         task.projectId == projectId
                     );
                 } else {
-                    return task.status == columnTypeMap[type].status;
+                    return (
+                        task.status == columnTypeMap[type].status &&
+                        task.taskOwnerId === userId
+                    );
                 }
             });
         } else {
