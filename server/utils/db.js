@@ -148,7 +148,7 @@ function getProjectFromActiveCode(inviteCode) {
             FROM project_invites
             WHERE invite_code = $1
             AND used = false
-            AND CURRENT_DATE > expires_on;`;
+            AND CURRENT_DATE < expires_on;`;
     const params = [inviteCode];
     return db.query(q, params);
 }
