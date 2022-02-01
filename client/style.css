@@ -167,6 +167,7 @@ header {
 
 .task-view-small-foreign {
     cursor: pointer;
+    background-color: lightgrey;
 }
 
 .task-view-sm-title {

@@ -7,9 +7,9 @@ const OwnTask = styled.div`
     background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
 `;
 
-const ForeignTask = styled.div`
-    background-color: "lightgrey";
-`;
+// const ForeignTask = styled.div`
+//     background-color: "lightgrey";
+// `;
 
 export default function TaskViewSmall(props) {
     const { taskId, index } = props;
@@ -46,12 +46,12 @@ export default function TaskViewSmall(props) {
             )}
         </Draggable>
     ) : (
-        <ForeignTask
+        <div
             className="task-view-small task-view-small-foreign"
             onClick={handleClick}
         >
             <div className="task-view-sm-title">{task.title}</div>
             <div>{task.dueDate}</div>
-        </ForeignTask>
+        </div>
     );
 }
