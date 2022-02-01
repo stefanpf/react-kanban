@@ -31,7 +31,7 @@ export default function EditTaskForm(props) {
                 />
                 <input
                     type="date"
-                    name="due_date"
+                    name="dueDate"
                     defaultValue={task.dueDate}
                     onChange={handleChange}
                 ></input>

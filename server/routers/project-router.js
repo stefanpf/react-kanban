@@ -100,11 +100,7 @@ projectRouter
         const projectId = req.params.id;
         db.getActiveProjectInviteCodes(projectId).then(({ rows }) => {
             const codes = rows.map((row) => {
-                const createdAt = new Date(row.created_at);
-                const expiresOn = new Date(
-                    createdAt.setDate(createdAt.getDate() + 7)
-                );
-                return { code: row.invite_code, expiresOn };
+                return { code: row.invite_code, expiresOn: row.expires_on };
             });
             res.json({ codes, success: true });
         });
@@ -118,12 +114,8 @@ projectRouter
         });
         db.addInviteCode(projectId, userId, inviteCode)
             .then(({ rows }) => {
-                const createdAt = new Date(rows[0].created_at);
-                const expiresOn = new Date(
-                    createdAt.setDate(createdAt.getDate() + 7)
-                );
                 res.json({
-                    code: { code: inviteCode, expiresOn },
+                    code: { code: inviteCode, expiresOn: rows[0].expires_on },
                     success: true,
                 });
             })

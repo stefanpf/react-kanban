@@ -138,7 +138,7 @@ function getProjectMembersByProjectIds(arrOfIds) {
 function addInviteCode(projectId, userId, inviteCode) {
     const q = `INSERT INTO project_invites (project_id, sender_id, invite_code)
             VALUES ($1, $2, $3)
-            RETURNING created_at;`;
+            RETURNING expires_on;`;
     const params = [projectId, userId, inviteCode];
     return db.query(q, params);
 }
@@ -148,17 +148,16 @@ function getProjectFromActiveCode(inviteCode) {
             FROM project_invites
             WHERE invite_code = $1
             AND used = false
-            AND CURRENT_TIMESTAMP - created_at < INTERVAL '7 days';`;
+            AND CURRENT_DATE > expires_on;`;
     const params = [inviteCode];
     return db.query(q, params);
 }
 
 function getActiveProjectInviteCodes(projectId) {
-    const q = `SELECT invite_code, created_at
+    const q = `SELECT invite_code, expires_on
             FROM project_invites
             WHERE project_id = $1
-            AND used = false
-            AND CURRENT_TIMESTAMP - created_at < INTERVAL '7 days';`;
+            AND used = false;`;
     const params = [projectId];
     return db.query(q, params);
 }

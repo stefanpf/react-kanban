@@ -102,9 +102,22 @@ button:hover {
 header {
     height: 90px;
     background-color: orange;
-    border-bottom: 1px solid blue;
+    display: flex;
+    justify-content: flex-end;
 }
 
+.header-notifications {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-weight: 400;
+    font-size: 36px;
+}
 /* PROJECT NAVIGATION */
 .project-navigation-col {
     padding-top: 12px;

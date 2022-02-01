@@ -27,7 +27,7 @@ CREATE TABLE tasks (
     description TEXT,
     owner_id INT REFERENCES users(id) NOT NULL,
     project_id INT REFERENCES projects(id) NOT NULL,
-    due_date TIMESTAMP,
+    due_date DATE,
     status INT DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -44,5 +44,5 @@ CREATE TABLE project_invites (
     sender_id INT REFERENCES users(id) NOT NULL,
     invite_code VARCHAR,
     used BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    expires_on DATE DEFAULT CURRENT_DATE + INTERVAL '7 days'
 );
