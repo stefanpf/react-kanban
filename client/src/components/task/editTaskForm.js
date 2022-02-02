@@ -32,7 +32,9 @@ export default function EditTaskForm(props) {
                 <input
                     type="date"
                     name="dueDate"
-                    defaultValue={task.dueDate}
+                    defaultValue={new Date(task.dueDate)
+                        .toISOString()
+                        .substr(0, 10)}
                     onChange={handleChange}
                 ></input>
                 <button type="submit" onClick={submit} className="button-cta">
