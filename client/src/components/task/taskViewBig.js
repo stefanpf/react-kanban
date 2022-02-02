@@ -30,6 +30,13 @@ export default function TaskViewBig(props) {
     const handleDelete = () => {
         fetch(`/api/task/${taskId}`, {
             method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                projectId: task.projectId,
+                ownerId: task.taskOwnerId,
+            }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -53,7 +60,7 @@ export default function TaskViewBig(props) {
                         Responsible:
                     </div>
                     <div className="task-view-big-sub-content">
-                        {task.taskOwnerId}
+                        {task.ownerName}
                     </div>
                     <div className="task-view-big-sub-heading">Due On:</div>
                     <div className="task-view-big-sub-content">

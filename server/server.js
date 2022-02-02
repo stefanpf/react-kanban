@@ -84,3 +84,13 @@ io.on("connection", (socket) => {
         delete onlineUsers[socket.id];
     });
 });
+
+// io.on("joinProject", (socket) => {
+//     const userId = socket.request.session.userId;
+//     db.getProjectIdsByUserId(userId).then(({ rows }) => {
+//         rows.forEach((row) => {
+//             socket.join(`project:${row.id}`);
+//         });
+//         console.log(socket.rooms);
+//     });
+// });

@@ -2,13 +2,13 @@ import KanBanBoard from "../kanban/kanBanBoard";
 
 export default function Overview() {
     return (
-        <>
-            <div>Overview component</div>
-            <div>
-                this should render a kanban board with all tasks that are owned
-                by the logged in user
+        <div className="project-container">
+            <div className="project-view-header">
+                <div className="project-view-header-info">
+                    <div className="project-view-header-title">My Tasks:</div>
+                </div>
             </div>
             <KanBanBoard />
-        </>
+        </div>
     );
 }

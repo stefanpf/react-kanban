@@ -15,7 +15,7 @@ export default function ProjectNavigation(props) {
     return (
         <div className="project-navigation-col">
             <Link to="/">
-                <button className="project-link-icon">Overview</button>
+                <button className="project-link-icon">My Tasks</button>
             </Link>
             {projects &&
                 projects.map((project, index) => (

@@ -11,6 +11,7 @@ taskRouter.get("/api/tasks", (req, res) => {
             tasks = rows.map((row) => {
                 return {
                     taskId: row.id,
+                    ownerName: row.name,
                     taskOwnerId: row.owner_id,
                     projectId: row.project_id,
                     dueDate: row.due_date,
@@ -31,6 +32,7 @@ taskRouter.get("/api/tasks", (req, res) => {
             rows.forEach((row) =>
                 tasks.push({
                     taskId: row.id,
+                    ownerName: row.name,
                     taskOwnerId: row.owner_id,
                     projectId: row.project_id,
                     dueDate: row.due_date,
@@ -118,16 +120,22 @@ taskRouter
             });
     })
     .delete((req, res) => {
-        const taskId = req.params.id;
+        const taskId = parseInt(req.params.id);
         const { userId } = req.session;
-        db.deleteTask(taskId, userId)
-            .then(() => {
-                res.json({ success: true });
-            })
-            .catch((err) => {
-                console.log("Err in deleteTask:", err);
-                res.json({ success: false });
-            });
+        const { projectId, ownerId } = req.body;
+        if (userId === ownerId) {
+            db.deleteTask(taskId, userId)
+                .then(() => {
+                    io.to(`project:${projectId}`).emit("deleteTask", taskId);
+                    res.json({ success: true });
+                })
+                .catch((err) => {
+                    console.log("Err in deleteTask:", err);
+                    res.json({ success: false });
+                });
+        } else {
+            res.json({ success: false });
+        }
     });
 
 module.exports = taskRouter;

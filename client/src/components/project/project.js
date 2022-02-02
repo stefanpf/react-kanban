@@ -26,17 +26,28 @@ export default function Project() {
         );
         dispatch(toggleModalVisibility());
     };
-
+    console.log(project);
     return (
         <div className="project-container">
             {project && (
                 <div className="project-view-header">
-                    <h1>Project Title: {project.name}</h1>
-                    <div className="project-view-header-button">
-                        <button onClick={handleClick}>Settings</button>
+                    <div className="project-view-header-info">
+                        <div className="project-view-header-title">
+                            {project.name}
+                        </div>
+                        {project.description && (
+                            <div className="project-view-header-description">
+                                {project.description}
+                            </div>
+                        )}
                     </div>
-                    <div className="project-view-header-button">
-                        <button onClick={handleClick}>Members</button>
+                    <div className="project-view-header-nav">
+                        <div className="project-view-header-button">
+                            <button onClick={handleClick}>Settings</button>
+                        </div>
+                        <div className="project-view-header-button">
+                            <button onClick={handleClick}>Members</button>
+                        </div>
                     </div>
                 </div>
             )}

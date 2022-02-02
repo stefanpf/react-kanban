@@ -76,7 +76,11 @@ projectRouter.post("/api/project/join", (req, res) => {
             return db.expireInviteCode(code);
         })
         .then(() => {
-            res.json({ projectId, success: true });
+            // io.to(`project:${projectId}`).emit("addMemberToProject", {
+            //     projectId,
+            //     userId,
+            // });
+            res.json({ userId, projectId, success: true });
         })
         .catch((err) => {
             console.log("Err in joinProject:", err);
@@ -152,13 +156,19 @@ projectRouter
     .delete((req, res) => {
         const { userId } = req.session;
         const { ownerId } = req.body;
-        const projectId = req.params.id;
+        const projectId = parseInt(req.params.id);
         if (userId === ownerId) {
             db.deleteTasksByProjectId(projectId)
                 .then(() => db.deleteInviteCodeByProjectId(projectId))
                 .then(() => db.deleteAllMembersFromProject(projectId))
                 .then(() => db.deleteProject(projectId))
-                .then(() => res.json({ success: true }))
+                .then(() => {
+                    io.to(`project:${projectId}`).emit(
+                        "deleteProject",
+                        projectId
+                    );
+                    res.json({ success: true });
+                })
                 .catch((err) => {
                     console.log("Err in deleteProject:", err);
                     res.json({ success: false });

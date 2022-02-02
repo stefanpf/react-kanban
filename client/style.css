@@ -39,8 +39,6 @@ button:hover {
 
 .main-container-left-col {
     height: 100%;
-    border: 1px solid red;
-    background-color: hotpink;
 }
 
 .add-button-big {
@@ -100,10 +98,10 @@ button:hover {
 /* HEADER */
 /* ------ */
 header {
-    height: 90px;
-    background-color: orange;
+    height: 70px;
+    background-color: rgb(247, 234, 234);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .header-notifications {
@@ -117,6 +115,29 @@ header {
     color: white;
     font-weight: 400;
     font-size: 36px;
+}
+
+.header-welcome {
+    padding: 12px 0px 12px 24px;
+    display: flex;
+    align-items: center;
+}
+.header-nav {
+    padding: 12px 24px 12px 0px;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+}
+
+.header-button {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0px 10px 0px 10px;
+}
+
+.header-button button {
+    padding: 6px;
+    border-radius: 7px;
 }
 /* PROJECT NAVIGATION */
 .project-navigation-col {
@@ -134,17 +155,64 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
-    color: black;
+    background-color: rgb(98, 123, 129);
+    color: white;
+    font-weight: 800;
     margin-bottom: 12px;
+    text-align: center;
 }
 
+/* PROJECT VIEW */
+/*--------------*/
+.project-container {
+    margin: 20px 10px 20px 10px;
+    padding: 12px;
+    background-color: rgb(237, 243, 243);
+    border-radius: 8px;
+}
+
+.project-view-header {
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-view-header-info {
+}
+
+.project-view-header-title {
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: underline;
+}
+
+.project-view-header-description {
+    padding: 8px 0px 0px 12px;
+    font-size: 1.3rem;
+}
+
+.project-view-header-nav {
+    display: flex;
+}
+
+.project-view-header-button {
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 0px 10px 0px 10px;
+}
+
+.project-view-header-button button {
+    padding: 6px;
+    border-radius: 7px;
+}
 /* KANBAN BOARD */
 /* --------------------*/
 
 .board-overview {
     display: flex;
     justify-content: space-between;
+    margin-top: 24px;
+    /* border: 1px solid red; */
 }
 
 .kanban-board {
@@ -174,8 +242,6 @@ header {
     border-radius: 3px;
     padding: 8px;
     margin-bottom: 8px;
-    /* opacity: 1; */
-    /* background-color: #fff; */
 }
 
 .task-view-small-foreign {
@@ -184,9 +250,15 @@ header {
 }
 
 .task-view-sm-title {
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 6px;
 }
 
+.task-view-sm-due-date {
+    margin-bottom: 6px;
+}
 /* TASK VIEW BIG */
 /* ------------- */
 .task-view-big-container {

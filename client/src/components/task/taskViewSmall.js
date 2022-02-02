@@ -37,7 +37,14 @@ export default function TaskViewSmall(props) {
                     onClick={handleClick}
                 >
                     <div className="task-view-sm-title">{task.title}</div>
-                    <div>{task.dueDate}</div>
+                    {task.dueDate && (
+                        <div className="task-view-sm-due-date">
+                            <em>Due: {task.dueDate}</em>
+                        </div>
+                    )}
+                    <div className="task-view-sm-owner">
+                        <em>Responsible: {task.ownerName}</em>
+                    </div>
                 </OwnTask>
             )}
         </Draggable>
@@ -47,7 +54,14 @@ export default function TaskViewSmall(props) {
             onClick={handleClick}
         >
             <div className="task-view-sm-title">{task.title}</div>
-            <div>{task.dueDate}</div>
+            {task.dueDate && (
+                <div className="task-view-sm-due-date">
+                    <em>Due: {task.dueDate}</em>
+                </div>
+            )}
+            <div className="task-view-sm-owner">
+                <em>Responsible: {task.ownerName}</em>
+            </div>
         </div>
     );
 }

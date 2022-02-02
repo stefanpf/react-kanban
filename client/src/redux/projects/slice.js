@@ -11,6 +11,19 @@ export function projectsReducer(projects = null, action) {
                 return project;
             }
         });
+    } else if (action.type === "projects/deleteProject") {
+        return projects.filter(
+            (project) => project.projectId !== action.payload
+        );
+    } else if (action.type === "projects/addMemberToProject") {
+        return projects.map((project) => {
+            if (project.projectId == action.payload.projectId) {
+                const members = [...project.members, action.payload.userId];
+                return { ...project, members };
+            } else {
+                return project;
+            }
+        });
     }
     return projects;
 }
@@ -33,5 +46,19 @@ export function updateProject(id, project) {
     return {
         type: "projects/updateProject",
         payload: { id, project },
+    };
+}
+
+export function deleteProject(id) {
+    return {
+        type: "projects/deleteProject",
+        payload: id,
+    };
+}
+
+export function addMemberToProject(member) {
+    return {
+        type: "projects/addMemberToProject",
+        payload: member,
     };
 }

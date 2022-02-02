@@ -2,7 +2,7 @@ export function tasksReducer(tasks = null, action) {
     if (action.type === "tasks/received") {
         tasks = action.payload;
     } else if (action.type === "tasks/updateTask") {
-        const newTasks = tasks.map((task) => {
+        return tasks.map((task) => {
             if (task.taskId === action.payload.taskId) {
                 return {
                     ...task,
@@ -11,12 +11,10 @@ export function tasksReducer(tasks = null, action) {
             }
             return task;
         });
-        return newTasks;
     } else if (action.type === "tasks/addTask") {
         return [...tasks, action.payload];
     } else if (action.type === "tasks/deleteTask") {
-        const newTasks = tasks.filter((task) => task.taskId !== action.payload);
-        return newTasks;
+        return tasks.filter((task) => task.taskId !== action.payload);
     }
     return tasks;
 }

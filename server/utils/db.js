@@ -49,16 +49,20 @@ function addNewTask(userId, project_id, title, description, dueDate) {
 }
 
 function getTasksByOwnerId(userId) {
-    const q = `SELECT id, owner_id, project_id, title, description, due_date, status
-            FROM tasks
-            WHERE owner_id = $1;`;
+    const q = `SELECT t.id, t.owner_id, t.project_id, t.title, t.description, t.due_date, t.status, u.name
+            FROM tasks AS t
+            JOIN users AS u
+            ON t.owner_id = u.id
+            WHERE t.owner_id = $1;`;
     const params = [userId];
     return db.query(q, params);
 }
 
 function getNonOwnedTasksByProjectId(userId, arrOfProjectIds) {
-    const q = `SELECT id, owner_id, project_id, title, description, due_date, status
-            FROM tasks
+    const q = `SELECT t.id, t.owner_id, t.project_id, t.title, t.description, t.due_date, t.status, u.name
+            FROM tasks AS t
+            JOIN users AS u
+            ON t.owner_id = u.id
             WHERE owner_id != $1
             AND project_id = ANY($2);`;
     const params = [userId, arrOfProjectIds];
