@@ -57,13 +57,15 @@ export default function ProjectSettingsView(props) {
                         Responsible:
                     </div>
                     <div className="task-view-big-sub-content">
-                        {project.projectOwnerId}
+                        {project.ownerName}
                     </div>
                     {error && <div>Oops, something went wrong...</div>}
-                    <button onClick={handleEdit}>Edit</button>
-                    {project.ownerId == userId && (
-                        <button onClick={handleDelete}>Delete</button>
-                    )}
+                    <div className="task-view-big-buttons">
+                        <button onClick={handleEdit}>Edit</button>
+                        {project.ownerId == userId && (
+                            <button onClick={handleDelete}>Delete</button>
+                        )}
+                    </div>
                 </div>
             )}
         </>

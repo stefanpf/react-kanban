@@ -29,6 +29,7 @@ CREATE TABLE tasks (
     project_id INT REFERENCES projects(id) NOT NULL,
     due_date DATE,
     status INT DEFAULT 1,
+    archived_on DATE DEFAULT null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

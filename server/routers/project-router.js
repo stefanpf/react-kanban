@@ -13,6 +13,7 @@ projectRouter.get("/api/projects", (req, res) => {
                 return {
                     projectId: row.id,
                     ownerId: row.owner_id,
+                    ownerName: row.owner_name,
                     members: [row.owner_id],
                     name: row.name,
                     description: row.description,

@@ -361,3 +361,44 @@ header {
     padding: 6px;
     border-radius: 7px;
 }
+
+/* PROJECT MEMBERS VIEW */
+.members-view-members-table {
+    /* border: 1px solid red; */
+    padding: 12px;
+}
+
+.members-view-members-table-entry {
+    border-bottom: 1px solid black;
+    margin-bottom: 6px;
+}
+
+.members-table-member-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.invite-codes-table {
+    padding: 12px 12px 12px 24px;
+}
+
+.invite-codes-table-entry {
+    display: flex;
+}
+
+.invite-codes-code {
+    padding-right: 20px;
+    border-bottom: 1px solid black;
+}
+
+.invite-codes-expires {
+    padding-left: 20px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.invite-codes-table-header {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1b105c;
+    margin-bottom: 10px;
+}

@@ -139,10 +139,12 @@ function getProjectIdsByUserId(userId) {
 }
 
 function getProjectsByUserId(userId) {
-    const q = `SELECT id, name, description, logo, owner_id
-            FROM projects
-            WHERE owner_id = $1
-            OR id IN (SELECT project_id
+    const q = `SELECT p.id, p.name, p.description, p.logo, p.owner_id, u.name AS owner_name
+            FROM projects AS p
+            JOIN users AS u
+            ON u.id = p.owner_id
+            WHERE p.owner_id = $1
+            OR p.id IN (SELECT project_id
                     FROM project_members
                     WHERE member_id = $1);`;
     const params = [userId];
