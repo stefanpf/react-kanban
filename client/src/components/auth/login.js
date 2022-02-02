@@ -10,7 +10,7 @@ export default function Login() {
         <>
             <h1>Login</h1>
             {error && <h2>Oops, something went wrong...</h2>}
-            <div className="form-container">
+            <div>
                 <form>
                     <input
                         type="email"
@@ -26,7 +26,11 @@ export default function Login() {
                         required
                         onChange={handleChange}
                     ></input>
-                    <button type="submit" onClick={submit}>
+                    <button
+                        type="submit"
+                        onClick={submit}
+                        className="button-cta"
+                    >
                         Login
                     </button>
                 </form>

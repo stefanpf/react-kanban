@@ -31,6 +31,72 @@ button:hover {
     box-shadow: 0px 4px 4px rgba(36, 18, 147, 0.4);
 }
 
+textarea {
+    all: unset;
+    border-radius: 8px;
+    padding: 4px 5px 4px 5px;
+    background-color: #fff;
+}
+
+textarea:focus {
+    outline: 1px solid #241293;
+}
+
+input {
+    all: unset;
+    color: #1b105c;
+}
+
+input:focus {
+    outline: 1px solid #241293;
+}
+
+form {
+    width: 100%;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form input {
+    background-color: #fff;
+    width: 96%;
+    border-radius: 8px;
+    font-size: 1.3em;
+    height: 2em;
+    margin: 14px 24px 24px 24px;
+    padding: 5px 10px;
+    align-self: center;
+}
+
+/* form input:last-of-type {
+    margin-bottom: 0;
+} */
+
+form input:focus {
+    outline: 1px solid #241293;
+}
+
+.button-cta {
+    width: 330px;
+    height: 50px;
+    margin: 20px 0px 20px 0px;
+    background-color: #1b105c;
+    color: white;
+    box-shadow: 0px 2px 4px rgba(36, 18, 147, 0.2);
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: 0.08em;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /* GLOBAL ELEMENTS */
 .main-container {
     display: grid;
@@ -62,7 +128,7 @@ button:hover {
     z-index: 10;
     padding: 24px 0px;
     width: 60%;
-    background-color: #fff;
+    background-color: rgb(221, 217, 217);
     border-radius: 10px;
     position: absolute;
     left: 50%;
@@ -124,7 +190,6 @@ header {
 }
 .header-nav {
     padding: 12px 24px 12px 0px;
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
 }
@@ -205,6 +270,12 @@ header {
     padding: 6px;
     border-radius: 7px;
 }
+
+.new-project-choice {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
 /* KANBAN BOARD */
 /* --------------------*/
 
@@ -212,7 +283,6 @@ header {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
-    /* border: 1px solid red; */
 }
 
 .kanban-board {
@@ -224,7 +294,6 @@ header {
     background-color: rgb(247, 179, 123);
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
 }
 
 .board-in-progress {
@@ -250,7 +319,6 @@ header {
 }
 
 .task-view-sm-title {
-    /* border: 1px solid red; */
     font-size: 1.3rem;
     font-weight: 800;
     margin-bottom: 6px;
@@ -262,12 +330,34 @@ header {
 /* TASK VIEW BIG */
 /* ------------- */
 .task-view-big-container {
-    width: 100%;
-    border: 1px solid blue;
+    width: 95%;
+    background-color: #fff;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    margin: 24px 16px 24px 16px;
     padding: 12px 10px 24px 10px;
 }
 
 .task-view-big-title {
     font-weight: 800;
-    font-size: 36px;
+    font-size: 2.5rem;
+}
+
+.task-view-big-sub-heading {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #1b105c;
+    margin: 6px 0px 6px 0px;
+}
+.task-view-big-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.task-view-big-buttons button {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0px 10px 0px 10px;
+    padding: 6px;
+    border-radius: 7px;
 }

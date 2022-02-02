@@ -52,7 +52,7 @@ export default function JoinProjectForm() {
                     required
                     onChange={handleChange}
                 ></input>
-                <button type="submit" onClick={submit}>
+                <button type="submit" onClick={submit} className="button-cta">
                     Join Project
                 </button>
             </form>

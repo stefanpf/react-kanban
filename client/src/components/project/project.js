@@ -26,7 +26,7 @@ export default function Project() {
         );
         dispatch(toggleModalVisibility());
     };
-    console.log(project);
+
     return (
         <div className="project-container">
             {project && (

@@ -14,13 +14,17 @@ export default function NewProject() {
     };
 
     return (
-        <div className="project-container">
-            <button className="new-project-button" onClick={handleClick}>
-                Start New Project
-            </button>
-            <button className="new-project-button" onClick={handleClick}>
-                Join Project
-            </button>
+        <div className="project-container new-project-choice">
+            <div>
+                <button className="button-cta" onClick={handleClick}>
+                    Start New Project
+                </button>
+            </div>
+            <div>
+                <button className="button-cta" onClick={handleClick}>
+                    Join Project
+                </button>
+            </div>
         </div>
     );
 }

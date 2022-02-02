@@ -40,6 +40,16 @@ function getUserNamesByProjectId(id) {
     return db.query(q, params);
 }
 
+function getUserNameByTaskId(id) {
+    const q = `SELECT u.name
+            FROM users AS u
+            JOIN tasks AS t
+            ON u.id = t.owner_id
+            WHERE t.id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function addNewTask(userId, project_id, title, description, dueDate) {
     const q = `INSERT INTO tasks (owner_id, project_id, title, description, due_date)
             VALUES ($1, $2, $3, $4, $5)
@@ -229,6 +239,7 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserNamesByProjectId,
+    getUserNameByTaskId,
     addNewTask,
     getTasksByOwnerId,
     getNonOwnedTasksByProjectId,

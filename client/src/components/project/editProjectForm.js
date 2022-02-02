@@ -71,7 +71,7 @@ export default function EditProjectForm(props) {
                     defaultValue={project.description}
                     onChange={handleChange}
                 />
-                <button type="submit" onClick={submit}>
+                <button type="submit" onClick={submit} className="button-cta">
                     Edit Project
                 </button>
             </form>

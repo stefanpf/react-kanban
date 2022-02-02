@@ -35,7 +35,7 @@ export default function NewTaskForm(props) {
 
     return (
         <div>
-            <h2>Add A New Task to Project {projectId}</h2>
+            <h2>Add New Task</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
                 <input
@@ -55,7 +55,7 @@ export default function NewTaskForm(props) {
                     name="due_date"
                     onChange={handleChange}
                 ></input>
-                <button type="submit" onClick={submit}>
+                <button type="submit" onClick={submit} className="button-cta">
                     Create Task
                 </button>
             </form>

@@ -10,7 +10,7 @@ export default function Registration() {
         <>
             <h1>Registration</h1>
             {error && <h2>Oops, something went wrong...</h2>}
-            <div className="form-container">
+            <div>
                 <form>
                     <input
                         type="text"
@@ -33,7 +33,11 @@ export default function Registration() {
                         required
                         onChange={handleChange}
                     ></input>
-                    <button type="submit" onClick={submit}>
+                    <button
+                        type="submit"
+                        onClick={submit}
+                        className="button-cta"
+                    >
                         Register
                     </button>
                 </form>

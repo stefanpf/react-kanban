@@ -74,10 +74,10 @@ export default function TaskViewBig(props) {
                     </div>
                     {error && <div>Oops, something went wrong...</div>}
                     {ownTask && (
-                        <>
+                        <div className="task-view-big-buttons">
                             <button onClick={handleEdit}>Edit</button>
                             <button onClick={handleDelete}>Delete</button>
-                        </>
+                        </div>
                     )}
                 </div>
             )}

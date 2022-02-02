@@ -53,7 +53,7 @@ export default function NewProjectForm() {
                     placeholder="description"
                     onChange={handleChange}
                 />
-                <button type="submit" onClick={submit}>
+                <button type="submit" onClick={submit} className="button-cta">
                     Create Project
                 </button>
             </form>
