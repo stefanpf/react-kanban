@@ -25,6 +25,10 @@ export default function TaskViewSmall(props) {
         dispatch(toggleModalVisibility());
     };
 
+    const formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
+        new Date(task.dueDate)
+    );
+
     return ownTask ? (
         <Draggable draggableId={taskId.toString()} index={index}>
             {(provided, snapshot) => (
@@ -39,7 +43,7 @@ export default function TaskViewSmall(props) {
                     <div className="task-view-sm-title">{task.title}</div>
                     {task.dueDate && (
                         <div className="task-view-sm-due-date">
-                            <em>Due: {task.dueDate}</em>
+                            <em>Due: {formattedDueDate}</em>
                         </div>
                     )}
                     <div className="task-view-sm-owner">
@@ -56,7 +60,7 @@ export default function TaskViewSmall(props) {
             <div className="task-view-sm-title">{task.title}</div>
             {task.dueDate && (
                 <div className="task-view-sm-due-date">
-                    <em>Due: {task.dueDate}</em>
+                    <em>Due: {formattedDueDate}</em>
                 </div>
             )}
             <div className="task-view-sm-owner">

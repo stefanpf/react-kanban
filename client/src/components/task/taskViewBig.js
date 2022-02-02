@@ -20,6 +20,9 @@ export default function TaskViewBig(props) {
         3: "Done",
         4: "Archived",
     };
+    const formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
+        new Date(task.dueDate)
+    );
 
     const handleEdit = () => {
         dispatch(
@@ -65,7 +68,7 @@ export default function TaskViewBig(props) {
                     <div className="task-view-big-sub-heading">Due On:</div>
                     <div className="task-view-big-sub-content">
                         {task.dueDate
-                            ? task.dueDate
+                            ? formattedDueDate
                             : "(no due date specified)"}
                     </div>
                     <div className="task-view-big-sub-heading">Status:</div>

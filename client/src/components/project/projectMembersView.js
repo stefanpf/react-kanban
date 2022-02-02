@@ -72,7 +72,10 @@ export default function ProjectMembersView(props) {
                                   {code.code}
                               </div>{" "}
                               <div className="invite-codes-expires">
-                                  expires on {code.expiresOn}
+                                  expires on{" "}
+                                  {new Intl.DateTimeFormat("en-GB").format(
+                                      new Date(code.expiresOn)
+                                  )}
                               </div>
                           </div>
                       ))
