@@ -17,6 +17,8 @@ export function tasksReducer(tasks = null, action) {
         return [...tasks, ...action.payload];
     } else if (action.type === "tasks/deleteTask") {
         return tasks.filter((task) => task.taskId !== action.payload);
+    } else if (action.type === "tasks/deleteTasks") {
+        return tasks.filter((task) => task.projectId !== action.payload);
     }
     return tasks;
 }
@@ -54,5 +56,12 @@ export function deleteTask(id) {
     return {
         type: "tasks/deleteTask",
         payload: id,
+    };
+}
+
+export function deleteTasks(projectId) {
+    return {
+        type: "tasks/deleteTasks",
+        payload: projectId,
     };
 }

@@ -1,5 +1,10 @@
 import { io } from "socket.io-client";
-import { addTask, updateTask, deleteTask } from "./redux/tasks/slice";
+import {
+    addTask,
+    updateTask,
+    deleteTask,
+    deleteTasks,
+} from "./redux/tasks/slice";
 import {
     updateProject,
     addMemberToProject,
@@ -29,6 +34,7 @@ export const init = (store) => {
         );
 
         socket.on("deleteProject", (projectId) => {
+            store.dispatch(deleteTasks(projectId));
             store.dispatch(deleteProject(projectId));
         });
 
