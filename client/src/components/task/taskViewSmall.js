@@ -8,7 +8,7 @@ const OwnTask = styled.div`
 `;
 
 export default function TaskViewSmall(props) {
-    const { taskId, index } = props;
+    const { taskId, index, projectId } = props;
     const ownTask = props.ownTask === "true";
     const dispatch = useDispatch();
     const task = useSelector(
@@ -17,6 +17,18 @@ export default function TaskViewSmall(props) {
                 state.tasks.filter((task) => task.taskId == taskId)) ||
             {}
     )[0];
+
+    if (!projectId && task) {
+        const project = useSelector(
+            (state) =>
+                (state.projects &&
+                    state.projects.filter(
+                        (project) => project.projectId == task.projectId
+                    )[0]) ||
+                []
+        );
+        var projectName = project.name;
+    }
 
     const handleClick = () => {
         dispatch(
@@ -45,12 +57,17 @@ export default function TaskViewSmall(props) {
                     <div className="task-view-sm-title">{task.title}</div>
                     {task.dueDate && (
                         <div className="task-view-sm-due-date">
-                            <em>Due: {formattedDueDate}</em>
+                            <em>Due:</em> {formattedDueDate}
                         </div>
                     )}
                     <div className="task-view-sm-owner">
-                        <em>Responsible: {task.ownerName}</em>
+                        <em>Responsible:</em> {task.ownerName}
                     </div>
+                    {!projectId && projectName && (
+                        <div className="task-view-sm-project-name">
+                            <em>Project:</em> {projectName}
+                        </div>
+                    )}
                 </OwnTask>
             )}
         </Draggable>

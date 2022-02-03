@@ -67,6 +67,7 @@ export default function BoardColumn(props) {
                                       taskId={task.taskId}
                                       index={index}
                                       ownTask="true"
+                                      projectId={projectId}
                                   />
                               );
                           })

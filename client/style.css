@@ -328,6 +328,10 @@ header {
 .task-view-sm-due-date {
     margin-bottom: 6px;
 }
+
+.task-view-sm-owner {
+    margin-bottom: 6px;
+}
 /* TASK VIEW BIG */
 /* ------------- */
 .task-view-big-container {
