@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { toggleModalVisibility } from "../../redux/modal/slice";
-import { addMemberToProject } from "../../redux/projects/slice";
-// import { socket } from "../../socket";
+import { addProject } from "../../redux/projects/slice";
+import { addTasks } from "../../redux/tasks/slice";
+import { socket } from "../../socket";
 
 export default function JoinProjectForm() {
     const [userInput, handleChange] = useForm();
@@ -26,14 +27,10 @@ export default function JoinProjectForm() {
                 console.log(data);
                 if (data.success) {
                     dispatch(toggleModalVisibility());
-                    // socket.emit("joinProject");
-                    dispatch(
-                        addMemberToProject({
-                            projectId: data.projectId,
-                            userId: data.userId,
-                        })
-                    );
-                    history.replace(`/project/${data.projectId}`);
+                    dispatch(addProject(data.project));
+                    dispatch(addTasks(data.tasks));
+                    socket.emit("joinProject", data.project.projectId);
+                    history.replace(`/project/${data.project.projectId}`);
                 } else {
                     setError(true);
                 }

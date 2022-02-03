@@ -127,6 +127,14 @@ function updateProject(projectId, ownerId, name, description, logo) {
     return db.query(q, params);
 }
 
+function getProjectById(projectId) {
+    const q = `SELECT name, description, logo, owner_id
+            FROM projects
+            WHERE id = $1;`;
+    const params = [projectId];
+    return db.query(q, params);
+}
+
 function getProjectIdsByUserId(userId) {
     const q = `SELECT id
             FROM projects
@@ -249,6 +257,7 @@ module.exports = {
     deleteTask,
     addNewProject,
     updateProject,
+    getProjectById,
     getProjectFromActiveCode,
     getProjectIdsByUserId,
     getProjectsByUserId,

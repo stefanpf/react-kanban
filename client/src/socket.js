@@ -33,7 +33,6 @@ export const init = (store) => {
         });
 
         socket.on("addMemberToProject", (payload) => {
-            console.log("addMemberToProject", payload);
             store.dispatch(
                 addMemberToProject({
                     projectId: payload.projectId,

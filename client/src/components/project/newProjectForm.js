@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { toggleModalVisibility } from "../../redux/modal/slice";
 import { addProject } from "../../redux/projects/slice";
+import { socket } from "../../socket";
 
 export default function NewProjectForm() {
     const [userInput, handleChange] = useForm();
@@ -25,6 +26,7 @@ export default function NewProjectForm() {
                 if (data.success) {
                     dispatch(toggleModalVisibility());
                     dispatch(addProject(data.project));
+                    socket.emit("joinProject", data.project.projectId);
                     history.replace(`/project/${data.project.projectId}`);
                 } else {
                     setError(true);

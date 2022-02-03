@@ -67,7 +67,7 @@ projectRouter.post("/api/project/new", (req, res) => {
 projectRouter.post("/api/project/join", (req, res) => {
     const { userId } = req.session;
     const { code } = req.body;
-    let projectId;
+    let projectId, project;
     db.getProjectFromActiveCode(code)
         .then(({ rows }) => {
             projectId = rows[0].project_id;
@@ -77,11 +77,38 @@ projectRouter.post("/api/project/join", (req, res) => {
             return db.expireInviteCode(code);
         })
         .then(() => {
-            // io.to(`project:${projectId}`).emit("addMemberToProject", {
-            //     projectId,
-            //     userId,
-            // });
-            res.json({ userId, projectId, success: true });
+            return db.getProjectById(projectId);
+        })
+        .then(({ rows }) => {
+            project = {
+                projectId,
+                ownerId: rows[0].owner_id,
+                name: rows[0].name,
+                description: rows[0].description,
+                logo: rows[0].logo,
+            };
+            return db.getProjectMembersByProjectIds([projectId]);
+        })
+        .then(({ rows }) => {
+            project = {
+                ...project,
+                members: [project.ownerId, ...rows.map((row) => row.member_id)],
+            };
+            return db.getNonOwnedTasksByProjectId(userId, [projectId]);
+        })
+        .then(({ rows }) => {
+            const tasks = rows.map((row) => {
+                return {
+                    taskId: row.id,
+                    taskOwnerId: row.owner_id,
+                    projectId: row.project_id,
+                    title: row.title,
+                    description: row.description,
+                    status: row.status,
+                    dueDate: row.due_date,
+                };
+            });
+            res.json({ userId, project, tasks, success: true });
         })
         .catch((err) => {
             console.log("Err in joinProject:", err);
