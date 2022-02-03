@@ -45,7 +45,6 @@ export function addTask(task) {
 }
 
 export function addTasks(tasks) {
-    console.log("tasks in slice action creator:", tasks);
     return {
         type: "tasks/addTasks",
         payload: tasks,

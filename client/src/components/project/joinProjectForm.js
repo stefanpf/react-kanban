@@ -24,7 +24,6 @@ export default function JoinProjectForm() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 if (data.success) {
                     dispatch(toggleModalVisibility());
                     dispatch(addProject(data.project));
