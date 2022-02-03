@@ -14,7 +14,7 @@ export default function EditTaskForm(props) {
 
     return (
         <div>
-            <h2>Edit Task {taskId}</h2>
+            <h2>Edit Task</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
                 <input
@@ -32,9 +32,11 @@ export default function EditTaskForm(props) {
                 <input
                     type="date"
                     name="dueDate"
-                    defaultValue={new Date(task.dueDate)
-                        .toISOString()
-                        .substr(0, 10)}
+                    defaultValue={
+                        task.dueDate
+                            ? new Date(task.dueDate).toISOString().substr(0, 10)
+                            : ""
+                    }
                     onChange={handleChange}
                 ></input>
                 <button type="submit" onClick={submit} className="button-cta">

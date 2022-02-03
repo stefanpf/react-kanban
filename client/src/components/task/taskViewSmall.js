@@ -25,9 +25,11 @@ export default function TaskViewSmall(props) {
         dispatch(toggleModalVisibility());
     };
 
-    const formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
-        new Date(task.dueDate)
-    );
+    if (task.dueDate) {
+        var formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
+            new Date(task.dueDate)
+        );
+    }
 
     return ownTask ? (
         <Draggable draggableId={taskId.toString()} index={index}>

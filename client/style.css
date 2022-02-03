@@ -227,6 +227,10 @@ header {
     text-align: center;
 }
 
+.project-link-overview {
+    background-color: rgb(209, 21, 115);
+}
+
 /* PROJECT VIEW */
 /*--------------*/
 .project-container {

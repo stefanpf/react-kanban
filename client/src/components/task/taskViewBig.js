@@ -20,9 +20,11 @@ export default function TaskViewBig(props) {
         3: "Done",
         4: "Archived",
     };
-    const formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
-        new Date(task.dueDate)
-    );
+    if (task.dueDate) {
+        var formattedDueDate = new Intl.DateTimeFormat("en-GB").format(
+            new Date(task.dueDate)
+        );
+    }
 
     const handleEdit = () => {
         dispatch(
