@@ -44,10 +44,11 @@ projectRouter.get("/api/projects", (req, res) => {
 projectRouter.post("/api/project/new", (req, res) => {
     const { userId } = req.session;
     const { name, description, logo } = req.body;
+    let newProject;
     if (name != "") {
         db.addNewProject(userId, name, description, logo)
             .then(({ rows }) => {
-                const newProject = {
+                newProject = {
                     projectId: rows[0].id,
                     ownerId: userId,
                     members: [userId],
@@ -55,6 +56,10 @@ projectRouter.post("/api/project/new", (req, res) => {
                     description,
                     logo,
                 };
+                return db.getProjectOwnerName(newProject.projectId);
+            })
+            .then(({ rows }) => {
+                newProject["ownerName"] = rows[0].name;
                 res.json({ project: newProject, success: true });
             })
             .catch((err) => {
@@ -87,6 +92,10 @@ projectRouter.post("/api/project/join", (req, res) => {
                 description: rows[0].description,
                 logo: rows[0].logo,
             };
+            return db.getProjectOwnerName(projectId);
+        })
+        .then(({ rows }) => {
+            project["ownerName"] = rows[0].name;
             return db.getProjectMembersByProjectIds([projectId]);
         })
         .then(({ rows }) => {
@@ -102,6 +111,7 @@ projectRouter.post("/api/project/join", (req, res) => {
                     taskId: row.id,
                     taskOwnerId: row.owner_id,
                     projectId: row.project_id,
+                    ownerName: row.name,
                     title: row.title,
                     description: row.description,
                     status: row.status,

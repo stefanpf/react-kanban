@@ -40,6 +40,16 @@ function getUserNamesByProjectId(id) {
     return db.query(q, params);
 }
 
+function getProjectOwnerName(projectId) {
+    const q = `SELECT u.name
+            FROM users AS u
+            JOIN projects AS p
+            ON u.id = p.owner_id
+            WHERE p.id = $1;`;
+    const params = [projectId];
+    return db.query(q, params);
+}
+
 function getUserNameByTaskId(id) {
     const q = `SELECT u.name
             FROM users AS u
@@ -249,6 +259,7 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserNamesByProjectId,
+    getProjectOwnerName,
     getUserNameByTaskId,
     addNewTask,
     getTasksByOwnerId,
