@@ -169,6 +169,14 @@ function getProjectsByUserId(userId) {
     return db.query(q, params);
 }
 
+function getProjectOwnerByProjectId(id) {
+    const q = `SELECT owner_id
+            FROM projects
+            WHERE id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function getProjectMembersByProjectIds(arrOfIds) {
     const q = `SELECT project_id, member_id
             FROM project_members
@@ -272,6 +280,7 @@ module.exports = {
     getProjectFromActiveCode,
     getProjectIdsByUserId,
     getProjectsByUserId,
+    getProjectOwnerByProjectId,
     getProjectMembersByProjectIds,
     addInviteCode,
     getActiveProjectInviteCodes,

@@ -127,8 +127,12 @@ projectRouter.post("/api/project/join", (req, res) => {
 });
 
 projectRouter.get("/api/project/:id/members", (req, res) => {
-    const projectId = req.params.id;
-    db.getUserNamesByProjectId(projectId)
+    const projectId = parseInt(req.params.id);
+    const { userId } = req.session;
+    checkIfUserIsMemberOfProject(userId, projectId)
+        .then(() => {
+            return db.getUserNamesByProjectId(projectId);
+        })
         .then(({ rows }) => {
             res.json({ memberNames: rows, success: true });
         })
@@ -142,12 +146,21 @@ projectRouter
     .route("/api/project/:id/invites")
     .get((req, res) => {
         const projectId = req.params.id;
-        db.getActiveProjectInviteCodes(projectId).then(({ rows }) => {
-            const codes = rows.map((row) => {
-                return { code: row.invite_code, expiresOn: row.expires_on };
+        const { userId } = req.session;
+        checkIfUserIsMemberOfProject(userId, projectId)
+            .then(() => {
+                return db.getActiveProjectInviteCodes(projectId);
+            })
+            .then(({ rows }) => {
+                const codes = rows.map((row) => {
+                    return { code: row.invite_code, expiresOn: row.expires_on };
+                });
+                res.json({ codes, success: true });
+            })
+            .catch((err) => {
+                console.log("Err in getActiveProjectInviteCodes:", err);
+                res.json({ success: false });
             });
-            res.json({ codes, success: true });
-        });
     })
     .post((req, res) => {
         const projectId = req.params.id;
@@ -156,7 +169,10 @@ projectRouter
             length: 6,
             type: "distinguishable",
         });
-        db.addInviteCode(projectId, userId, inviteCode)
+        checkIfUserIsMemberOfProject(userId, projectId)
+            .then(() => {
+                return db.addInviteCode(projectId, userId, inviteCode);
+            })
             .then(({ rows }) => {
                 res.json({
                     code: { code: inviteCode, expiresOn: rows[0].expires_on },
@@ -173,8 +189,18 @@ projectRouter
     .route("/api/project/:id")
     .post((req, res) => {
         const projectId = parseInt(req.params.id);
+        const { userId } = req.session;
         const { ownerId, name, description, logo } = req.body;
-        db.updateProject(projectId, ownerId, name, description, logo)
+        checkIfUserIsMemberOfProject(userId, projectId)
+            .then(() => {
+                return db.updateProject(
+                    projectId,
+                    ownerId,
+                    name,
+                    description,
+                    logo
+                );
+            })
             .then(() => {
                 const updatedProject = {
                     id: projectId,
@@ -215,5 +241,29 @@ projectRouter
             res.json({ success: false });
         }
     });
+
+const checkIfUserIsMemberOfProject = (userId, projectId) => {
+    return new Promise((resolve, reject) => {
+        let memberIds = [];
+        db.getProjectOwnerByProjectId(projectId)
+            .then(({ rows }) => {
+                memberIds.push(rows[0].owner_id);
+                return db.getProjectMembersByProjectIds([projectId]);
+            })
+            .then(({ rows }) => {
+                console.log(memberIds);
+                rows.forEach((row, index) => {
+                    memberIds.push(row.member_id);
+                });
+                if (memberIds.includes(userId)) {
+                    resolve();
+                } else {
+                    reject(
+                        `Membership check failed for user ${userId}. Project members: ${memberIds}`
+                    );
+                }
+            });
+    });
+};
 
 module.exports = projectRouter;
