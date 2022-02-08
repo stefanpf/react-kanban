@@ -1,7 +1,7 @@
 {
     "name": "react-kanban",
     "version": "1.0.0",
-    "description": "",
+    "description": "A focused project management tool for single users and small teams",
     "main": "server/server.js",
     "scripts": {
         "build": "webpack --mode production",
