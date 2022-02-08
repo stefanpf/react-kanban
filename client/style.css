@@ -257,6 +257,7 @@ header {
 .project-view-header-description {
     padding: 8px 0px 0px 12px;
     font-size: 1.3rem;
+    white-space: pre-line;
 }
 
 .project-view-header-nav {
@@ -356,6 +357,11 @@ header {
     color: #1b105c;
     margin: 6px 0px 6px 0px;
 }
+
+.task-view-big-description {
+    white-space: pre-line;
+}
+
 .task-view-big-buttons {
     display: flex;
     justify-content: space-evenly;
