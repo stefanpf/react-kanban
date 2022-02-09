@@ -2,6 +2,7 @@ const express = require("express");
 const cryptoRandomString = require("crypto-random-string");
 const projectRouter = express.Router();
 const db = require("../utils/db");
+const helpers = require("./router-helpers");
 const { io } = require("../server");
 
 projectRouter.get("/api/projects", (req, res) => {
@@ -125,7 +126,8 @@ projectRouter.post("/api/project/join", (req, res) => {
 projectRouter.get("/api/project/:id/members", (req, res) => {
     const projectId = parseInt(req.params.id);
     const { userId } = req.session;
-    checkIfUserIsMemberOfProject(userId, projectId)
+    helpers
+        .checkIfUserIsMemberOfProject(userId, projectId)
         .then(() => db.getUserNamesByProjectId(projectId))
         .then(({ rows }) => {
             res.json({ memberNames: rows, success: true });
@@ -141,7 +143,8 @@ projectRouter
     .get((req, res) => {
         const projectId = req.params.id;
         const { userId } = req.session;
-        checkIfUserIsMemberOfProject(userId, projectId)
+        helpers
+            .checkIfUserIsMemberOfProject(userId, projectId)
             .then(() => db.getActiveProjectInviteCodes(projectId))
             .then(({ rows }) => {
                 const codes = rows.map((row) => {
@@ -161,7 +164,8 @@ projectRouter
             length: 6,
             type: "distinguishable",
         });
-        checkIfUserIsMemberOfProject(userId, projectId)
+        helpers
+            .checkIfUserIsMemberOfProject(userId, projectId)
             .then(() => db.addInviteCode(projectId, userId, inviteCode))
             .then(({ rows }) => {
                 res.json({
@@ -181,7 +185,8 @@ projectRouter
         const projectId = parseInt(req.params.id);
         const { userId } = req.session;
         const { ownerId, name, description, logo } = req.body;
-        checkIfUserIsMemberOfProject(userId, projectId)
+        helpers
+            .checkIfUserIsMemberOfProject(userId, projectId)
             .then(() => {
                 return db.updateProject(
                     projectId,
@@ -231,27 +236,27 @@ projectRouter
             });
     });
 
-const checkIfUserIsMemberOfProject = (userId, projectId) => {
-    return new Promise((resolve, reject) => {
-        let memberIds = [];
-        db.getProjectOwnerByProjectId(projectId)
-            .then(({ rows }) => {
-                memberIds.push(rows[0].owner_id);
-                return db.getProjectMembersByProjectIds([projectId]);
-            })
-            .then(({ rows }) => {
-                rows.forEach((row) => {
-                    memberIds.push(row.member_id);
-                });
-                if (memberIds.includes(userId)) {
-                    resolve();
-                } else {
-                    reject(
-                        `Membership check failed for user ${userId}. Project members: ${memberIds}`
-                    );
-                }
-            });
-    });
-};
+// const checkIfUserIsMemberOfProject = (userId, projectId) => {
+//     return new Promise((resolve, reject) => {
+//         let memberIds = [];
+//         db.getProjectOwnerByProjectId(projectId)
+//             .then(({ rows }) => {
+//                 memberIds.push(rows[0].owner_id);
+//                 return db.getProjectMembersByProjectIds([projectId]);
+//             })
+//             .then(({ rows }) => {
+//                 rows.forEach((row) => {
+//                     memberIds.push(row.member_id);
+//                 });
+//                 if (memberIds.includes(userId)) {
+//                     resolve();
+//                 } else {
+//                     reject(
+//                         `Membership check failed for user ${userId}. Project members: ${memberIds}`
+//                     );
+//                 }
+//             });
+//     });
+// };
 
 module.exports = projectRouter;

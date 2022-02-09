@@ -68,6 +68,14 @@ function addNewTask(userId, project_id, title, description, dueDate) {
     return db.query(q, params);
 }
 
+function getTaskOwnerByTaskId(id) {
+    const q = `SELECT owner_id
+            FROM tasks
+            WHERE id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function getTasksByOwnerId(userId) {
     const q = `SELECT t.id, t.owner_id, t.project_id, t.title, t.description, t.due_date, t.status, u.name
             FROM tasks AS t
@@ -270,6 +278,7 @@ module.exports = {
     getProjectOwnerName,
     getUserNameByTaskId,
     addNewTask,
+    getTaskOwnerByTaskId,
     getTasksByOwnerId,
     getNonOwnedTasksByProjectId,
     updateTask,

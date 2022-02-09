@@ -1,6 +1,7 @@
 const express = require("express");
 const taskRouter = express.Router();
 const db = require("../utils/db");
+const helpers = require("./router-helpers");
 const { io } = require("../server");
 
 taskRouter.get("/api/tasks", (req, res) => {
@@ -22,12 +23,10 @@ taskRouter.get("/api/tasks", (req, res) => {
             });
             return db.getProjectIdsByUserId(userId);
         })
-        .then(({ rows }) => {
-            return rows.map((row) => row.id);
-        })
-        .then((projectIds) => {
-            return db.getNonOwnedTasksByProjectId(userId, projectIds);
-        })
+        .then(({ rows }) => rows.map((row) => row.id))
+        .then((projectIds) =>
+            db.getNonOwnedTasksByProjectId(userId, projectIds)
+        )
         .then(({ rows }) => {
             rows.forEach((row) =>
                 tasks.push({
@@ -54,13 +53,18 @@ taskRouter.post("/api/task/new", (req, res) => {
     const { title, description, projectId, due_date: dueDate } = req.body;
     let newTask;
     if (title) {
-        db.addNewTask(
-            userId,
-            projectId,
-            title,
-            description || null,
-            dueDate || null
-        )
+        helpers
+            .checkIfUserIsMemberOfProject(userId, projectId)
+            .then(() =>
+                db.addNewTask(
+                    userId,
+                    projectId,
+                    title,
+                    description || null,
+                    dueDate || null
+                )
+            )
+
             .then(({ rows }) => {
                 newTask = {
                     taskId: rows[0].id,
@@ -95,18 +99,23 @@ taskRouter
     .route("/api/task/:id")
     .post((req, res) => {
         const taskId = parseInt(req.params.id);
+        const { userId } = req.session;
         const { taskOwnerId, projectId, title, description, status, dueDate } =
             req.body;
         let updatedTask;
-        db.updateTask(
-            taskId,
-            taskOwnerId,
-            projectId,
-            title,
-            description,
-            dueDate,
-            status
-        )
+        helpers
+            .checkIfUserIsTaskOwner(userId, taskId)
+            .then(() =>
+                db.updateTask(
+                    taskId,
+                    taskOwnerId,
+                    projectId,
+                    title,
+                    description,
+                    dueDate,
+                    status
+                )
+            )
             .then(() => {
                 updatedTask = {
                     taskId,
@@ -132,20 +141,19 @@ taskRouter
     .delete((req, res) => {
         const taskId = parseInt(req.params.id);
         const { userId } = req.session;
-        const { projectId, ownerId } = req.body;
-        if (userId === ownerId) {
-            db.deleteTask(taskId, userId)
-                .then(() => {
-                    io.to(`project:${projectId}`).emit("deleteTask", taskId);
-                    res.json({ success: true });
-                })
-                .catch((err) => {
-                    console.log("Err in deleteTask:", err);
-                    res.json({ success: false });
-                });
-        } else {
-            res.json({ success: false });
-        }
+        const { projectId } = req.body;
+        helpers
+            .checkIfUserIsTaskOwner(userId, taskId)
+            .then(() => db.deleteTask(taskId, userId))
+
+            .then(() => {
+                io.to(`project:${projectId}`).emit("deleteTask", taskId);
+                res.json({ success: true });
+            })
+            .catch((err) => {
+                console.log("Err in deleteTask:", err);
+                res.json({ success: false });
+            });
     });
 
 module.exports = taskRouter;
