@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function ProjectNavigation(props) {
     const { userId } = props;
+    const location = useLocation();
+    const activeProject =
+        location.pathname === "/"
+            ? 0
+            : location.pathname.slice(location.pathname.lastIndexOf("/") + 1);
+    console.log(activeProject);
     const projects = useSelector(
         (state) =>
             (state.projects &&
@@ -15,16 +21,29 @@ export default function ProjectNavigation(props) {
     return (
         <div className="project-navigation-col">
             <Link to="/">
-                <button className="project-link-icon project-link-overview">
-                    My Tasks
-                </button>
+                <div
+                    className={`project-link-icon-container ${
+                        activeProject == 0 && "project-link-active"
+                    }`}
+                >
+                    <button className="project-link-icon project-link-overview">
+                        My Tasks
+                    </button>
+                </div>
             </Link>
             {projects &&
                 projects.map((project, index) => (
                     <Link key={index} to={`/project/${project.projectId}`}>
-                        <button className="project-link-icon">
-                            {project.name}
-                        </button>
+                        <div
+                            className={`project-link-icon-container ${
+                                activeProject == project.projectId &&
+                                "project-link-active"
+                            }`}
+                        >
+                            <button className="project-link-icon">
+                                {project.name}
+                            </button>
+                        </div>
                     </Link>
                 ))}
             <Link to="/new-project">

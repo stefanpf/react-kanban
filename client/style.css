@@ -214,6 +214,21 @@ header {
     align-items: center;
 }
 
+.project-link-icon-container {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: none;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-link-active {
+    background-color: orange;
+}
+
 .project-link-icon {
     width: 60px;
     height: 60px;
@@ -225,7 +240,6 @@ header {
     background-color: rgb(98, 123, 129);
     color: white;
     font-weight: 800;
-    margin-bottom: 12px;
     text-align: center;
 }
 
