@@ -78,12 +78,8 @@ projectRouter.post("/api/project/join", (req, res) => {
             projectId = rows[0].project_id;
             return db.addMemberToProject(userId, projectId);
         })
-        .then(() => {
-            return db.expireInviteCode(code);
-        })
-        .then(() => {
-            return db.getProjectById(projectId);
-        })
+        .then(() => db.expireInviteCode(code))
+        .then(() => db.getProjectById(projectId))
         .then(({ rows }) => {
             project = {
                 projectId,
@@ -130,9 +126,7 @@ projectRouter.get("/api/project/:id/members", (req, res) => {
     const projectId = parseInt(req.params.id);
     const { userId } = req.session;
     checkIfUserIsMemberOfProject(userId, projectId)
-        .then(() => {
-            return db.getUserNamesByProjectId(projectId);
-        })
+        .then(() => db.getUserNamesByProjectId(projectId))
         .then(({ rows }) => {
             res.json({ memberNames: rows, success: true });
         })
@@ -148,9 +142,7 @@ projectRouter
         const projectId = req.params.id;
         const { userId } = req.session;
         checkIfUserIsMemberOfProject(userId, projectId)
-            .then(() => {
-                return db.getActiveProjectInviteCodes(projectId);
-            })
+            .then(() => db.getActiveProjectInviteCodes(projectId))
             .then(({ rows }) => {
                 const codes = rows.map((row) => {
                     return { code: row.invite_code, expiresOn: row.expires_on };
@@ -170,9 +162,7 @@ projectRouter
             type: "distinguishable",
         });
         checkIfUserIsMemberOfProject(userId, projectId)
-            .then(() => {
-                return db.addInviteCode(projectId, userId, inviteCode);
-            })
+            .then(() => db.addInviteCode(projectId, userId, inviteCode))
             .then(({ rows }) => {
                 res.json({
                     code: { code: inviteCode, expiresOn: rows[0].expires_on },
@@ -250,7 +240,6 @@ const checkIfUserIsMemberOfProject = (userId, projectId) => {
                 return db.getProjectMembersByProjectIds([projectId]);
             })
             .then(({ rows }) => {
-                console.log(memberIds);
                 rows.forEach((row) => {
                     memberIds.push(row.member_id);
                 });
