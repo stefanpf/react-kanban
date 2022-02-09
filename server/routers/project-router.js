@@ -219,27 +219,26 @@ projectRouter
     })
     .delete((req, res) => {
         const { userId } = req.session;
-        const { ownerId } = req.body;
         const projectId = parseInt(req.params.id);
-        if (userId === ownerId) {
-            db.deleteTasksByProjectId(projectId)
-                .then(() => db.deleteInviteCodeByProjectId(projectId))
-                .then(() => db.deleteAllMembersFromProject(projectId))
-                .then(() => db.deleteProject(projectId))
-                .then(() => {
-                    io.to(`project:${projectId}`).emit(
-                        "deleteProject",
-                        projectId
-                    );
-                    res.json({ success: true });
-                })
-                .catch((err) => {
-                    console.log("Err in deleteProject:", err);
+        db.getProjectOwnerByProjectId(projectId)
+            .then(({ rows }) => {
+                if (userId == rows[0].owner_id) {
+                    return db.deleteTasksByProjectId(projectId);
+                } else {
                     res.json({ success: false });
-                });
-        } else {
-            res.json({ success: false });
-        }
+                }
+            })
+            .then(() => db.deleteInviteCodeByProjectId(projectId))
+            .then(() => db.deleteAllMembersFromProject(projectId))
+            .then(() => db.deleteProject(projectId))
+            .then(() => {
+                io.to(`project:${projectId}`).emit("deleteProject", projectId);
+                res.json({ success: true });
+            })
+            .catch((err) => {
+                console.log("Err in deleteProject:", err);
+                res.json({ success: false });
+            });
     });
 
 const checkIfUserIsMemberOfProject = (userId, projectId) => {
@@ -252,7 +251,7 @@ const checkIfUserIsMemberOfProject = (userId, projectId) => {
             })
             .then(({ rows }) => {
                 console.log(memberIds);
-                rows.forEach((row, index) => {
+                rows.forEach((row) => {
                     memberIds.push(row.member_id);
                 });
                 if (memberIds.includes(userId)) {
