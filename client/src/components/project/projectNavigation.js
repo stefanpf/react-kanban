@@ -8,7 +8,6 @@ export default function ProjectNavigation(props) {
         location.pathname === "/"
             ? 0
             : location.pathname.slice(location.pathname.lastIndexOf("/") + 1);
-    console.log(activeProject);
     const projects = useSelector(
         (state) =>
             (state.projects &&

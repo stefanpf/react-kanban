@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveModal, toggleModalVisibility } from "../../redux/modal/slice";
-import { deleteTask } from "../../redux/tasks/slice";
 
 export default function TaskViewBig(props) {
     const { taskId } = props;
@@ -32,6 +31,26 @@ export default function TaskViewBig(props) {
         );
     };
 
+    const handleArchive = () => {
+        fetch(`/api/task/${taskId}/archive`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                projectId: task.projectId,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    dispatch(toggleModalVisibility());
+                } else {
+                    setError(true);
+                }
+            });
+    };
+
     const handleDelete = () => {
         fetch(`/api/task/${taskId}`, {
             method: "DELETE",
@@ -46,13 +65,13 @@ export default function TaskViewBig(props) {
             .then((res) => res.json())
             .then((data) => {
                 if (data.success) {
-                    dispatch(deleteTask(taskId));
                     dispatch(toggleModalVisibility());
                 } else {
                     setError(true);
                 }
             });
     };
+
     return (
         <>
             {task && (
@@ -81,6 +100,9 @@ export default function TaskViewBig(props) {
                     {ownTask && (
                         <div className="task-view-big-buttons">
                             <button onClick={handleEdit}>Edit</button>
+                            {task.status === 3 && (
+                                <button onClick={handleArchive}>Archive</button>
+                            )}
                             <button onClick={handleDelete}>Delete</button>
                         </div>
                     )}

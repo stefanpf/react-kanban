@@ -17,6 +17,16 @@ export function tasksReducer(tasks = null, action) {
         return [...tasks, ...action.payload];
     } else if (action.type === "tasks/deleteTask") {
         return tasks.filter((task) => task.taskId !== action.payload);
+    } else if (action.type === "tasks/archiveTask") {
+        return tasks.map((task) => {
+            if (task.taskId === action.payload) {
+                return {
+                    ...task,
+                    status: 4,
+                };
+            }
+            return task;
+        });
     } else if (action.type === "tasks/deleteTasks") {
         return tasks.filter((task) => task.projectId !== action.payload);
     }
@@ -55,6 +65,13 @@ export function deleteTask(id) {
     return {
         type: "tasks/deleteTask",
         payload: id,
+    };
+}
+
+export function archiveTask(id) {
+    return {
+        type: "tasks/archiveTask",
+        payload: parseInt(id),
     };
 }
 

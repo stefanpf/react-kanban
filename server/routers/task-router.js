@@ -156,4 +156,22 @@ taskRouter
             });
     });
 
+taskRouter.post("/api/task/:id/archive", (req, res) => {
+    const taskId = req.params.id;
+    const { userId } = req.session;
+    const { projectId } = req.body;
+
+    helpers
+        .checkIfUserIsTaskOwner(userId, taskId)
+        .then(() => db.archiveTask(taskId))
+        .then(() => {
+            io.to(`project:${projectId}`).emit("archiveTask", taskId);
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("Err in archiveTask:", err);
+            res.json({ success: false });
+        });
+});
+
 module.exports = taskRouter;

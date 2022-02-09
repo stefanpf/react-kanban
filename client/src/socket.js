@@ -3,6 +3,7 @@ import {
     addTask,
     updateTask,
     deleteTask,
+    archiveTask,
     deleteTasks,
 } from "./redux/tasks/slice";
 import {
@@ -25,6 +26,10 @@ export const init = (store) => {
 
         socket.on("deleteTask", (taskId) => {
             store.dispatch(deleteTask(taskId));
+        });
+
+        socket.on("archiveTask", (taskId) => {
+            store.dispatch(archiveTask(taskId));
         });
 
         socket.on("updateProject", (updatedProject) =>

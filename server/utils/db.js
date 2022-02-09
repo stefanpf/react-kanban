@@ -129,6 +129,14 @@ function deleteTask(taskId, userId) {
     return db.query(q, params);
 }
 
+function archiveTask(taskId) {
+    const q = `UPDATE tasks
+            SET status = 4, archived_on = CURRENT_DATE
+            WHERE id = $1;`;
+    const params = [taskId];
+    return db.query(q, params);
+}
+
 function addNewProject(userId, name, description, logo) {
     const q = `INSERT INTO projects (owner_id, name, description, logo)
             VALUES ($1, $2, $3, $4)
@@ -283,6 +291,7 @@ module.exports = {
     getNonOwnedTasksByProjectId,
     updateTask,
     deleteTask,
+    archiveTask,
     addNewProject,
     updateProject,
     getProjectById,
