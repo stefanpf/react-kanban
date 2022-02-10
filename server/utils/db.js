@@ -27,6 +27,14 @@ function getUserByEmail(email) {
     return db.query(q, params);
 }
 
+function getUserDataById(id) {
+    const q = `SELECT name, email
+            FROM users
+            WHERE id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function getUserNamesByProjectId(id) {
     const q = `SELECT name
             FROM users
@@ -282,6 +290,7 @@ function deleteProject(id) {
 module.exports = {
     addUser,
     getUserByEmail,
+    getUserDataById,
     getUserNamesByProjectId,
     getProjectOwnerName,
     getUserNameByTaskId,

@@ -8,6 +8,7 @@ import EditProjectForm from "../project/editProjectForm";
 import JoinProjectForm from "../project/joinProjectForm";
 import ProjectSettingsView from "../project/projectSettingsView";
 import ProjectMembersView from "../project/projectMembersView";
+import Profile from "../profile/profile";
 
 export default function Modal() {
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function Modal() {
                 {modalType.type === "editProjectForm" && (
                     <EditProjectForm projectId={modalType.projectId} />
                 )}
+                {modalType.type === "profile" && <Profile />}
                 <button onClick={handleClick} className="close-modal-button">
                     X
                 </button>

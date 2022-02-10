@@ -30,6 +30,7 @@ const io = require("socket.io")(server, {
 module.exports = { io };
 
 const authRouter = require("./routers/auth-router");
+const profileRouter = require("./routers/profile-router");
 const projectRouter = require("./routers/project-router");
 const taskRouter = require("./routers/task-router");
 const PORT = 3001;
@@ -53,6 +54,7 @@ app.use(express.json());
 
 // ROUTES
 app.use(authRouter);
+app.use(profileRouter);
 app.use(projectRouter);
 app.use(taskRouter);
 app.get("*", function (req, res) {
