@@ -18,11 +18,11 @@ export default function PrivacyPolicy() {
             <h2>2. Minimal Cookies</h2>
             <p>
                 We use ONE (1) cookie to ensure that this site works as
-                intended. When you login, we place a cookie in your browser.
+                intended. When you log in, we place a cookie in your browser.
                 This cookie contains one piece of information: your user ID,
                 i.e. the unique number under which your account is listed in our
                 database. This piece of information makes sure that you and only
-                you see all your projects and tasks. The userId is encrypted to
+                you see all your projects and tasks. The user Id is encrypted to
                 make sure that only our servers can access this information.
                 This is the only cookie we need. Deleting this cookie means
                 logging you out.
@@ -39,7 +39,7 @@ export default function PrivacyPolicy() {
             <h2>4. Easy Delete</h2>
             <p>
                 Want to delete your account and all associated information? No
-                problem. Just login, go to &quot;My Account&quot; and click on
+                problem. Just log in, go to &quot;My Account&quot; and click on
                 &quot;Delete&quot;.
             </p>
         </div>
