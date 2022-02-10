@@ -10,6 +10,7 @@ import ProjectSettingsView from "../project/projectSettingsView";
 import ProjectMembersView from "../project/projectMembersView";
 import Profile from "../profile/profile";
 import EditProfileForm from "../profile/editProfileForm";
+import PrivacyPolicy from "../global/privacyPolicy";
 
 export default function Modal() {
     const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export default function Modal() {
                 )}
                 {modalType.type === "profile" && <Profile />}
                 {modalType.type === "editProfileForm" && <EditProfileForm />}
+                {modalType.type === "privacyPolicy" && <PrivacyPolicy />}
                 <button onClick={handleClick} className="close-modal-button">
                     X
                 </button>

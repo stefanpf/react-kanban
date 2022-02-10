@@ -167,6 +167,14 @@ form input:focus {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.privacy-policy {
+    padding: 24px;
+}
+
+.privacy-policy * {
+    padding: 6px 0px 6px 0px;
+}
+
 /* HEADER */
 /* ------ */
 header {
@@ -209,6 +217,23 @@ header {
 .header-button button {
     padding: 6px;
     border-radius: 7px;
+}
+
+/* FOOTER */
+footer {
+    padding: 24px 24px 18px 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-col {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-link {
+    cursor: pointer;
+    padding: 0px 6px 0px 6px;
 }
 /* PROJECT NAVIGATION */
 .project-navigation-col {

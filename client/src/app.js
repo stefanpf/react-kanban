@@ -7,6 +7,7 @@ import ProjectNavigation from "./components/project/projectNavigation";
 import Overview from "./components/project/overview";
 import Project from "./components/project/project";
 import NewProject from "./components/project/newProject";
+import Footer from "./components/ui/footer";
 import { receiveUserData } from "./redux/user_data/slice";
 import { receiveTasks } from "./redux/tasks/slice";
 import { receiveProjects } from "./redux/projects/slice";
@@ -66,6 +67,7 @@ export default function App(props) {
                     </Route>
                 </div>
             </div>
+            <Footer />
         </BrowserRouter>
     );
 }
