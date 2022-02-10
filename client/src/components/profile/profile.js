@@ -1,9 +1,15 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveModal } from "../../redux/modal/slice";
 
 export default function Profile() {
     const { profileData } = useSelector((state) => state.userData || {});
+    const dispatch = useDispatch();
     const handleClick = (e) => {
-        console.log("user wants to:", e.target.name);
+        if (e.target.name === "edit") {
+            dispatch(
+                setActiveModal({ modalType: { type: "editProfileForm" } })
+            );
+        }
     };
 
     return (
@@ -17,18 +23,18 @@ export default function Profile() {
             <div className="task-view-big-sub-heading"></div>
             <div className="task-view-big-sub-content"></div>
             {/* {error && <div>Oops, something went wrong...</div>} */}
-            {/* <div className="task-view-big-buttons">
+            <div className="task-view-big-buttons">
                 <button name="edit" onClick={handleClick}>
                     Edit
                 </button>
-                <button
+                {/* <button
                     name="delete"
                     onClick={handleClick}
                     className="delete-button"
                 >
                     Delete
-                </button>
-            </div> */}
+                </button> */}
+            </div>
         </div>
     );
 }

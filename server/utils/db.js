@@ -35,6 +35,14 @@ function getUserDataById(id) {
     return db.query(q, params);
 }
 
+function updateUserData(id, name, email) {
+    const q = `UPDATE users
+            SET name = $2, email = $3
+            WHERE id = $1;`;
+    const params = [id, name, email];
+    return db.query(q, params);
+}
+
 function getUserNamesByProjectId(id) {
     const q = `SELECT name
             FROM users
@@ -291,6 +299,7 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserDataById,
+    updateUserData,
     getUserNamesByProjectId,
     getProjectOwnerName,
     getUserNameByTaskId,
