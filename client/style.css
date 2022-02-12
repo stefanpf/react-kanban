@@ -1,3 +1,469 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     background-color: ghostwhite;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    all: unset;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+    background-color: #1b105c;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    box-shadow: 0px 4px 4px rgba(36, 18, 147, 0.4);
+}
+
+textarea {
+    resize: none;
+    border: none;
+    border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 4px 5px 4px 5px;
+    background-color: #fff;
+}
+
+textarea:focus {
+    outline: 1px solid #241293;
+}
+
+input {
+    all: unset;
+    color: #1b105c;
+}
+
+input:focus {
+    outline: 1px solid #241293;
+}
+
+form {
+    width: 100%;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form input {
+    background-color: #fff;
+    width: 96%;
+    border-radius: 8px;
+    font-size: 1.3em;
+    height: 2em;
+    margin: 14px 24px 24px 24px;
+    padding: 5px 10px;
+    align-self: center;
+}
+
+/* form input:last-of-type {
+    margin-bottom: 0;
+} */
+
+form input:focus {
+    outline: 1px solid #241293;
+}
+
+.button-cta {
+    width: 330px;
+    height: 50px;
+    margin: 20px 0px 20px 0px;
+    background-color: #1b105c;
+    color: white;
+    box-shadow: 0px 2px 4px rgba(36, 18, 147, 0.2);
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: 0.08em;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-button {
+    background-color: red;
+}
+/* GLOBAL ELEMENTS */
+.main-container {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+}
+
+.main-container-left-col {
+    height: 100%;
+}
+
+.add-button-big {
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.add-button-small {
+    width: 50px;
+    height: 50px;
+    font-size: 48px;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.add-new-task-button {
+    align-self: center;
+}
+
+.modal {
+    z-index: 10;
+    padding: 24px 0px;
+    width: 60%;
+    background-color: rgb(221, 217, 217);
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.close-modal-button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 2.5em;
+    height: 2.5em;
+    font-weight: 900;
+    font-size: 24px;
+    border-radius: 50%;
+}
+
+.overlay {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.text-modal {
+    padding: 24px;
+}
+
+.text-modal * {
+    padding: 6px 0px 6px 0px;
+}
+
+.text-modal p {
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.text-modal div {
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+/* HEADER */
+/* ------ */
+header {
+    height: 70px;
+    background-color: rgb(247, 234, 234);
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-notifications {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-weight: 400;
+    font-size: 36px;
+}
+
+.header-welcome {
+    padding: 12px 0px 12px 24px;
+    display: flex;
+    align-items: center;
+}
+.header-nav {
+    padding: 12px 24px 12px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.header-button {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0px 10px 0px 10px;
+}
+
+.header-button button {
+    padding: 6px;
+    border-radius: 7px;
+}
+
+/* FOOTER */
+footer {
+    padding: 24px 24px 18px 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-col {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-link {
+    cursor: pointer;
+    padding: 0px 6px 0px 6px;
+}
+/* PROJECT NAVIGATION */
+.project-navigation-col {
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-link-icon-container {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: none;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-link-active {
+    background-color: orange;
+}
+
+.project-link-icon {
+    width: 60px;
+    height: 60px;
+    border: 2px solid blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(98, 123, 129);
+    color: white;
+    font-weight: 800;
+    text-align: center;
+}
+
+.project-link-overview {
+    background-color: rgb(209, 21, 115);
+}
+
+/* PROJECT VIEW */
+/*--------------*/
+.project-container {
+    margin: 20px 10px 20px 10px;
+    padding: 12px;
+    background-color: rgb(237, 243, 243);
+    border-radius: 8px;
+}
+
+.project-view-header {
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-view-header-title {
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: underline;
+}
+
+.project-view-header-description {
+    padding: 8px 0px 0px 12px;
+    font-size: 1.3rem;
+    white-space: pre-line;
+}
+
+.project-view-header-nav {
+    display: flex;
+}
+
+.project-view-header-button {
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 0px 10px 0px 10px;
+}
+
+.project-view-header-button button {
+    padding: 6px;
+    border-radius: 7px;
+}
+
+.new-project-choice {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+/* KANBAN BOARD */
+/* --------------------*/
+
+.board-overview {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.kanban-board {
+    width: 30%;
+    padding: 12px 6px 12px 6px;
+}
+
+.board-to-do {
+    background-color: rgb(247, 179, 123);
+    display: flex;
+    flex-direction: column;
+}
+
+.board-in-progress {
+    background-color: rgb(210, 236, 198);
+}
+
+.board-done {
+    background-color: rgb(72, 245, 3);
+}
+
+/* TASK VIEW SMALL */
+/* --------------- */
+.task-view-small {
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.task-view-small-foreign {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+
+.task-view-sm-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.task-view-sm-due-date {
+    margin-bottom: 6px;
+}
+
+.task-view-sm-owner {
+    margin-bottom: 6px;
+}
+/* TASK VIEW BIG */
+/* ------------- */
+.task-view-big-container {
+    width: 95%;
+    background-color: #fff;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    margin: 24px 16px 24px 16px;
+    padding: 12px 10px 24px 10px;
+}
+
+.task-view-big-title {
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+.task-view-big-sub-heading {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #1b105c;
+    margin: 6px 0px 6px 0px;
+}
+
+.task-view-big-description {
+    white-space: pre-line;
+}
+
+.task-view-big-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.task-view-big-buttons button {
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0px 10px 0px 10px;
+    padding: 6px;
+    border-radius: 7px;
+}
+
+/* PROJECT MEMBERS VIEW */
+.members-view-members-table {
+    padding: 12px;
+}
+
+.members-view-members-table-entry {
+    border-bottom: 1px solid black;
+    margin-bottom: 6px;
+}
+
+.members-table-member-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.invite-codes-table {
+    padding: 12px 12px 12px 24px;
+}
+
+.invite-codes-table-entry {
+    display: flex;
+}
+
+.invite-codes-code {
+    padding-right: 20px;
+    border-bottom: 1px solid black;
+}
+
+.invite-codes-expires {
+    padding-left: 20px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.invite-codes-table-header {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1b105c;
+    margin-bottom: 10px;
 }
