@@ -236,27 +236,4 @@ projectRouter
             });
     });
 
-// const checkIfUserIsMemberOfProject = (userId, projectId) => {
-//     return new Promise((resolve, reject) => {
-//         let memberIds = [];
-//         db.getProjectOwnerByProjectId(projectId)
-//             .then(({ rows }) => {
-//                 memberIds.push(rows[0].owner_id);
-//                 return db.getProjectMembersByProjectIds([projectId]);
-//             })
-//             .then(({ rows }) => {
-//                 rows.forEach((row) => {
-//                     memberIds.push(row.member_id);
-//                 });
-//                 if (memberIds.includes(userId)) {
-//                     resolve();
-//                 } else {
-//                     reject(
-//                         `Membership check failed for user ${userId}. Project members: ${memberIds}`
-//                     );
-//                 }
-//             });
-//     });
-// };
-
 module.exports = projectRouter;

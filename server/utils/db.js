@@ -43,6 +43,13 @@ function updateUserData(id, name, email) {
     return db.query(q, params);
 }
 
+function deleteUser(id) {
+    const q = `DELETE FROM users
+            WHERE id = $1;`;
+    const params = [id];
+    return db.query(q, params);
+}
+
 function getUserNamesByProjectId(id) {
     const q = `SELECT name
             FROM users
@@ -145,6 +152,14 @@ function deleteTask(taskId, userId) {
     return db.query(q, params);
 }
 
+function deleteTasksOnAccountDeletion(userId, arrOfProjectIds) {
+    const q = `DELETE FROM tasks
+            WHERE owner_id = $1
+            OR project_id = ANY($2);`;
+    const params = [userId, arrOfProjectIds];
+    return db.query(q, params);
+}
+
 function archiveTask(taskId) {
     const q = `UPDATE tasks
             SET status = 4, archived_on = CURRENT_DATE
@@ -184,6 +199,14 @@ function getProjectIdsByUserId(userId) {
             OR id IN (SELECT project_id
                         FROM project_members
                         WHERE member_id = $1);`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
+function getOwnedProjectIdsByUserId(userId) {
+    const q = `SELECT id
+            FROM projects
+            WHERE owner_id = $1;`;
     const params = [userId];
     return db.query(q, params);
 }
@@ -266,6 +289,14 @@ function deleteInviteCodeByProjectId(id) {
     return db.query(q, params);
 }
 
+function deleteInviteCodesOnAccountDeletion(userId, arrOfProjectIds) {
+    const q = `DELETE FROM project_invites
+            WHERE sender_id = $1
+            OR project_id = ANY($2);`;
+    const params = [userId, arrOfProjectIds];
+    return db.query(q, params);
+}
+
 function addMemberToProject(userId, projectId) {
     const q = `INSERT INTO project_members (member_id, project_id)
             VALUES ($1, $2);`;
@@ -281,10 +312,17 @@ function removeMemberFromProject(userId, projectId) {
     return db.query(q, params);
 }
 
-function deleteAllMembersFromProject(projectId) {
+function deleteUserFromForeignProjectsOnAccountDeletion(userId) {
     const q = `DELETE FROM project_members
-            WHERE project_id = $1;`;
-    const params = [projectId];
+            WHERE member_id = $1;`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
+function deleteAllMembersFromProjects(arrOfProjectIds) {
+    const q = `DELETE FROM project_members
+            WHERE project_id = ANY($1);`;
+    const params = [arrOfProjectIds];
     return db.query(q, params);
 }
 
@@ -295,11 +333,19 @@ function deleteProject(id) {
     return db.query(q, params);
 }
 
+function deleteProjectsOnAccountDeletion(userId) {
+    const q = `DELETE FROM projects
+            WHERE owner_id = $1;`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     addUser,
     getUserByEmail,
     getUserDataById,
     updateUserData,
+    deleteUser,
     getUserNamesByProjectId,
     getProjectOwnerName,
     getUserNameByTaskId,
@@ -309,12 +355,14 @@ module.exports = {
     getNonOwnedTasksByProjectId,
     updateTask,
     deleteTask,
+    deleteTasksOnAccountDeletion,
     archiveTask,
     addNewProject,
     updateProject,
     getProjectById,
     getProjectFromActiveCode,
     getProjectIdsByUserId,
+    getOwnedProjectIdsByUserId,
     getProjectsByUserId,
     getProjectOwnerByProjectId,
     getProjectMembersByProjectIds,
@@ -322,9 +370,12 @@ module.exports = {
     getActiveProjectInviteCodes,
     expireInviteCode,
     deleteInviteCodeByProjectId,
+    deleteInviteCodesOnAccountDeletion,
     addMemberToProject,
     removeMemberFromProject,
-    deleteAllMembersFromProject,
+    deleteUserFromForeignProjectsOnAccountDeletion,
+    deleteAllMembersFromProjects,
     deleteTasksByProjectId,
     deleteProject,
+    deleteProjectsOnAccountDeletion,
 };

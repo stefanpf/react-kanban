@@ -9,6 +9,10 @@ export default function Profile() {
             dispatch(
                 setActiveModal({ modalType: { type: "editProfileForm" } })
             );
+        } else if (e.target.name === "delete") {
+            dispatch(
+                setActiveModal({ modalType: { type: "deleteProfileForm" } })
+            );
         }
     };
 
@@ -27,13 +31,13 @@ export default function Profile() {
                 <button name="edit" onClick={handleClick}>
                     Edit
                 </button>
-                {/* <button
+                <button
                     name="delete"
                     onClick={handleClick}
                     className="delete-button"
                 >
                     Delete
-                </button> */}
+                </button>
             </div>
         </div>
     );

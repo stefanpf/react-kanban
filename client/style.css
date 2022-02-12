@@ -167,15 +167,20 @@ form input:focus {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.privacy-policy {
+.text-modal {
     padding: 24px;
 }
 
-.privacy-policy * {
+.text-modal * {
     padding: 6px 0px 6px 0px;
 }
 
-.privacy-policy p {
+.text-modal p {
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.text-modal div {
     font-size: 20px;
     line-height: 1.3;
 }
