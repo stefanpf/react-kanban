@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveModal, toggleModalVisibility } from "../../redux/modal/slice";
 import KanBanBoard from "../kanban/kanBanBoard";
+import ProjectArchive from "./projectArchive";
 
 export default function Project() {
     const { id } = useParams();
+    const [showArchive, setShowArchive] = useState(false);
     const dispatch = useDispatch();
     const project = useSelector(
         (state) =>
@@ -16,15 +19,20 @@ export default function Project() {
     );
 
     const handleClick = (e) => {
-        dispatch(
-            setActiveModal({
-                modalType: {
-                    type: `project${e.target.textContent}View`,
-                    projectId: id,
-                },
-            })
-        );
-        dispatch(toggleModalVisibility());
+        const action = e.target.name;
+        if (action === "Settings" || action === "Members") {
+            dispatch(
+                setActiveModal({
+                    modalType: {
+                        type: `project${action}View`,
+                        projectId: id,
+                    },
+                })
+            );
+            dispatch(toggleModalVisibility());
+        } else if (action === "Archive") {
+            setShowArchive(!showArchive);
+        }
     };
 
     return (
@@ -43,15 +51,25 @@ export default function Project() {
                     </div>
                     <div className="project-view-header-nav">
                         <div className="project-view-header-button">
-                            <button onClick={handleClick}>Settings</button>
+                            <button name="Settings" onClick={handleClick}>
+                                Settings
+                            </button>
                         </div>
                         <div className="project-view-header-button">
-                            <button onClick={handleClick}>Members</button>
+                            <button name="Members" onClick={handleClick}>
+                                Members
+                            </button>
+                        </div>
+                        <div className="project-view-header-button">
+                            <button name="Archive" onClick={handleClick}>
+                                Archive
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
-            <KanBanBoard projectId={id} />
+            {!showArchive && <KanBanBoard projectId={id} />}
+            {showArchive && <ProjectArchive projectId={id} />}
         </div>
     );
 }

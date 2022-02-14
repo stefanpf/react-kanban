@@ -179,6 +179,22 @@ projectRouter
             });
     });
 
+projectRouter.route("/api/project/:id/archive").get((req, res) => {
+    const { userId } = req.session;
+    const projectId = req.params.id;
+
+    helpers
+        .checkIfUserIsMemberOfProject(userId, projectId)
+        .then(() => db.getArchivedTasksByProjectId(projectId))
+        .then(({ rows }) => {
+            res.json({ archivedTasks: rows, success: true });
+        })
+        .catch((err) => {
+            console.log("Err in getArchivedTasks:", err);
+            res.json({ success: false });
+        });
+});
+
 projectRouter
     .route("/api/project/:id")
     .post((req, res) => {

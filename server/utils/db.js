@@ -104,7 +104,8 @@ function getTasksByOwnerId(userId) {
             FROM tasks AS t
             JOIN users AS u
             ON t.owner_id = u.id
-            WHERE t.owner_id = $1;`;
+            WHERE t.owner_id = $1
+            AND t.status < 4;`;
     const params = [userId];
     return db.query(q, params);
 }
@@ -115,8 +116,19 @@ function getNonOwnedTasksByProjectId(userId, arrOfProjectIds) {
             JOIN users AS u
             ON t.owner_id = u.id
             WHERE owner_id != $1
-            AND project_id = ANY($2);`;
+            AND project_id = ANY($2)
+            AND status < 4;`;
     const params = [userId, arrOfProjectIds];
+    return db.query(q, params);
+}
+
+function getArchivedTasksByProjectId(projectId) {
+    const q = `SELECT id, owner_id, title, description, archived_on
+            FROM tasks
+            WHERE status = 4
+            AND project_id = $1
+            ORDER BY id DESC;`;
+    const params = [projectId];
     return db.query(q, params);
 }
 
@@ -353,6 +365,7 @@ module.exports = {
     getTaskOwnerByTaskId,
     getTasksByOwnerId,
     getNonOwnedTasksByProjectId,
+    getArchivedTasksByProjectId,
     updateTask,
     deleteTask,
     deleteTasksOnAccountDeletion,
