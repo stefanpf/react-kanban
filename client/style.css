@@ -467,3 +467,18 @@ footer {
     color: #1b105c;
     margin-bottom: 10px;
 }
+
+/* ARCHIVE VIEW */
+.archive-view-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.archive-view-inner-container {
+}
+
+.archive-view-table {
+}
