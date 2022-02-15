@@ -15,30 +15,18 @@ export default function ProjectArchive(props) {
                 if (data.success) {
                     setArchivedTasks(data.archivedTasks);
                 }
-            });
+            })
+            .catch(() => setError(true));
     }, [projectId]);
 
-    const handleDelete = (taskId, ownerId) => {
-        fetch(`/api/task/${taskId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                projectId: projectId,
-                ownerId: ownerId,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    setArchivedTasks(
-                        archivedTasks.filter((task) => task.id !== taskId)
-                    );
-                } else {
-                    setError(true);
-                }
-            });
+    const handleDelete = (err, taskId) => {
+        if (err) {
+            setError(true);
+        } else {
+            setArchivedTasks(
+                archivedTasks.filter((task) => task.id !== taskId)
+            );
+        }
     };
 
     return (

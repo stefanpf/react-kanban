@@ -1,5 +1,7 @@
+import DeleteTaskButton from "./deleteTaskButton";
+
 export default function TaskViewArchive(props) {
-    const { task, userId, handleDelete } = props;
+    const { task, userId, projectId, handleDelete } = props;
     const ownTask = task.owner_id === userId;
 
     return (
@@ -12,11 +14,12 @@ export default function TaskViewArchive(props) {
             </td>
             <td>
                 {ownTask && (
-                    <button
-                        onClick={() => handleDelete(task.id, task.owner_id)}
-                    >
-                        Delete
-                    </button>
+                    <DeleteTaskButton
+                        taskId={task.id}
+                        ownerId={task.owner_id}
+                        projectId={projectId}
+                        callback={(err, taskId) => handleDelete(err, taskId)}
+                    />
                 )}
             </td>
         </tr>

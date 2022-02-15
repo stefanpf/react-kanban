@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveModal, toggleModalVisibility } from "../../redux/modal/slice";
+import DeleteTaskButton from "./deleteTaskButton";
 
 export default function TaskViewBig(props) {
     const { taskId } = props;
@@ -51,27 +52,6 @@ export default function TaskViewBig(props) {
             });
     };
 
-    const handleDelete = () => {
-        fetch(`/api/task/${taskId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                projectId: task.projectId,
-                ownerId: task.taskOwnerId,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    dispatch(toggleModalVisibility());
-                } else {
-                    setError(true);
-                }
-            });
-    };
-
     return (
         <>
             {task && (
@@ -103,7 +83,18 @@ export default function TaskViewBig(props) {
                             {task.status === 3 && (
                                 <button onClick={handleArchive}>Archive</button>
                             )}
-                            <button onClick={handleDelete}>Delete</button>
+                            <DeleteTaskButton
+                                taskId={taskId}
+                                ownerId={task.ownerId}
+                                projectId={task.projectId}
+                                callback={(err) => {
+                                    if (err) {
+                                        setError(true);
+                                    } else {
+                                        dispatch(toggleModalVisibility());
+                                    }
+                                }}
+                            />
                         </div>
                     )}
                 </div>
