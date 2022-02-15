@@ -2,7 +2,10 @@ const express = require("express");
 const taskRouter = express.Router();
 const db = require("../utils/db");
 const helpers = require("./router-helpers");
+const { requireLoggedInUser } = require("../middleware/authorization");
 const { io } = require("../server");
+
+taskRouter.use(requireLoggedInUser);
 
 taskRouter.get("/api/tasks", (req, res) => {
     const { userId } = req.session;

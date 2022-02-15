@@ -3,7 +3,10 @@ const cryptoRandomString = require("crypto-random-string");
 const projectRouter = express.Router();
 const db = require("../utils/db");
 const helpers = require("./router-helpers");
+const { requireLoggedInUser } = require("../middleware/authorization");
 const { io } = require("../server");
+
+projectRouter.use(requireLoggedInUser);
 
 projectRouter.get("/api/projects", (req, res) => {
     const { userId } = req.session;
