@@ -15,7 +15,7 @@ export default function DeleteTaskButton(props) {
             .then((res) => res.json())
             .then((data) => {
                 if (data.success) {
-                    callback(false, taskId);
+                    callback(null, taskId);
                 } else {
                     callback(true, taskId);
                 }

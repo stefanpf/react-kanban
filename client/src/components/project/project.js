@@ -18,6 +18,10 @@ export default function Project() {
             {}
     );
 
+    const toggleShowArchive = () => {
+        setShowArchive(!showArchive);
+    };
+
     const handleClick = (e) => {
         const action = e.target.name;
         if (action === "Settings" || action === "Members") {
@@ -31,7 +35,7 @@ export default function Project() {
             );
             dispatch(toggleModalVisibility());
         } else if (action === "Archive") {
-            setShowArchive(!showArchive);
+            toggleShowArchive();
         }
     };
 
@@ -69,7 +73,12 @@ export default function Project() {
                 </div>
             )}
             {!showArchive && <KanBanBoard projectId={id} />}
-            {showArchive && <ProjectArchive projectId={id} />}
+            {showArchive && (
+                <ProjectArchive
+                    projectId={id}
+                    handleUnmount={toggleShowArchive}
+                />
+            )}
         </div>
     );
 }

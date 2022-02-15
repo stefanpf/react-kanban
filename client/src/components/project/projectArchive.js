@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import TaskViewArchive from "../task/taskViewArchive";
 
 export default function ProjectArchive(props) {
-    const { projectId } = props;
+    const { projectId, handleUnmount } = props;
     const { userId } = useSelector((state) => state.userData || {});
     const [error, setError] = useState(false);
     const [archivedTasks, setArchivedTasks] = useState([]);
@@ -17,6 +17,7 @@ export default function ProjectArchive(props) {
                 }
             })
             .catch(() => setError(true));
+        return () => handleUnmount();
     }, [projectId]);
 
     const handleDelete = (err, taskId) => {
