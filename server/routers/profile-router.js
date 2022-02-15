@@ -2,7 +2,10 @@ const express = require("express");
 const profileRouter = express.Router();
 const db = require("../utils/db");
 const { checkValidEmail } = require("../utils/helper-functions");
+const { requireLoggedInUser } = require("../middleware/authorization");
 const { io } = require("../server");
+
+profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/api/profile")

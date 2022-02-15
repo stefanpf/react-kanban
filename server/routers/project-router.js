@@ -3,7 +3,10 @@ const cryptoRandomString = require("crypto-random-string");
 const projectRouter = express.Router();
 const db = require("../utils/db");
 const helpers = require("./router-helpers");
+const { requireLoggedInUser } = require("../middleware/authorization");
 const { io } = require("../server");
+
+projectRouter.use(requireLoggedInUser);
 
 projectRouter.get("/api/projects", (req, res) => {
     const { userId } = req.session;
@@ -178,6 +181,22 @@ projectRouter
                 res.json({ success: false });
             });
     });
+
+projectRouter.route("/api/project/:id/archive").get((req, res) => {
+    const { userId } = req.session;
+    const projectId = req.params.id;
+
+    helpers
+        .checkIfUserIsMemberOfProject(userId, projectId)
+        .then(() => db.getArchivedTasksByProjectId(projectId))
+        .then(({ rows }) => {
+            res.json({ archivedTasks: rows, success: true });
+        })
+        .catch((err) => {
+            console.log("Err in getArchivedTasks:", err);
+            res.json({ success: false });
+        });
+});
 
 projectRouter
     .route("/api/project/:id")
