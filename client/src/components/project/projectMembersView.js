@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { removeMemberFromProject } from "../../redux/projects/slice";
+import RemoveProjectMemberButton from "./removeProjectMemberButton";
 
 export default function ProjectMembersView(props) {
     const { projectId } = props;
     const [memberNames, setMemberNames] = useState([]);
     const [inviteCodes, setInviteCodes] = useState([]);
-    const dispatch = useDispatch();
     const [error, setError] = useState(false);
     const { userId } = useSelector((state) => state.userData || {});
     const { ownerId } = useSelector(
@@ -18,7 +16,6 @@ export default function ProjectMembersView(props) {
                 )[0]) ||
             {}
     );
-    const userIsProjectOwner = userId === ownerId;
 
     useEffect(() => {
         fetch(`/api/project/${projectId}/members`)
@@ -56,29 +53,6 @@ export default function ProjectMembersView(props) {
             });
     };
 
-    const removeProjectMember = (id) => {
-        fetch(`/api/project/${projectId}/members`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                memberId: id,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    setMemberNames(
-                        memberNames.filter((member) => member.id !== id)
-                    );
-                } else {
-                    setError(true);
-                }
-            })
-            .catch(() => setError(true));
-    };
-
     return (
         <div className="task-view-big-container">
             <h1>Project Members</h1>
@@ -95,18 +69,15 @@ export default function ProjectMembersView(props) {
                                   {member.id === ownerId
                                       ? "(Project Owner)"
                                       : ""}{" "}
-                                  {userIsProjectOwner &&
-                                  member.id !== ownerId ? (
-                                      <button
-                                          onClick={() =>
-                                              removeProjectMember(member.id)
-                                          }
-                                      >
-                                          Remove
-                                      </button>
-                                  ) : (
-                                      ""
-                                  )}
+                                  <RemoveProjectMemberButton
+                                      projectId={projectId}
+                                      userId={userId}
+                                      ownerId={ownerId}
+                                      member={member}
+                                      setError={setError}
+                                      memberNames={memberNames}
+                                      setMemberNames={setMemberNames}
+                                  />
                               </div>
                           </div>
                       ))
