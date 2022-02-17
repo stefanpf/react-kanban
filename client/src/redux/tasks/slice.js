@@ -29,6 +29,13 @@ export function tasksReducer(tasks = null, action) {
         });
     } else if (action.type === "tasks/deleteTasks") {
         return tasks.filter((task) => task.projectId !== action.payload);
+    } else if (action.type === "tasks/removeTasksFromProjectByMemberId") {
+        return tasks.filter((task) => {
+            !(
+                task.projectId === action.payload.projectId &&
+                task.taskOwnerId === action.payload.memberId
+            );
+        });
     }
     return tasks;
 }
@@ -79,5 +86,12 @@ export function deleteTasks(projectId) {
     return {
         type: "tasks/deleteTasks",
         payload: projectId,
+    };
+}
+
+export function removeTasksFromProjectByMemberId(member) {
+    return {
+        type: "tasks/removeTasksFromProjectByMemberId",
+        payload: member,
     };
 }

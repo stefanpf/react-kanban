@@ -51,7 +51,7 @@ function deleteUser(id) {
 }
 
 function getUserNamesByProjectId(id) {
-    const q = `SELECT name
+    const q = `SELECT id, name
             FROM users
             WHERE id IN (SELECT member_id
                             FROM project_members
@@ -161,6 +161,15 @@ function deleteTask(taskId, userId) {
             WHERE id = $1
             AND owner_id = $2;`;
     const params = [taskId, userId];
+    return db.query(q, params);
+}
+
+function deleteTasksFromProjectByUserId(userId, projectId) {
+    const q = `DELETE FROM tasks
+            WHERE owner_id = $1
+            AND project_id = $2
+            RETURNING id;`;
+    const params = [userId, projectId];
     return db.query(q, params);
 }
 
@@ -368,6 +377,7 @@ module.exports = {
     getArchivedTasksByProjectId,
     updateTask,
     deleteTask,
+    deleteTasksFromProjectByUserId,
     deleteTasksOnAccountDeletion,
     archiveTask,
     addNewProject,
