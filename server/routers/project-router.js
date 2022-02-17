@@ -164,6 +164,24 @@ projectRouter
                     console.log("Err in delete member from project:", err);
                     res.json({ success: false });
                 });
+        } else {
+            helpers
+                .checkIfUserIsNotProjectOwner(userId, projectId)
+                .then(() =>
+                    db.deleteTasksFromProjectByUserId(memberId, projectId)
+                )
+                .then(() => db.removeMemberFromProject(memberId, projectId))
+                .then(() => {
+                    io.to(`project:${projectId}`).emit(
+                        "removeMemberFromProject",
+                        { projectId, memberId }
+                    );
+                    res.json({ success: true });
+                })
+                .catch((err) => {
+                    console.log("Err in delete member from project:", err);
+                    res.json({ success: false });
+                });
         }
     });
 

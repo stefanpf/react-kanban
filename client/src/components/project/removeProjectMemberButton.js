@@ -1,3 +1,7 @@
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { toggleModalVisibility } from "../../redux/modal/slice";
+
 export default function RemoveProjectMemberButton(props) {
     const {
         projectId,
@@ -9,6 +13,8 @@ export default function RemoveProjectMemberButton(props) {
         setError,
     } = props;
     const userIsProjectOwner = userId === ownerId;
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     let textContent, buttonVisible;
     if (userIsProjectOwner && member.id !== ownerId) {
@@ -35,6 +41,10 @@ export default function RemoveProjectMemberButton(props) {
                     setMemberNames(
                         memberNames.filter((member) => member.id !== id)
                     );
+                    if (textContent === "Leave") {
+                        dispatch(toggleModalVisibility());
+                        history.replace("/");
+                    }
                 } else {
                     setError(true);
                 }

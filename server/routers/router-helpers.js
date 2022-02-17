@@ -39,6 +39,22 @@ const checkIfUserIsProjectOwner = (userId, projectId) => {
     });
 };
 
+const checkIfUserIsNotProjectOwner = (userId, projectId) => {
+    return new Promise((resolve, reject) => {
+        userId = parseInt(userId);
+        projectId = parseInt(projectId);
+        db.getProjectOwnerByProjectId(projectId).then(({ rows }) => {
+            if (userId !== rows[0].owner_id) {
+                resolve();
+            } else {
+                reject(
+                    `Negative ownership check failed for project ${projectId}`
+                );
+            }
+        });
+    });
+};
+
 const checkIfUserIsTaskOwner = (userId, taskId) => {
     return new Promise((resolve, reject) => {
         userId = parseInt(userId);
@@ -56,5 +72,6 @@ const checkIfUserIsTaskOwner = (userId, taskId) => {
 module.exports = {
     checkIfUserIsMemberOfProject,
     checkIfUserIsProjectOwner,
+    checkIfUserIsNotProjectOwner,
     checkIfUserIsTaskOwner,
 };
