@@ -2,16 +2,15 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { toggleModalVisibility } from "../../redux/modal/slice";
 
-export default function RemoveProjectMemberButton(props) {
-    const {
-        projectId,
-        userId,
-        ownerId,
-        member,
-        memberNames,
-        setMemberNames,
-        setError,
-    } = props;
+export default function RemoveProjectMemberButton({
+    projectId,
+    userId,
+    ownerId,
+    member,
+    memberNames,
+    setMemberNames,
+    setError,
+}) {
     const userIsProjectOwner = userId === ownerId;
     const dispatch = useDispatch();
     const history = useHistory();

@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModalVisibility, setActiveModal } from "../../redux/modal/slice";
 import NewTaskForm from "../task/newTaskForm";
@@ -14,10 +15,15 @@ import DeleteProfileForm from "../profile/deleteProfileForm";
 import PrivacyPolicy from "../global/privacyPolicy";
 
 export default function Modal() {
+    const modalRef = useRef();
     const dispatch = useDispatch();
     const modalType = useSelector(
         (state) => (state.modal && state.modal.modalType) || {}
     );
+
+    useEffect(() => {
+        modalRef.current.style.top = window.scrollY + 24 + "px";
+    });
 
     const handleClick = () => {
         dispatch(setActiveModal({ modalType: "" }));
@@ -27,7 +33,7 @@ export default function Modal() {
     return (
         <>
             <div className="overlay" onClick={handleClick}></div>
-            <div className="modal">
+            <div className="modal" ref={modalRef}>
                 {modalType.type === "newTaskForm" && (
                     <NewTaskForm projectId={modalType.projectId} />
                 )}
