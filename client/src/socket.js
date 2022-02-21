@@ -5,10 +5,12 @@ import {
     deleteTask,
     archiveTask,
     deleteTasks,
+    removeTasksFromProjectByMemberId,
 } from "./redux/tasks/slice";
 import {
     updateProject,
     addMemberToProject,
+    removeMemberFromProject,
     deleteProject,
 } from "./redux/projects/slice";
 
@@ -44,12 +46,12 @@ export const init = (store) => {
         });
 
         socket.on("addMemberToProject", (payload) => {
-            store.dispatch(
-                addMemberToProject({
-                    projectId: payload.projectId,
-                    userId: payload.userId,
-                })
-            );
+            store.dispatch(addMemberToProject(payload));
+        });
+
+        socket.on("removeMemberFromProject", (payload) => {
+            store.dispatch(removeTasksFromProjectByMemberId(payload));
+            store.dispatch(removeMemberFromProject(payload));
         });
     }
 };

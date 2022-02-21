@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
         socket.join(`project:${projectId}`);
         io.to(`project:${projectId}`).emit("addMemberToProject", {
             projectId,
-            userId: socket.request.session.userId,
+            memberId: socket.request.session.userId,
         });
     });
 

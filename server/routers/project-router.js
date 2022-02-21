@@ -126,20 +126,64 @@ projectRouter.post("/api/project/join", (req, res) => {
         });
 });
 
-projectRouter.get("/api/project/:id/members", (req, res) => {
-    const projectId = parseInt(req.params.id);
-    const { userId } = req.session;
-    helpers
-        .checkIfUserIsMemberOfProject(userId, projectId)
-        .then(() => db.getUserNamesByProjectId(projectId))
-        .then(({ rows }) => {
-            res.json({ memberNames: rows, success: true });
-        })
-        .catch((err) => {
-            console.log("Err in getUserNamesByProjectId:", err);
-            res.json({ success: false });
-        });
-});
+projectRouter
+    .route("/api/project/:id/members")
+    .get((req, res) => {
+        const projectId = parseInt(req.params.id);
+        const { userId } = req.session;
+        helpers
+            .checkIfUserIsMemberOfProject(userId, projectId)
+            .then(() => db.getUserNamesByProjectId(projectId))
+            .then(({ rows }) => {
+                res.json({ memberNames: rows, success: true });
+            })
+            .catch((err) => {
+                console.log("Err in getUserNamesByProjectId:", err);
+                res.json({ success: false });
+            });
+    })
+    .delete((req, res) => {
+        const projectId = parseInt(req.params.id);
+        const { userId } = req.session;
+        const { memberId } = req.body;
+        if (userId !== memberId) {
+            helpers
+                .checkIfUserIsProjectOwner(userId, projectId)
+                .then(() =>
+                    db.deleteTasksFromProjectByUserId(memberId, projectId)
+                )
+                .then(() => db.removeMemberFromProject(memberId, projectId))
+                .then(() => {
+                    io.to(`project:${projectId}`).emit(
+                        "removeMemberFromProject",
+                        { projectId, memberId }
+                    );
+                    res.json({ success: true });
+                })
+                .catch((err) => {
+                    console.log("Err in delete member from project:", err);
+                    res.json({ success: false });
+                });
+        } else {
+            helpers
+                .checkIfUserIsNotProjectOwner(userId, projectId)
+                .then(() =>
+                    db.deleteTasksFromProjectByUserId(memberId, projectId)
+                )
+                .then(() => db.removeMemberFromProject(memberId, projectId))
+                .then(() => {
+                    io.to(`project:${projectId}`).emit(
+                        "removeMemberFromProject",
+                        { projectId, memberId }
+                    );
+                    res.json({ success: true });
+                })
+                .catch((err) => {
+                    console.log("Err in delete member from project:", err);
+                    res.json({ success: false });
+                });
+        }
+    });
 
 projectRouter
     .route("/api/project/:id/invites")
@@ -234,16 +278,11 @@ projectRouter
     .delete((req, res) => {
         const { userId } = req.session;
         const projectId = parseInt(req.params.id);
-        db.getProjectOwnerByProjectId(projectId)
-            .then(({ rows }) => {
-                if (userId == rows[0].owner_id) {
-                    return db.deleteTasksByProjectId(projectId);
-                } else {
-                    res.json({ success: false });
-                }
-            })
+        helpers
+            .checkIfUserIsProjectOwner(userId, projectId)
+            .then(() => db.deleteTasksByProjectId(projectId))
             .then(() => db.deleteInviteCodeByProjectId(projectId))
-            .then(() => db.deleteAllMembersFromProject(projectId))
+            .then(() => db.deleteAllMembersFromProjects([projectId]))
             .then(() => db.deleteProject(projectId))
             .then(() => {
                 io.to(`project:${projectId}`).emit("deleteProject", projectId);
