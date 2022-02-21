@@ -12,21 +12,27 @@ export default function Registration() {
             {error && <h2>Oops, something went wrong...</h2>}
             <div>
                 <form>
+                    <label htmlFor="nameInput">Name:</label>
                     <input
+                        id="nameInput"
                         type="text"
                         name="name"
                         placeholder="what should we call you?"
                         required
                         onChange={handleChange}
                     ></input>
+                    <label htmlFor="emailInput">Email:</label>
                     <input
+                        id="emailInput"
                         type="email"
                         name="email"
                         placeholder="your@email.com"
                         required
                         onChange={handleChange}
                     ></input>
+                    <label htmlFor="passwordInput">Password:</label>
                     <input
+                        id="passwordInput"
                         type="password"
                         name="password"
                         placeholder="password"

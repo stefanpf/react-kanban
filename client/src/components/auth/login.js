@@ -12,13 +12,16 @@ export default function Login() {
             {error && <h2>Oops, something went wrong...</h2>}
             <div>
                 <form>
+                    <label htmlFor="emailInput">Email:</label>
                     <input
+                        id="emailInput"
                         type="email"
                         name="email"
                         placeholder="your@email.com"
                         required
                         onChange={handleChange}
                     ></input>
+                    <label htmlFor="passwordInput">Password:</label>
                     <input
                         type="password"
                         name="password"

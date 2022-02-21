@@ -40,14 +40,18 @@ export default function EditProfileForm() {
             <h2>Edit Profile</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
+                <label htmlFor="nameInput">Name:</label>
                 <input
+                    id="nameInput"
                     type="text"
                     name="name"
                     defaultValue={profileData.name}
                     required
                     onChange={handleChange}
                 ></input>
+                <label htmlFor="emailInput">Email:</label>
                 <input
+                    id="emailInput"
                     type="email"
                     name="email"
                     defaultValue={profileData.email}

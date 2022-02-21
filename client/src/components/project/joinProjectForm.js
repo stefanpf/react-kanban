@@ -41,7 +41,9 @@ export default function JoinProjectForm() {
             <h2>Join An Existing Project</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
+                <label htmlFor="codeInput">Invite Code:</label>
                 <input
+                    id="codeInput"
                     type="text"
                     name="code"
                     placeholder="your invite code"

@@ -59,14 +59,18 @@ export default function EditProjectForm(props) {
             <h2>Edit Project {project.name}</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
+                <label htmlFor="nameInput">Name:</label>
                 <input
+                    id="nameInput"
                     type="text"
                     name="name"
                     defaultValue={project.name}
                     required
                     onChange={handleChange}
                 ></input>
+                <label htmlFor="descriptionInput">Description:</label>
                 <textarea
+                    id="descriptionInput"
                     name="description"
                     defaultValue={project.description}
                     onChange={handleChange}

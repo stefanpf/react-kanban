@@ -38,19 +38,25 @@ export default function NewTaskForm(props) {
             <h2>Add New Task</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
+                <label htmlFor="titleInput">Title:</label>
                 <input
+                    id="titleInput"
                     type="text"
                     name="title"
                     placeholder="title"
                     required
                     onChange={handleChange}
                 ></input>
+                <label htmlFor="descriptionInput">Description:</label>
                 <textarea
+                    id="descriptionInput"
                     name="description"
                     placeholder="description"
                     onChange={handleChange}
                 />
+                <label htmlFor="dueDateInput">Due Date:</label>
                 <input
+                    id="dueDateInput"
                     type="date"
                     name="due_date"
                     onChange={handleChange}

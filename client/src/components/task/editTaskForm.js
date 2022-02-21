@@ -17,19 +17,25 @@ export default function EditTaskForm(props) {
             <h2>Edit Task</h2>
             {error && <h3>Oops, something went wrong...</h3>}
             <form>
+                <label htmlFor="titleInput">Title:</label>
                 <input
+                    id="titleInput"
                     type="text"
                     name="title"
                     defaultValue={task.title}
                     required
                     onChange={handleChange}
                 ></input>
+                <label htmlFor="descriptionInput">Description:</label>
                 <textarea
+                    id="descriptionInput"
                     name="description"
                     defaultValue={task.description}
                     onChange={handleChange}
                 />
+                <label htmlFor="dueDateInput">Due Date:</label>
                 <input
+                    id="dueDateInput"
                     type="date"
                     name="dueDate"
                     defaultValue={
