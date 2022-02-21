@@ -15,14 +15,14 @@ const server = require("http").Server(app);
 
 // create and export IO before Routers are imported
 // to prevent circular import problems as they require IO
+const SOCKET_HOSTNAME =
+    process.env.SOCKET_HOSTNAME || require("../secrets").SOCKET_HOSTNAME;
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) => {
         callback(
             null,
-            req.headers.referer.startsWith("https://sp-kanban.herokuapp.com") ||
-                req.headers.referer.startsWith(
-                    "http://sp-kanban.herokuapp.com"
-                ) ||
+            req.headers.referer.startsWith(`https://${SOCKET_HOSTNAME}`) ||
+                req.headers.referer.startsWith(`http://${SOCKET_HOSTNAME}`) ||
                 req.headers.referer.startsWith("http://localhost:3000")
         );
     },
