@@ -23,7 +23,8 @@ const io = require("socket.io")(server, {
             null,
             req.headers.referer.startsWith(`https://${SOCKET_HOSTNAME}`) ||
                 req.headers.referer.startsWith(`http://${SOCKET_HOSTNAME}`) ||
-                req.headers.referer.startsWith("http://localhost:3000")
+                req.headers.referer.startsWith("http://localhost:3000") ||
+                req.headers.referer.startsWith("http://127.0.0.1:3000")
         );
     },
 });
