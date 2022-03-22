@@ -23,18 +23,26 @@ export default function Header() {
     return (
         <header>
             {/* <div className="header-notifications">0</div> */}
-            <div className="header-welcome">
-                <h1>WeKanBan!</h1>
+            <div className="header-logo">
+                <img src="/img/logo-icon.svg"></img>
+                <h1>WeKanBan</h1>
             </div>
             <div className="header-nav">
                 <div className="header-button">
-                    <button name="my-account" onClick={handleClick}>
-                        My Account
-                    </button>
+                    <img
+                        src="/img/profile-icon.svg"
+                        alt="My Account"
+                        name="my-account"
+                        onClick={handleClick}
+                    ></img>
                 </div>
                 <div className="header-button">
                     <a href="/logout">
-                        <button>Logout</button>
+                        <img
+                            src="/img/logout-icon.svg"
+                            alt="Logout"
+                            className="logout-icon"
+                        ></img>
                     </a>
                 </div>
             </div>

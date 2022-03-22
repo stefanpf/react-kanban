@@ -48,13 +48,13 @@ export default function App(props) {
 
     return (
         <BrowserRouter>
-            <Header />
-            {modalIsVisible && <Modal />}
-            <div className="main-container">
-                <div className="main-container-left-col">
+            <div className="grid-container">
+                <Header />
+                {modalIsVisible && <Modal />}
+                <div className="side-nav">
                     <ProjectNavigation userId={userId} />
                 </div>
-                <div className="main-container-right-col">
+                <div className="project-container">
                     {error && <h2>Oops, something went wrong...</h2>}
                     <Route path="/new-project">
                         <NewProject />
@@ -66,8 +66,8 @@ export default function App(props) {
                         <Overview />
                     </Route>
                 </div>
+                <Footer />
             </div>
-            <Footer />
         </BrowserRouter>
     );
 }

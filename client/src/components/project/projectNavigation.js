@@ -18,16 +18,19 @@ export default function ProjectNavigation(props) {
     );
 
     return (
-        <div className="project-navigation-col">
+        <>
             <Link to="/">
                 <div
                     className={`project-link-icon-container ${
                         activeProject == 0 && "project-link-active"
                     }`}
                 >
-                    <button className="project-link-icon project-link-overview">
-                        My Tasks
-                    </button>
+                    <div className="project-link-icon project-link-overview">
+                        <img
+                            src="/img/overview-icon.png"
+                            alt="My Task Overview"
+                        />
+                    </div>
                 </div>
             </Link>
             {projects &&
@@ -52,6 +55,6 @@ export default function ProjectNavigation(props) {
                     </button>
                 </div>
             </Link>
-        </div>
+        </>
     );
 }
