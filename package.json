@@ -20,7 +20,6 @@
         "@babel/polyfill": "^7.4.3",
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
-        "@testing-library/react": "^11.2.2",
         "@types/react-router-dom": "^5.1.8",
         "aws-sdk": "^2.815.0",
         "babel-loader": "^8.2.2",
@@ -65,5 +64,8 @@
     },
     "keywords": [],
     "author": "Stefan Pfeuffer",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@testing-library/react": "^12.1.3"
+    }
 }
