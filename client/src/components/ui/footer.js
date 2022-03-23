@@ -9,28 +9,28 @@ export default function Footer() {
     };
 
     return (
-        <footer>
-            <div className="footer-col">
+        <>
+            <div className="footer-col footer-col-left">
                 <div className="footer-copyright">
                     &copy; 2022 Stefan Pfeuffer
                 </div>
             </div>
 
-            <div className="footer-col">
+            <div className="footer-col footer-col-right">
                 <div className="footer-link" onClick={handleClick}>
                     Privacy Policy
                 </div>
-                <div>|</div>
                 <div className="footer-link">
                     <a
                         href="https://github.com/stefanpf/react-kanban"
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Source (GitHub)
+                        <img src="/img/external-link.svg" />
+                        Source
                     </a>
                 </div>
             </div>
-        </footer>
+        </>
     );
 }

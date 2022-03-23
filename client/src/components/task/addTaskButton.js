@@ -12,11 +12,13 @@ export default function AddTaskButton(props) {
     };
 
     return (
-        <button
-            className="add-button-small add-new-task-button"
-            onClick={handleClick}
-        >
-            +
-        </button>
+        <div className="project-link-icon new-task-button">
+            <img
+                src="/img/add-new-icon.svg"
+                alt="New Task"
+                title="New Task"
+                onClick={handleClick}
+            />
+        </div>
     );
 }

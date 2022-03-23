@@ -42,35 +42,47 @@ export default function Project() {
     return (
         <div className="project-container">
             {project && (
-                <div className="project-view-header">
-                    <div className="project-view-header-info">
+                <>
+                    <div className="project-view-header">
                         <div className="project-view-header-title">
                             {project.name}
                         </div>
-                        {project.description && (
-                            <div className="project-view-header-description">
-                                {project.description}
+                        <div className="project-view-header-nav">
+                            <div className="project-view-nav-link">
+                                <img
+                                    src="/img/settings-icon.svg"
+                                    alt="Project Settings"
+                                    title="Project Settings"
+                                    name="Settings"
+                                    onClick={handleClick}
+                                />
                             </div>
-                        )}
+                            <div className="project-view-nav-link">
+                                <img
+                                    src="/img/users-icon.svg"
+                                    alt="Project Members"
+                                    title="Project Members"
+                                    name="Members"
+                                    onClick={handleClick}
+                                />
+                            </div>
+                            <div className="project-view-nav-link">
+                                <img
+                                    src="/img/archive-icon.svg"
+                                    alt="Project Archive"
+                                    title="Project Archive"
+                                    name="Archive"
+                                    onClick={handleClick}
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className="project-view-header-nav">
-                        <div className="project-view-header-button">
-                            <button name="Settings" onClick={handleClick}>
-                                Settings
-                            </button>
+                    {project.description && (
+                        <div className="project-view-description">
+                            {project.description}
                         </div>
-                        <div className="project-view-header-button">
-                            <button name="Members" onClick={handleClick}>
-                                Members
-                            </button>
-                        </div>
-                        <div className="project-view-header-button">
-                            <button name="Archive" onClick={handleClick}>
-                                Archive
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    )}
+                </>
             )}
             {!showArchive && <KanBanBoard projectId={id} />}
             {showArchive && (

@@ -56,16 +56,33 @@ export default function TaskViewSmall(props) {
                 >
                     <div className="task-view-sm-title">{task.title}</div>
                     {task.dueDate && (
-                        <div className="task-view-sm-due-date">
-                            <em>Due:</em> {formattedDueDate}
+                        <div className="task-view-sm-item">
+                            <img
+                                src="/img/date-icon.svg"
+                                alt="Due Date"
+                                title="Due Date"
+                            />
+                            {formattedDueDate}
                         </div>
                     )}
-                    <div className="task-view-sm-owner">
-                        <em>Responsible:</em> {task.ownerName}
-                    </div>
+                    {projectId && (
+                        <div className="task-view-sm-item">
+                            <img
+                                src="/img/owner-icon.svg"
+                                alt="Responsible"
+                                title="Responsible"
+                            />{" "}
+                            {task.ownerName}
+                        </div>
+                    )}
                     {!projectId && projectName && (
-                        <div className="task-view-sm-project-name">
-                            <em>Project:</em> {projectName}
+                        <div className="task-view-sm-item">
+                            <img
+                                src="/img/project-icon.svg"
+                                alt="Project"
+                                title="Project"
+                            />{" "}
+                            {projectName}
                         </div>
                     )}
                 </OwnTask>
@@ -78,12 +95,22 @@ export default function TaskViewSmall(props) {
         >
             <div className="task-view-sm-title">{task.title}</div>
             {task.dueDate && (
-                <div className="task-view-sm-due-date">
-                    <em>Due: {formattedDueDate}</em>
+                <div className="task-view-sm-item">
+                    <img
+                        src="/img/date-icon.svg"
+                        alt="Due Date"
+                        title="Due Date"
+                    />
+                    {formattedDueDate}
                 </div>
             )}
-            <div className="task-view-sm-owner">
-                <em>Responsible: {task.ownerName}</em>
+            <div className="task-view-sm-item">
+                <img
+                    src="/img/owner-icon.svg"
+                    alt="Responsible"
+                    title="Responsible"
+                />{" "}
+                {task.ownerName}
             </div>
         </div>
     );

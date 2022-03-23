@@ -24,6 +24,7 @@ export default function ProjectNavigation(props) {
                     className={`project-link-icon-container ${
                         activeProject == 0 && "project-link-active"
                     }`}
+                    title="My Tasks Overview"
                 >
                     <div className="project-link-icon project-link-overview">
                         <img
@@ -42,17 +43,22 @@ export default function ProjectNavigation(props) {
                                 "project-link-active"
                             }`}
                         >
-                            <button className="project-link-icon">
+                            <div className="project-link-icon">
                                 {project.name}
-                            </button>
+                            </div>
                         </div>
                     </Link>
                 ))}
             <Link to="/new-project">
-                <div className="project-link-icon">
-                    <button className="add-button-small add-new-task-button">
-                        +
-                    </button>
+                <div
+                    className={`project-link-icon-container ${
+                        activeProject == "new-project" && "project-link-active"
+                    }`}
+                    title="New Project"
+                >
+                    <div className="project-link-icon">
+                        <img src="/img/add-new-icon.svg" alt="New Project" />
+                    </div>
                 </div>
             </Link>
         </>

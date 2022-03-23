@@ -21,14 +21,13 @@ export default function Header() {
     };
 
     return (
-        <header>
-            {/* <div className="header-notifications">0</div> */}
+        <>
             <div className="header-logo">
                 <img src="/img/logo-icon.svg"></img>
                 <h1>WeKanBan</h1>
             </div>
             <div className="header-nav">
-                <div className="header-button">
+                <div className="header-link" title="My Account">
                     <img
                         src="/img/profile-icon.svg"
                         alt="My Account"
@@ -36,7 +35,7 @@ export default function Header() {
                         onClick={handleClick}
                     ></img>
                 </div>
-                <div className="header-button">
+                <div className="header-link" title="Logout">
                     <a href="/logout">
                         <img
                             src="/img/logout-icon.svg"
@@ -46,6 +45,6 @@ export default function Header() {
                     </a>
                 </div>
             </div>
-        </header>
+        </>
     );
 }
