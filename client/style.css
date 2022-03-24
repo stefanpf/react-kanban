@@ -113,7 +113,6 @@ form input:focus {
 
 .modal {
     z-index: 10;
-    padding: 24px 0px;
     width: 60%;
     background-color: rgb(221, 217, 217);
     border-radius: 10px;
@@ -125,7 +124,7 @@ form input:focus {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    color: black;
+    color: #000022;
 }
 
 .close-modal-button {
@@ -290,6 +289,11 @@ form input:focus {
 .project-link-icon img {
     width: 60px;
     height: 60px;
+}
+
+.project-link-overview img {
+    width: 45px;
+    height: 45px;
 }
 
 /* PROJECT VIEW */
