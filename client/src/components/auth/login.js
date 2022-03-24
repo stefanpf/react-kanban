@@ -7,7 +7,7 @@ export default function Login() {
     const [submit, error] = useFormSubmit("/api/login", userInput);
 
     return (
-        <>
+        <div className="logged-out-form-card">
             <h1>Login</h1>
             {error && <h2>Oops, something went wrong...</h2>}
             <div>
@@ -41,9 +41,11 @@ export default function Login() {
             <div className="auth-switch-text">
                 Don&apos;t have an account yet?{" "}
                 <Link to="/">
-                    Click here to <strong>register!</strong>
+                    <span className="logged-out-link">
+                        Click here to <strong>register!</strong>
+                    </span>
                 </Link>
             </div>
-        </>
+        </div>
     );
 }

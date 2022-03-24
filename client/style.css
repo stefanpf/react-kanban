@@ -35,6 +35,23 @@ button:hover {
     box-shadow: 0px 4px 4px rgba(231, 231, 235, 0.4);
 }
 
+.button-cta {
+    width: 330px;
+    height: 50px;
+    margin: 20px 0px 20px 0px;
+    box-shadow: 0px 2px 4px rgba(36, 18, 147, 0.2);
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: 0.08em;
+    align-self: center;
+}
+
+.delete-button {
+    background-color: red;
+}
+
 textarea {
     resize: none;
     border: none;
@@ -80,28 +97,6 @@ form input {
 
 form input:focus {
     outline: 1px solid #241293;
-}
-
-.button-cta {
-    width: 330px;
-    height: 50px;
-    margin: 20px 0px 20px 0px;
-    background-color: #1b105c;
-    color: white;
-    box-shadow: 0px 2px 4px rgba(36, 18, 147, 0.2);
-    border-radius: 8px;
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 33px;
-    letter-spacing: 0.08em;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.delete-button {
-    background-color: red;
 }
 
 /* GLOBAL ELEMENTS */
@@ -293,8 +288,8 @@ form input:focus {
 }
 
 .project-link-icon img {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
 }
 
 /* PROJECT VIEW */
@@ -502,4 +497,59 @@ form input:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+/* LOGGED OUT VIEW*/
+.logged-out-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.logged-out-logo {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.logged-out-logo img {
+    width: 80px;
+    height: auto;
+}
+
+.logged-out-logo h1 {
+    margin-left: 1.5rem;
+    font-size: 2.3rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+}
+
+.logged-out-tagline {
+    font-size: 1.7rem;
+    margin: 40px 0px;
+}
+
+.logged-out-form-card {
+    background-color: #ccc;
+    border-radius: 10px;
+    padding: 24px;
+    color: #000022;
+}
+
+.logged-out-form-card h1,
+.logged-out-form-card h2 {
+    margin-bottom: 24px;
+}
+
+.auth-switch-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.logged-out-link {
+    cursor: pointer;
+}
+
+.logged-out-link:hover {
+    color: rgb(47, 74, 196);
 }

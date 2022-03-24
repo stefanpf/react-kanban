@@ -7,7 +7,7 @@ export default function Registration() {
     const [submit, error] = useFormSubmit("/api/register", userInput);
 
     return (
-        <>
+        <div className="logged-out-form-card">
             <h1>Registration</h1>
             {error && <h2>Oops, something went wrong...</h2>}
             <div>
@@ -51,9 +51,11 @@ export default function Registration() {
             <div className="auth-switch-text">
                 Already registered?{" "}
                 <Link to="/login">
-                    Click here to <strong>log in!</strong>
+                    <span className="logged-out-link">
+                        Click here to <strong>log in!</strong>
+                    </span>
                 </Link>
             </div>
-        </>
+        </div>
     );
 }
